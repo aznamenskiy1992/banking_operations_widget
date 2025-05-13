@@ -10,7 +10,10 @@ def mask_account_card(card_or_account_number: str) -> str:
         masked_data: str = get_mask_account(int(card_or_account_number_split[-1]))
     else:
         masked_data: str = get_mask_card_number(int(card_or_account_number_split[-1]))
-    return card_or_account_number_split[0] + " " + masked_data
+    if len(card_or_account_number_split) == 2:
+        return card_or_account_number_split[0] + " " + masked_data
+    else:
+        return " ".join(card_or_account_number_split[:-1]) + " " + masked_data
 
 
 def get_date(date_: str) -> str:
