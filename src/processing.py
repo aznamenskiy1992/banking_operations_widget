@@ -11,9 +11,7 @@ def filter_by_state(
 def sort_by_date(
     source_data: list[dict[str, Union[str, int]]], sort: str = "True"
 ) -> list[dict[str, Union[str, int]]]:
-    """
-    Сортирует словари по дате (значению ключа date)
-    """
+    """Функция, которая сортирует список словарей по дате"""
     if sort.lower() == "true":
         reverse = True
     else:
