@@ -11,3 +11,7 @@ from src.masks import get_mask_card_number
 ])
 def test_input_standard_card_number(card_number, mask_number):
     assert get_mask_card_number(card_number) == mask_number
+
+
+def test_none_card_number(none_card_and_account_number):
+    assert get_mask_card_number(None) == none_card_and_account_number
