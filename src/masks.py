@@ -21,7 +21,17 @@ def get_mask_card_number(card_number: int) -> str:
             "*" * 4,
             "*" * 2 + str(card_number)[-4:],
         ]
+    elif len(str(card_number)) == 19:
+        dividing_card_number_by_blocks: list[str] = [
+            str(card_number)[:4],
+            str(card_number)[4:6] + "*" * 2,
+            "*" * 4,
+            "*" * 4,
+            str(card_number)[-3:],
+        ]
+
     mask_card_number: str = " ".join(dividing_card_number_by_blocks)
+
     return mask_card_number
 
 
