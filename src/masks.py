@@ -51,6 +51,8 @@ def get_mask_card_number(card_number: int) -> str:
                     dividing_card_number_by_blocks.append(
                         mask_card_number[dividing_start_position:dividing_end_position]
                     )
+    else:
+        return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
 
     mask_card_number: str = " ".join(dividing_card_number_by_blocks)
 
