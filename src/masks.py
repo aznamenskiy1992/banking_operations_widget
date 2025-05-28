@@ -1,5 +1,8 @@
 def get_mask_card_number(card_number: int) -> str:
     """Функция, которая маскирует номер карты"""
+    if card_number is None:
+        return "Не указан номер карты или счёта"
+
     card_number_str = str(card_number)
     len_card_number = len(str(card_number))
 
