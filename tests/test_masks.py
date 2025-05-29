@@ -1,6 +1,6 @@
 import pytest
 
-from src.masks import get_mask_card_number
+from src.masks import get_mask_card_number, get_mask_account
 
 
 @pytest.mark.parametrize("card_number, mask_number", [
@@ -43,3 +43,11 @@ def test_card_number_other_incorrect_types(card_and_account_number_other_incorre
     assert get_mask_card_number((5543812355785520, 5543812355785)) == card_and_account_number_other_incorrect_types
     assert get_mask_card_number({5543812355785520}) == card_and_account_number_other_incorrect_types
     assert get_mask_card_number(5543812355785520.25) == card_and_account_number_other_incorrect_types
+
+
+@pytest.mark.parametrize("account_number, mask_number", [
+    (79053641285349013572, "**3572"),
+    (77762358105236921456, "**1456"),
+])
+def test_input_account_number(account_number, mask_number):
+    assert get_mask_account(account_number) == mask_number
