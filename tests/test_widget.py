@@ -58,3 +58,7 @@ def test_not_have_date(not_have_date):
 
 def test_none_date(none_date):
     assert get_date(None) == none_date
+
+
+def test_whitespace_in_date(whitespace_in_date):
+    assert get_date(" 2023-05-15 T12:30:45 ") == whitespace_in_date

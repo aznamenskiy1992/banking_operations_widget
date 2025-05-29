@@ -37,3 +37,8 @@ def not_have_date():
 @pytest.fixture
 def none_date():
     return "Дата не указана"
+
+
+@pytest.fixture
+def whitespace_in_date():
+    return "Дата не должна содержать пробелы"
