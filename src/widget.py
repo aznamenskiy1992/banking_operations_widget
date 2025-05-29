@@ -55,6 +55,9 @@ def get_date(date_: str) -> str:
     if date_ is None:
         return "Дата не указана"
 
+    if " " in date_:
+        date_ = date_.replace(" ", "")
+
     date_split: list[str] = date_.split("T")
 
     try:
