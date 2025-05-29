@@ -60,3 +60,11 @@ def test_none_account_number(none_card_and_account_number):
 def test_none_standard_account_number(none_standard_card_and_account_number):
     assert get_mask_account(7) == none_standard_card_and_account_number
     assert get_mask_account(745205381921035742369) == none_standard_card_and_account_number
+
+
+@pytest.mark.parametrize("account_number, mask_number", [
+    ("79053641285349013572", "**3572"),
+    ("77762358105236921456", "**1456"),
+])
+def test_account_number_str_all_symbols_int(account_number, mask_number):
+    assert get_mask_account(account_number) == mask_number
