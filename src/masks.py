@@ -98,10 +98,23 @@ def get_mask_card_number(card_number: int) -> str:
 
 
 def get_mask_account(account_number: int) -> str:
-    """Функция, которая маскирует номер счёта"""
+    """Функция для маскировки номера счёта.
+
+    Возвращает строку, в которой первые 16 цифр заменены на '*', а оставлены только последние 4 цифры.
+    Номер счёта должен состоять из 20 цифр и может быть передан как целое число, либо как строка из цифр.
+
+    Args:
+        account_number (int): Номер счёта для маскировки. Может быть целым числом или строкой.
+
+    Returns:
+        str: Замаскированный номер счёта в формате **XXXX, где XXXX - последние 4 цифры номера.
+             В случае ошибки возвращает соответствующее сообщение.
+    """
+    # Проверка на None
     if account_number is None:
         return "Не указан номер карты или счёта"
 
+    # Преобразование номера счёта в строку с проверкой типа
     if isinstance(account_number, int):
         account_number_str = str(account_number)
     elif isinstance(account_number, str):
@@ -112,10 +125,12 @@ def get_mask_account(account_number: int) -> str:
     else:
         return "Номер карты или счёта должен быть целым числом"
 
+    # Проверка длины номера счёта
     len_account_number = len(account_number_str)
 
+    # Маскировка номера счёта (оставляем только последние 4 цифры)
     if len_account_number == 20:
-        mask_account_number: str = "*" * 2 + str(account_number)[16:]
+        mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
         return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
 
