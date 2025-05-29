@@ -31,4 +31,4 @@ def card_and_account_number_incorrect_types():
 
 @pytest.fixture
 def not_have_date():
-    return "Не указана дата"
+    return "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
