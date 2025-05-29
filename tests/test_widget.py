@@ -31,3 +31,11 @@ def test_definition_other_account_number(account_number, mask_number):
 
 def test_none_card_and_account_number(none_card_and_account_number):
     assert mask_account_card(None) == none_card_and_account_number
+
+
+def test_card_and_account_number_incorrect_types(card_and_account_number_incorrect_types):
+    assert mask_account_card([5543812355785, 79053641285349013572]) == card_and_account_number_incorrect_types
+    assert mask_account_card({"Visa": 5543812355785520, "Расчётный счет": 79053641285349013572}) == card_and_account_number_incorrect_types
+    assert mask_account_card((5543812355785, 79053641285349013572)) == card_and_account_number_incorrect_types
+    assert mask_account_card({5543812355785, 79053641285349013572}) == card_and_account_number_incorrect_types
+    assert mask_account_card(5543812355785.25) == card_and_account_number_incorrect_types
