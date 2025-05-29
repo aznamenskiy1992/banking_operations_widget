@@ -52,7 +52,7 @@ def sort_by_date(
 
     try:
         sorted_data = sorted(source_data, key=lambda data: data["date"], reverse=reverse)
-    except:
+    except KeyError:
         return "В словарях нет ключа 'date'"
     else:
         return sorted_data
