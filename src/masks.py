@@ -3,7 +3,14 @@ def get_mask_card_number(card_number: int) -> str:
     if card_number is None:
         return "Не указан номер карты или счёта"
 
-    card_number_str = str(card_number)
+    if isinstance(card_number, int):
+        card_number_str = str(card_number)
+    elif isinstance(card_number, str):
+        if not card_number.isdigit():
+            return "Номер карты или счёта должен состоять только из цифр"
+        else:
+            card_number_str = card_number
+
     len_card_number = len(str(card_number))
 
     mask_patterns = {
