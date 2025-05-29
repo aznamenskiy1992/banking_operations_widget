@@ -27,3 +27,8 @@ def card_and_account_number_incorrect_types():
     Маска ввода:
     Для счёта - 'Счёт 79053641285349013572'
     Для Карты - 'Visa Classic 5543812355785'"""
+
+
+@pytest.fixture
+def not_have_date():
+    return "Не указана дата"

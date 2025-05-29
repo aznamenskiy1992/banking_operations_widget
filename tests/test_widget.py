@@ -50,3 +50,7 @@ def test_card_and_account_number_incorrect_types(card_and_account_number_incorre
 ])
 def test_convert_str_to_date_d_m_y(date, convert_date):
     assert get_date(date) == convert_date
+
+
+def test_not_have_date(not_have_date):
+    assert get_date("T12:30:45") == not_have_date
