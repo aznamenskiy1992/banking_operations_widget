@@ -51,22 +51,43 @@ def mask_account_card(card_or_account_number: str) -> str:
 
 
 def get_date(date_: str) -> str:
-    """Функция, которая преобразовывает дату из строки в формат DD.MM.YYYY"""
+    """Преобразует дату из строкового формата YYYY-MM-DDTHH:MM:SS в формат DD.MM.YYYY.
+
+    Функция принимает строку с датой, обрабатывает её и возвращает в новом формате.
+    Также обрабатывает случаи, когда дата не указана или указана в неверном формате.
+
+    Args:
+        date_ (str): Строка с датой в формате YYYY-MM-DD. Может содержать пробелы
+                     или быть частью строки с временем (разделитель 'T').
+
+    Returns:
+        str: Дата в формате DD.MM.YYYY, либо сообщение об ошибке, если дата
+             не указана или указана в неверном формате.
+    """
+    # Проверка на None (дата не указана)
     if date_ is None:
         return "Дата не указана"
 
+    # Удаление пробелов в строке, если они есть
     if " " in date_:
         date_ = date_.replace(" ", "")
 
+    # Разделение строки по 'T' (если дата включает время)
     date_split: list[str] = date_.split("T")
 
     try:
+        # Парсинг даты из формата YYYY-MM-DD и преобразование в строку
         formatted_date_by_y_m_d: str = str(datetime.strptime(date_split[0], "%Y-%m-%d").date())
     except:
+        # Обработка ошибки парсинга (неверный формат даты)
         return "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
     else:
+        # Разделение даты на компоненты (год, месяц, день)
         formatted_date_by_y_m_d_split: list[str] = formatted_date_by_y_m_d.split("-")
+
+        # Сборка даты в формате DD.MM.YYYY
         formatted_date_by_d_m_y: str = ".".join(
             [formatted_date_by_y_m_d_split[-1], formatted_date_by_y_m_d_split[1], formatted_date_by_y_m_d_split[0]]
         )
+
         return formatted_date_by_d_m_y
