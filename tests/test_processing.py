@@ -65,3 +65,10 @@ def test_note_have_value_state_in_dicts(src_dicts, state, notice):
 ])
 def test_state_key_not_in_dicts(src_dicts, state, notice):
     assert filter_by_state(src_dicts, state) == notice
+
+
+@pytest.mark.parametrize("src_dicts, notice", [
+    (None, "Не указан список словарей"),
+])
+def test_none_list_dicts(src_dicts, notice):
+    assert filter_by_state(src_dicts) == notice
