@@ -60,5 +60,9 @@ def test_none_date(none_date):
     assert get_date(None) == none_date
 
 
-def test_whitespace_in_date(whitespace_in_date):
-    assert get_date(" 2023-05-15 T12:30:45 ") == whitespace_in_date
+@pytest.mark.parametrize("date, convert_date", [
+    (" 2023-05-15 T12:30:45 ", "15.05.2023"),
+    (" 2000-01-01 T00:00:00", "01.01.2000"),
+])
+def test_whitespace_in_date(date, convert_date):
+    assert get_date(date) == convert_date
