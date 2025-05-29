@@ -5,6 +5,9 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(card_or_account_number: str) -> str:
     """Функция, которая маскирует номер карты и счёта"""
+    if card_or_account_number is None:
+        return "Не указан номер карты или счёта"
+
     card_or_account_number_split: list[str] = card_or_account_number.split()
 
     if "счет" in card_or_account_number.lower() or "счёт" in card_or_account_number.lower():
