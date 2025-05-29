@@ -41,5 +41,5 @@ def test_card_number_other_incorrect_types(card_and_account_number_other_incorre
     assert get_mask_card_number([5543812355785520, 5543812355785]) == card_and_account_number_other_incorrect_types
     assert get_mask_card_number({"Visa": 5543812355785520}) == card_and_account_number_other_incorrect_types
     assert get_mask_card_number((5543812355785520, 5543812355785)) == card_and_account_number_other_incorrect_types
-    assert get_mask_card_number(set(5543812355785520, 5543812355785)) == card_and_account_number_other_incorrect_types
+    assert get_mask_card_number({5543812355785520}) == card_and_account_number_other_incorrect_types
     assert get_mask_card_number(5543812355785520.25) == card_and_account_number_other_incorrect_types
