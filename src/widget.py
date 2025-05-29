@@ -8,6 +8,12 @@ def mask_account_card(card_or_account_number: str) -> str:
     if card_or_account_number is None:
         return "Не указан номер карты или счёта"
 
+    if not isinstance(card_or_account_number, str):
+        return """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""
+
     card_or_account_number_split: list[str] = card_or_account_number.split()
 
     if "счет" in card_or_account_number.lower() or "счёт" in card_or_account_number.lower():
