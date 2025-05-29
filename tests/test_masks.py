@@ -35,3 +35,11 @@ def test_card_number_str_all_symbols_int(card_number, mask_number):
 def test_card_number_str_symbols_not_int(card_and_account_number_str_symbols_not_int):
     assert get_mask_card_number("5543-8123-5585-520") == card_and_account_number_str_symbols_not_int
     assert get_mask_card_number("5543 812 355 785") == card_and_account_number_str_symbols_not_int
+
+
+def test_card_number_other_incorrect_types(card_and_account_number_other_incorrect_types):
+    assert get_mask_card_number([5543812355785520, 5543812355785]) == card_and_account_number_other_incorrect_types
+    assert get_mask_card_number({"Visa": 5543812355785520}) == card_and_account_number_other_incorrect_types
+    assert get_mask_card_number((5543812355785520, 5543812355785)) == card_and_account_number_other_incorrect_types
+    assert get_mask_card_number(set(5543812355785520, 5543812355785)) == card_and_account_number_other_incorrect_types
+    assert get_mask_card_number(5543812355785520.25) == card_and_account_number_other_incorrect_types
