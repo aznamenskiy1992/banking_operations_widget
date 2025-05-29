@@ -70,5 +70,12 @@ def get_mask_card_number(card_number: int) -> str:
 
 def get_mask_account(account_number: int) -> str:
     """Функция, которая маскирует номер счёта"""
-    mask_account_number: str = "*" * 2 + str(account_number)[16:]
+    account_number_str = str(account_number)
+    len_account_number = len(account_number_str)
+
+    if len_account_number == 20:
+        mask_account_number: str = "*" * 2 + str(account_number)[16:]
+    else:
+        return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
+
     return mask_account_number
