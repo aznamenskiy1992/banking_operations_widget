@@ -3,9 +3,12 @@ from typing import Union
 
 def filter_by_state(
     source_data: list[dict[str, Union[str, int]]], state: str = "EXECUTED"
-) -> list[dict[str, Union[str, int]]]:
+) -> Union[list[dict[str, Union[str, int]]], str]:
     """Функция, которая фильтрует список словарей по ключу state"""
-    return list(filter(lambda data: data["state"] == state, source_data))
+    if len(list(filter(lambda data: data["state"] == state, source_data))) ==0:
+        return "Нет словарей со значением state"
+    else:
+        return list(filter(lambda data: data["state"] == state, source_data))
 
 
 def sort_by_date(
