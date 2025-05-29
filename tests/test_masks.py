@@ -78,6 +78,6 @@ def test_account_number_str_symbols_not_int(card_and_account_number_str_symbols_
 def test_account_number_other_incorrect_types(card_and_account_number_other_incorrect_types):
     assert get_mask_account([79053641285349013572]) == card_and_account_number_other_incorrect_types
     assert get_mask_account({"Счёт": 79053641285349013572}) == card_and_account_number_other_incorrect_types
-    assert get_mask_account((79053641285349013572)) == card_and_account_number_other_incorrect_types
+    assert get_mask_account((79053641285349013572,)) == card_and_account_number_other_incorrect_types
     assert get_mask_account({79053641285349013572}) == card_and_account_number_other_incorrect_types
     assert get_mask_account(79053641285349013572.25) == card_and_account_number_other_incorrect_types

@@ -80,6 +80,8 @@ def get_mask_account(account_number: int) -> str:
             return "Номер карты или счёта должен состоять только из цифр"
         else:
             account_number_str = account_number
+    else:
+        return "Номер карты или счёта должен быть целым числом"
 
     len_account_number = len(account_number_str)
 
