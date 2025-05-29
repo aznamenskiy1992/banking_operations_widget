@@ -41,5 +41,5 @@ def test_filter_dict_by_state_key(src_dicts, state, filter_dicts):
      "NEXT",
      "Нет словарей со значением state"),
 ])
-def note_have_value_state_in_dicts(src_dicts, state, notice):
+def test_note_have_value_state_in_dicts(src_dicts, state, notice):
     assert filter_by_state(src_dicts, state) == notice
