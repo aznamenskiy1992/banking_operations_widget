@@ -52,6 +52,9 @@ def mask_account_card(card_or_account_number: str) -> str:
 
 def get_date(date_: str) -> str:
     """Функция, которая преобразовывает дату из строки в формат DD.MM.YYYY"""
+    if date_ is None:
+        return "Дата не указана"
+
     date_split: list[str] = date_.split("T")
 
     try:
