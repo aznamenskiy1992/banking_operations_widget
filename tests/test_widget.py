@@ -1,6 +1,6 @@
 import pytest
 
-from src.widget import mask_account_card
+from src.widget import mask_account_card, get_date
 
 
 @pytest.mark.parametrize("number, mask_number", [
@@ -41,3 +41,12 @@ def test_card_and_account_number_incorrect_types(card_and_account_number_incorre
     assert mask_account_card(5543812355785.25) == card_and_account_number_incorrect_types
     assert mask_account_card(5543812355785) == card_and_account_number_incorrect_types
     assert mask_account_card(79053641285349013572) == card_and_account_number_incorrect_types
+
+
+@pytest.mark.parametrize("date, convert_date", [
+    ("2023-05-15T12:30:45", "15.05.2023"),
+    ("2000-01-01T00:00:00", "01.01.2000"),
+    ("0001-01-01T00:00:00", "01.01.0001"),
+])
+def test_convert_str_to_date_d_m_y(date, convert_date):
+    assert get_date(date) == convert_date
