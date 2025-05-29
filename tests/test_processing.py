@@ -104,3 +104,17 @@ def test_none_list_dicts(src_dicts, notice):
     ])
 def test_sort_dict_by_date_key(src_dicts, reverse_, sort_dicts):
     assert sort_by_date(src_dicts, reverse_) == sort_dicts
+
+
+@pytest.mark.parametrize("src_dicts, notice", [
+    ([
+         {'id': 41428829, 'state': 'EXECUTED'},
+         {'id': 939719570, 'state': 'EXECUTED'},
+         {'id': 594226727, 'state': 'CANCELED'},
+         {'id': 615064591, 'state': 'CANCELED'}
+     ],
+     "True",
+     "В словарях нет ключа 'date'")
+])
+def test_not_have_date_key_in_dict(src_dicts, notice):
+    assert sort_by_date(src_dicts) == notice
