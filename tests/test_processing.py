@@ -113,7 +113,6 @@ def test_sort_dict_by_date_key(src_dicts, reverse_, sort_dicts):
          {'id': 594226727, 'state': 'CANCELED'},
          {'id': 615064591, 'state': 'CANCELED'}
      ],
-     "True",
      "В словарях нет ключа 'date'")
 ])
 def test_not_have_date_key_in_dict(src_dicts, notice):
