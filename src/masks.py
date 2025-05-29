@@ -73,7 +73,14 @@ def get_mask_account(account_number: int) -> str:
     if account_number is None:
         return "Не указан номер карты или счёта"
 
-    account_number_str = str(account_number)
+    if isinstance(account_number, int):
+        account_number_str = str(account_number)
+    elif isinstance(account_number, str):
+        if not account_number.isdigit():
+            return "Номер карты или счёта должен состоять только из цифр"
+        else:
+            account_number_str = account_number
+
     len_account_number = len(account_number_str)
 
     if len_account_number == 20:
