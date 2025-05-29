@@ -68,3 +68,8 @@ def test_none_standard_account_number(none_standard_card_and_account_number):
 ])
 def test_account_number_str_all_symbols_int(account_number, mask_number):
     assert get_mask_account(account_number) == mask_number
+
+
+def test_account_number_str_symbols_not_int(card_and_account_number_str_symbols_not_int):
+    assert get_mask_account("7905-3641-2853-4901-3572") == card_and_account_number_str_symbols_not_int
+    assert get_mask_account("7905 3641 2853 4901 3572") == card_and_account_number_str_symbols_not_int
