@@ -39,3 +39,5 @@ def test_card_and_account_number_incorrect_types(card_and_account_number_incorre
     assert mask_account_card((5543812355785, 79053641285349013572)) == card_and_account_number_incorrect_types
     assert mask_account_card({5543812355785, 79053641285349013572}) == card_and_account_number_incorrect_types
     assert mask_account_card(5543812355785.25) == card_and_account_number_incorrect_types
+    assert mask_account_card(5543812355785) == card_and_account_number_incorrect_types
+    assert mask_account_card(79053641285349013572) == card_and_account_number_incorrect_types
