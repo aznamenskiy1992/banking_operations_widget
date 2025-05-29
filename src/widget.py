@@ -5,25 +5,34 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(card_or_account_number: str) -> str:
     """Функция, которая маскирует номер карты и счёта"""
+    # Проверка на None (отсутствие номера)
     if card_or_account_number is None:
         return "Не указан номер карты или счёта"
 
+    # Проверка типа входных данных (должна быть строка)
     if not isinstance(card_or_account_number, str):
         return """Номер карты или счёта должен быть строкой.
     Маска ввода:
     Для счёта - 'Счёт 79053641285349013572'
     Для Карты - 'Visa Classic 5543812355785'"""
 
+    # Разделение входной строки на части по пробелам
     card_or_account_number_split: list[str] = card_or_account_number.split()
 
+    # Определение типа номера (счет или карта) и вызов соответствующей функции маскировки
     if "счет" in card_or_account_number.lower() or "счёт" in card_or_account_number.lower():
+        # Если это счет, вызываем функцию маскировки счета
         masked_data: str = get_mask_account(int(card_or_account_number_split[-1]))
     else:
+        # Если это карта, вызываем функцию маскировки номера карты
         masked_data: str = get_mask_card_number(int(card_or_account_number_split[-1]))
 
+    # Формирование результата в зависимости от структуры входной строки
     if len(card_or_account_number_split) == 2:
+        # Тип в одно слово: "Счёт 79053641285349013572"" → "Счёт **3572"
         return card_or_account_number_split[0] + " " + masked_data
     else:
+        # Тип в несколько слов: "Расчётный счёт 79053641285349013572" → "Расчётный счёт **3572"
         return " ".join(card_or_account_number_split[:-1]) + " " + masked_data
 
 
