@@ -51,3 +51,8 @@ def test_card_number_other_incorrect_types(card_and_account_number_other_incorre
 ])
 def test_input_account_number(account_number, mask_number):
     assert get_mask_account(account_number) == mask_number
+
+
+def test_none_standard_account_number(none_standard_card_and_account_number):
+    assert get_mask_account(7) == none_standard_card_and_account_number
+    assert get_mask_account(745205381921035742369) == none_standard_card_and_account_number
