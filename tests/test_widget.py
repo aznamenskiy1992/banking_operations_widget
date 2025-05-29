@@ -18,3 +18,11 @@ def test_definition_account_and_card_number(number, mask_number):
 ])
 def test_definition_other_card_number(card_number, mask_number):
     assert mask_account_card(card_number) == mask_number
+
+
+@pytest.mark.parametrize("account_number, mask_number", [
+    ("Расчётный счет 79053641285349013572", "Расчётный счет **3572"),
+    ("Корреспондентский счет 79053641285349013572", "Корреспондентский счет **3572"),
+])
+def test_definition_other_account_number(account_number, mask_number):
+    assert mask_account_card(account_number) == mask_number
