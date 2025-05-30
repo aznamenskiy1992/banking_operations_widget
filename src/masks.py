@@ -62,7 +62,7 @@ def get_mask_card_number(card_number: int) -> str:
 
         # Создаём замаскированную строку: начало + звёздочки + конец
         mask_card_number: str = (
-                card_number_str[:masking_position_start] + "*" * masking_count + card_number_str[masking_position_end:]
+            card_number_str[:masking_position_start] + "*" * masking_count + card_number_str[masking_position_end:]
         )
 
         # Разделяем замаскированный номер на блоки согласно шаблону

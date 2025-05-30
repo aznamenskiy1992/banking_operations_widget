@@ -42,7 +42,7 @@ def filter_by_state(
 
 
 def sort_by_date(
-        source_data: list[dict[str, Union[str, int]]], sort: str = "True"
+    source_data: list[dict[str, Union[str, int]]], sort: str = "True"
 ) -> list[dict[str, Union[str, int]]]:
     """Сортирует список словарей по дате.
 
