@@ -29,7 +29,7 @@ def filter_by_state(
     try:
         # Фильтрация словарей по значению state с обработкой возможного исключения KeyError
         filtered_data = list(filter(lambda data: data["state"] == state, source_data))
-    except:
+    except KeyError:
         # Обработка случая, когда в словарях отсутствует ключ 'state'
         return "В словарях нет ключа 'state'"
     else:
