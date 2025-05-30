@@ -33,13 +33,14 @@ def mask_account_card(card_or_account_number: str) -> str:
     # Разделение входной строки на части по пробелам
     card_or_account_number_split: list[str] = card_or_account_number.split()
 
+    masked_data: str
     # Определение типа номера (счет или карта) и вызов соответствующей функции маскировки
     if "счет" in card_or_account_number.lower() or "счёт" in card_or_account_number.lower():
         # Если это счет, вызываем функцию маскировки счета
-        masked_data: str = get_mask_account(int(card_or_account_number_split[-1]))
+        masked_data = get_mask_account(int(card_or_account_number_split[-1]))
     else:
         # Если это карта, вызываем функцию маскировки номера карты
-        masked_data: str = get_mask_card_number(int(card_or_account_number_split[-1]))
+        masked_data = get_mask_card_number(int(card_or_account_number_split[-1]))
 
     # Формирование результата в зависимости от структуры входной строки
     if len(card_or_account_number_split) == 2:
