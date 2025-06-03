@@ -1,7 +1,7 @@
-from typing import Union
+from typing import Union, Iterator
 
 
-def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Union[dict[str, int], None, str]:
+def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Union[Iterator[dict[str, int]], str]:
     """Функция, фильтрующая список словарей с транзакциями по указанной валюте"""
     if transactions is None:
         return "Не передан список словарей с транзакциями"
@@ -13,3 +13,7 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
             print(f"""Найдена транзакция не в словаре:
 {e}""")
             return "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
+
+    filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item["operationAmount"]["currency"]["name"] == currency, transactions))
+
+    return (item_dic for item_dic in filtered_transactions)
