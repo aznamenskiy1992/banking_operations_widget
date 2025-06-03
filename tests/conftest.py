@@ -58,3 +58,9 @@ def none_transactions_list_for_filter_by_currancy_and_transaction_descriptions()
 def empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions():
     """Фикстура возвращает сообщение об ошибке, когда на вход подаётся пустой список словарей с транзакциями"""
     return "Список не содержит ни одной транзакции"
+
+
+@pytest.fixture
+def in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions():
+    """Фикстура возвращает сообщение об ошибке, когда на вход подаётся список с транзакциями не в словарях"""
+    return "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
