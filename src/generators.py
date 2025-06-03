@@ -1,4 +1,4 @@
-from typing import Iterator, Union, Dict, Any
+from typing import Any, Dict, Iterator, Union
 
 
 def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Iterator[Dict[str, Any]]:
@@ -17,12 +17,20 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
 
     for i, e in enumerate(transactions):
         if not isinstance(transactions[i], dict):
-            print(f"""Найдена транзакция, переданная не в типе dict:
+            print(
+                f"""Найдена транзакция, переданная не в типе dict:
 {e}
-Тип, в котором передана транзакция {type(transactions[i])}""")
+Тип, в котором передана транзакция {type(transactions[i])}"""
+            )
             raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
 
-    filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item.get("operationAmount", {}).get("currency", {}).get("name", "").lower() == currency.lower(), transactions))
+    filtered_transactions: list[dict[str, int]] = list(
+        filter(
+            lambda item: item.get("operationAmount", {}).get("currency", {}).get("name", "").lower()
+            == currency.lower(),
+            transactions,
+        )
+    )
 
     for transaction in filtered_transactions:
         yield transaction
