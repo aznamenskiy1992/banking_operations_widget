@@ -129,3 +129,46 @@ def example_input_transactions_for_for_filter_by_currency_and_transaction_descri
         },
     ]
     return transactions
+
+
+@pytest.fixture
+def example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions():
+    """Фикстура передаёт список транзакций в функции filter_by_currency и transaction_descriptions без необходимых ключей"""
+    transactions = [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {
+                "amount": "9824.07",
+            },
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702"
+        },
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+            "date": "2019-04-04T23:20:05.206878",
+            "operationAmount": {
+                "amount": "79114.93",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод со счета на счет",
+            "from": "Счет 19708645243227258542",
+            "to": "Счет 75651667383060284188"
+        },
+        {
+            "id": 895315941,
+            "state": "EXECUTED",
+            "date": "2018-08-19T04:27:37.904916",
+            "operationAmount": {
+                "amount": "56883.54",
+            },
+            "from": "Visa Classic 6831982476737658",
+            "to": "Visa Platinum 8990922113665229"
+        }
+    ]
+    return transactions
