@@ -5,3 +5,5 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
     """Функция, фильтрующая список словарей с транзакциями по указанной валюте"""
     if transactions is None:
         return "Не передан список словарей с транзакциями"
+    elif len(transactions) == 0:
+        return "Список не содержит ни одной транзакции"
