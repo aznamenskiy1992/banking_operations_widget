@@ -17,11 +17,26 @@ def test_empty_transactions_list_for_filter_by_currency_and_transaction_descript
     assert str(exc_info.value) == "Список не содержит ни одной транзакции"
 
 
-def test_in_transactions_list_not_dict_for_filter_by_currency_and_transaction_descriptions():
+@pytest.mark.parametrize(
+    "transactions, currency, error_message",
+    [
+        (
+            [{(939719570, 9824.07), (142264268, "EXECUTED")}],
+            "USD",
+            "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
+        ),
+        (
+            [(939719570, 9824.07), (142264268, "EXECUTED")],
+            "USD",
+            "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
+        )
+    ]
+)
+def test_in_transactions_list_not_dict_for_filter_by_currency_and_transaction_descriptions(transactions, currency, error_message):
     """Тестирует обработку кейса, когда на вход подаётся список с транзакциями не в словарях"""
     with pytest.raises(TypeError) as exc_info:
-        next(filter_by_currency([{(939719570, 9824.07), (142264268, "EXECUTED")}], "USD"))
-    assert str(exc_info.value) == "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
+        next(filter_by_currency(transactions, currency))
+    assert str(exc_info.value) == error_message
 
 
 def test_filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
