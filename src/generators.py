@@ -19,4 +19,5 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
 
     filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item["operationAmount"]["currency"]["name"] == currency, transactions))
 
-    return (item_dic for item_dic in filtered_transactions)
+    for transaction in filtered_transactions:
+        yield transaction
