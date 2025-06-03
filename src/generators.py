@@ -15,7 +15,7 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
 Тип, в котором передана транзакция {type(transactions[i])}""")
             raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
 
-    filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item["operationAmount"]["currency"]["name"] == currency, transactions))
+    filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item.get("operationAmount", {}).get("currency", {}).get("name") == currency, transactions))
 
     for transaction in filtered_transactions:
         yield transaction
