@@ -64,9 +64,3 @@ def empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions(
 def in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions():
     """Фикстура возвращает сообщение об ошибке, когда на вход подаётся список с транзакциями не в словарях"""
     return "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
-
-
-@pytest.fixture
-def stop_iteration_for_filter_by_currancy_and_transaction_descriptions():
-    """Фикстура возвращает сообщение, что итератор завершил работу"""
-    return "Транзакции закончились"
