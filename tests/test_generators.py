@@ -87,7 +87,7 @@ def test_none_list_for_filter_by_currency():
     with pytest.raises(ValueError) as exc_info:
         filter_by_currency(None, "USD")
 
-        assert str(exc_info.value) == "Не передан список словарей с транзакциями"
+    assert str(exc_info.value) == "Не передан список словарей с транзакциями"
 
 
 def test_empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions(empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions):
