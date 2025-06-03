@@ -10,10 +10,10 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
 
     for i, e in enumerate(transactions):
         if not isinstance(transactions[i], dict):
-            print(f"""Найдена транзакция не в словаре:
-{e}""")
-            yield "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
-            return
+            print(f"""Найдена транзакция, переданная не в типе dict:
+{e}
+Тип, в котором передана транзакция {type(transactions[i])}""")
+            raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
 
     filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item["operationAmount"]["currency"]["name"] == currency, transactions))
 
