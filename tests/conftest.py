@@ -49,6 +49,6 @@ def none_date():
 
 
 @pytest.fixture
-def none_date_for_filter_by_currancy_and_transaction_descriptions():
+def none_transactions_list_for_filter_by_currancy_and_transaction_descriptions():
     """Фикстура возвращает сообщение об ошибке, когда на вход вместо списка словарей подаётся None."""
     return "Не передан список словарей с транзакциями"
