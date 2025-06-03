@@ -130,14 +130,14 @@ def test_none_list_for_filter_by_currency():
     assert str(exc_info.value) == "Не передан список словарей с транзакциями"
 
 
-def test_empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions(empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions):
+def test_empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions():
     """Тестирует обработку кейса, когда на вход подаётся пустой список словарей с транзакциями"""
     with pytest.raises(ValueError) as exc_info:
         next(filter_by_currency([], "USD"))
     assert str(exc_info.value) == "Список не содержит ни одной транзакции"
 
 
-def test_in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions(in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions):
+def test_in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions():
     """Тестирует обработку кейса, когда на вход подаётся список с транзакциями не в словарях"""
     with pytest.raises(TypeError) as exc_info:
         next(filter_by_currency([{(939719570, 9824.07), (142264268, "EXECUTED")}], "USD"))
