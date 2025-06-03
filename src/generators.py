@@ -13,5 +13,3 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
             print(f"""Найдена транзакция не в словаре:
 {e}""")
             return "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
-
-print(filter_by_currency([{(939719570, 9824.07), (142264268, "EXECUTED")}], "USD"))
