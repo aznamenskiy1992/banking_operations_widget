@@ -46,3 +46,9 @@ def not_have_date():
 def none_date():
     """Фикстура возвращает сообщение об ошибке, когда дата не указана (None)."""
     return "Дата не указана"
+
+
+@pytest.fixture
+def none_date_for_filter_by_currancy_and_transaction_descriptions():
+    """Фикстура возвращает сообщение об ошибке, когда на вход вместо списка словарей подаётся None."""
+    return "Не передан список словарей с транзакциями"
