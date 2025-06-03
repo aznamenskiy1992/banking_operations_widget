@@ -221,7 +221,7 @@ def test_none_currency_in_transactions_for_filter_by_currency():
     assert str(exc_info.value) == "Вместо валюты транзакций передано None. должно быть str"
 
 
-def empty_currency_in_transactions_for_filter_by_currency():
+def test_empty_currency_in_transactions_for_filter_by_currency():
     """Тестирует обработку кейса, где вместо валюты подаётся пустая строка"""
     with pytest.raises(ValueError) as exc_info:
         next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, ""))
