@@ -212,3 +212,10 @@ def test_not_need_key_in_dict_for_filter_by_currancy():
         "from": "Счет 19708645243227258542",
         "to": "Счет 75651667383060284188"
     }
+
+
+def test_none_currency_in_transactions_for_filter_by_currency():
+    """Тестирует обработку кейса, где на вход подаётся валюта в виде None"""
+    with pytest.raises(ValueError) as exc_info:
+        next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, None))
+    assert str(exc_info.value) == "Не указана валюта транзакции"
