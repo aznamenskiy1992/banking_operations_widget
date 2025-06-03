@@ -92,8 +92,9 @@ def test_none_list_for_filter_by_currency():
 
 def test_empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions(empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions):
     """Тестирует обработку кейса, когда на вход подаётся пустой список словарей с транзакциями"""
-    generator = filter_by_currency([], "USD")
-    assert next(generator)  == empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions
+    with pytest.raises(ValueError) as exc_info:
+        next(filter_by_currency([], "USD"))
+    assert str(exc_info.value) == "Список не содержит ни одной транзакции"
 
 
 def test_in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions(in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions):
