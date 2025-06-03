@@ -12,6 +12,8 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
         raise ValueError("Вместо валюты транзакций передано None. должно быть str")
     elif len(currency) == 0:
         raise ValueError("Вместо валюты транзакций передана пустая строка")
+    elif not isinstance(currency, str):
+        raise TypeError("Валюта транзакций передана не в str")
 
     for i, e in enumerate(transactions):
         if not isinstance(transactions[i], dict):
