@@ -6,8 +6,7 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
     if transactions is None:
         raise ValueError("Не передан список словарей с транзакциями")
     elif len(transactions) == 0:
-        yield "Список не содержит ни одной транзакции"
-        return
+        raise ValueError("Список не содержит ни одной транзакции")
 
     for i, e in enumerate(transactions):
         if not isinstance(transactions[i], dict):
