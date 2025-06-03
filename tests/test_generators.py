@@ -3,7 +3,7 @@ import pytest
 from src.generators import filter_by_currency
 
 
-example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions = [
+example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions = [
     {
         "id": 939719570,
         "state": "EXECUTED",
@@ -81,7 +81,7 @@ example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptio
     },
 ]
 
-example_input_transactions_without_need_key_for_for_filter_by_currancy = [
+example_input_transactions_without_need_key_for_for_filter_by_currency = [
     {
         "id": 939719570,
         "state": "EXECUTED",
@@ -130,14 +130,14 @@ def test_none_list_for_filter_by_currency():
     assert str(exc_info.value) == "Не передан список словарей с транзакциями"
 
 
-def test_empty_transactions_list_for_filter_by_currancy_and_transaction_descriptions():
+def test_empty_transactions_list_for_filter_by_currency_and_transaction_descriptions():
     """Тестирует обработку кейса, когда на вход подаётся пустой список словарей с транзакциями"""
     with pytest.raises(ValueError) as exc_info:
         next(filter_by_currency([], "USD"))
     assert str(exc_info.value) == "Список не содержит ни одной транзакции"
 
 
-def test_in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_descriptions():
+def test_in_transactions_list_not_dict_for_filter_by_currency_and_transaction_descriptions():
     """Тестирует обработку кейса, когда на вход подаётся список с транзакциями не в словарях"""
     with pytest.raises(TypeError) as exc_info:
         next(filter_by_currency([{(939719570, 9824.07), (142264268, "EXECUTED")}], "USD"))
@@ -146,7 +146,7 @@ def test_in_transactions_list_not_dict_for_filter_by_currancy_and_transaction_de
 
 def test_filter_by_currency():
     """Тестирует фильтрацию транзакций по переданной валюте"""
-    generator = filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, "USD")
+    generator = filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, "USD")
     assert next(generator) == {
         "id": 939719570,
         "state": "EXECUTED",
@@ -194,9 +194,9 @@ def test_filter_by_currency():
     }
 
 
-def test_not_need_key_in_dict_for_filter_by_currancy():
+def test_not_need_key_in_dict_for_filter_by_currency():
     """Тестирует обработку кейса, когда в словарях нет ключей 'operationAmount', 'currency', 'name'"""
-    generator = filter_by_currency(example_input_transactions_without_need_key_for_for_filter_by_currancy, "USD")
+    generator = filter_by_currency(example_input_transactions_without_need_key_for_for_filter_by_currency, "USD")
     assert next(generator) == {
         "id": 142264268,
         "state": "EXECUTED",
@@ -217,14 +217,14 @@ def test_not_need_key_in_dict_for_filter_by_currancy():
 def test_none_currency_in_transactions_for_filter_by_currency():
     """Тестирует обработку кейса, где на вход подаётся валюта в виде None"""
     with pytest.raises(ValueError) as exc_info:
-        next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, None))
+        next(filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, None))
     assert str(exc_info.value) == "Вместо валюты транзакций передано None. должно быть str"
 
 
 def test_empty_currency_in_transactions_for_filter_by_currency():
     """Тестирует обработку кейса, где вместо валюты подаётся пустая строка"""
     with pytest.raises(ValueError) as exc_info:
-        next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, ""))
+        next(filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, ""))
     assert str(exc_info.value) == "Вместо валюты транзакций передана пустая строка"
 
 
@@ -239,13 +239,13 @@ currency_not_str_for_filter_by_currency_error_message = "Валюта транз
 def test_currency_not_str_for_filter_by_currency(currency, error_message):
     """Тестирует обработку кейса, где на вход подаётся валюта транзакции не в str"""
     with pytest.raises(TypeError) as exc_info:
-        next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, currency))
+        next(filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, currency))
     assert str(exc_info.value) == error_message
 
 
 def test_currency_in_different_registers_for_filter_by_currency():
     """Тестирует обработку кейса, где на вход подаётся валюта транзакции в нижнем регистре"""
-    generator = filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, "usd")
+    generator = filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, "usd")
     assert next(generator) == {
         "id": 939719570,
         "state": "EXECUTED",
