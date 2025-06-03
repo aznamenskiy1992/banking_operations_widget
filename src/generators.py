@@ -4,7 +4,7 @@ from typing import Union, Iterator
 def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Union[Iterator[dict[str, int]], str]:
     """Функция, фильтрующая список словарей с транзакциями по указанной валюте"""
     if transactions is None:
-        raise ValueError("Не передан список словарей с транзакциями")
+        raise ValueError("Вместо списка словарей с транзакциями передано None. Должен быть список словарей")
     elif len(transactions) == 0:
         raise ValueError("Список не содержит ни одной транзакции")
 

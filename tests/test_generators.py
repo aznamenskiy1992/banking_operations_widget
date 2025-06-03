@@ -7,7 +7,7 @@ def test_none_list_for_filter_by_currency():
     """Тестирует обработку None в качестве списка словарей."""
     with pytest.raises(ValueError) as exc_info:
         next(filter_by_currency(None, "USD"))
-    assert str(exc_info.value) == "Не передан список словарей с транзакциями"
+    assert str(exc_info.value) == "Вместо списка словарей с транзакциями передано None. Должен быть список словарей"
 
 
 def test_empty_transactions_list_for_filter_by_currency_and_transaction_descriptions():
