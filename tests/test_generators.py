@@ -81,6 +81,46 @@ example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptio
     },
 ]
 
+example_input_transactions_without_need_key_for_for_filter_by_currancy = [
+    {
+        "id": 939719570,
+        "state": "EXECUTED",
+        "date": "2018-06-30T02:08:58.425572",
+        "operationAmount": {
+            "amount": "9824.07",
+        },
+        "description": "Перевод организации",
+        "from": "Счет 75106830613657916952",
+        "to": "Счет 11776614605963066702"
+    },
+    {
+        "id": 142264268,
+        "state": "EXECUTED",
+        "date": "2019-04-04T23:20:05.206878",
+        "operationAmount": {
+            "amount": "79114.93",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод со счета на счет",
+        "from": "Счет 19708645243227258542",
+        "to": "Счет 75651667383060284188"
+    },
+    {
+"id": 895315941,
+        "state": "EXECUTED",
+        "date": "2018-08-19T04:27:37.904916",
+        "operationAmount": {
+            "amount": "56883.54",
+        },
+        "description": "Перевод организации",
+        "from": "Visa Classic 6831982476737658",
+        "to": "Visa Platinum 8990922113665229"
+    }
+]
+
 
 def test_none_list_for_filter_by_currency():
     """Тестирует обработку None в качестве списка словарей."""
@@ -151,4 +191,24 @@ def test_filter_by_currency():
         "description": "Перевод с карты на карту",
         "from": "Visa Classic 6831982476737658",
         "to": "Visa Platinum 8990922113665229"
+    }
+
+
+def test_not_need_key_in_dict_for_filter_by_currancy():
+    """Тестирует обработку кейса, когда в словарях нет ключей 'operationAmount', 'currency', 'name'"""
+    generator = filter_by_currency(example_input_transactions_without_need_key_for_for_filter_by_currancy, "USD")
+    assert next(generator) == {
+        "id": 142264268,
+        "state": "EXECUTED",
+        "date": "2019-04-04T23:20:05.206878",
+        "operationAmount": {
+            "amount": "79114.93",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод со счета на счет",
+        "from": "Счет 19708645243227258542",
+        "to": "Счет 75651667383060284188"
     }
