@@ -226,3 +226,18 @@ def test_empty_currency_in_transactions_for_filter_by_currency():
     with pytest.raises(ValueError) as exc_info:
         next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, ""))
     assert str(exc_info.value) == "Вместо валюты транзакций передана пустая строка"
+
+
+currency_not_str_for_filter_by_currency_error_message = "Валюта транзакций передана не в str"
+@pytest.mark.parametrize(
+    "currency, error_message",
+    [
+        (["USD"], currency_not_str_for_filter_by_currency_error_message),
+        ({"USD",}, currency_not_str_for_filter_by_currency_error_message),
+    ]
+)
+def test_currency_not_str_for_filter_by_currency(currency, error_message):
+    """Тестирует обработку кейса, где на вход подаётся валюта транзакции не в str"""
+    with pytest.raises(TypeError) as exc_info:
+        next(filter_by_currency(example_input_transactions_for_for_filter_by_currancy_and_transaction_descriptions, currency))
+    assert str(exc_info.value) == error_message
