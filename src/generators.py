@@ -14,7 +14,8 @@ def filter_by_currency(transactions: list[dict[str, int]], currency: str) -> Uni
         if not isinstance(transactions[i], dict):
             print(f"""Найдена транзакция не в словаре:
 {e}""")
-            return "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
+            yield "Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция"
+            return
 
     filtered_transactions: list[dict[str, int]] = list(filter(lambda item: item["operationAmount"]["currency"]["name"] == currency, transactions))
 
