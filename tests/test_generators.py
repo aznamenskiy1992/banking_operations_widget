@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
 def test_none_list_for_filter_by_currency_and_transaction_descriptions():
@@ -250,3 +250,21 @@ def test_not_need_key_in_dict_for_transaction_descriptions(example_input_transac
 
     with pytest.raises(StopIteration):
         next(generator)
+
+
+def test_generate_card_number_for_card_number_generator():
+    generator = card_number_generator(1, 3)
+    assert next(generator) == "0000 0000 0000 0001"
+    assert next(generator) == "0000 0000 0000 0002"
+    assert next(generator) == "0000 0000 0000 0003"
+
+    with pytest.raises(StopIteration):
+        next(generator)
+
+    generator2 = card_number_generator(150, 152)
+    assert next(generator) == "0000 0000 0000 0150"
+    assert next(generator) == "0000 0000 0000 0151"
+    assert next(generator) == "0000 0000 0000 0152"
+
+    with pytest.raises(StopIteration):
+        next(generator2)

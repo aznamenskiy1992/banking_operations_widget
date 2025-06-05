@@ -57,3 +57,7 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
             continue
         else:
             yield transactions[i]["description"]
+
+
+def card_number_generator(start: int, stop: int) -> str:
+    pass
