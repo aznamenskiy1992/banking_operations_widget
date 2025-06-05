@@ -38,5 +38,8 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
 
 def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
     """Функция, возвращающая описание каждой операции из списка транзакций"""
+    if transactions is None:
+        raise ValueError("Вместо списка словарей с транзакциями передано None. Должен быть список словарей")
+
     for i in range(len(transactions)):
         yield transactions[i]["description"]
