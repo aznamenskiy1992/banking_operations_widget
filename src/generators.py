@@ -53,4 +53,7 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
             raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
 
     for i in range(len(transactions)):
-        yield transactions[i]["description"]
+        if transactions[i].get("description") == None:
+            continue
+        else:
+            yield transactions[i]["description"]
