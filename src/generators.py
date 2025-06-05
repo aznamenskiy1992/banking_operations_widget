@@ -43,5 +43,14 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
     elif len(transactions) == 0:
         raise ValueError("Список не содержит ни одной транзакции")
 
+    for i, e in enumerate(transactions):
+        if not isinstance(transactions[i], dict):
+            print(
+                f"""Найдена транзакция, переданная не в типе dict:
+{e}
+Тип, в котором передана транзакция {type(transactions[i])}"""
+            )
+            raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
+
     for i in range(len(transactions)):
         yield transactions[i]["description"]
