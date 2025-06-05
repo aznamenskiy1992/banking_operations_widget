@@ -241,3 +241,26 @@ def test_get_transaction_info_for_transaction_descriptions(example_input_transac
     assert next(generator) == "Перевод организации"
     assert next(generator) == "Перевод со счета на счет"
     assert next(generator) == "Перевод со счета на счет"
+
+
+def test_not_need_key_in_dict_for_transaction_descriptions(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions):
+    """Тестирует обработку кейса, где в списке транзакций нет ключа 'description'"""
+    generator = transaction_descriptions(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions)
+    assert next(generator) == {
+        "id": 142264268,
+        "state": "EXECUTED",
+        "date": "2019-04-04T23:20:05.206878",
+        "operationAmount": {
+            "amount": "79114.93",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод со счета на счет",
+        "from": "Счет 19708645243227258542",
+        "to": "Счет 75651667383060284188"
+    }
+
+    with pytest.raises(StopIteration):
+        next(generator)
