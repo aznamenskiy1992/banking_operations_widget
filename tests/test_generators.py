@@ -54,7 +54,7 @@ def test_in_transactions_list_not_dict_for_filter_by_currency_and_transaction_de
 
     with pytest.raises(TypeError) as exc_info2:
         next(transaction_descriptions(transactions))
-    assert str(exc_info2) == raise_message
+    assert str(exc_info2.value) == raise_message
 
 
 def test_filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
