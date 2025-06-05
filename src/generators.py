@@ -34,3 +34,9 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
 
     for transaction in filtered_transactions:
         yield transaction
+
+
+def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
+    """Функция, возвращающая описание каждой операции из списка транзакций"""
+    for i in range(len(transactions)):
+        yield transactions[i]["description"]
