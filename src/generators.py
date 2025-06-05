@@ -61,6 +61,9 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
 
 def card_number_generator(start: int, stop: int) -> str:
     """Функция, генерирует номера карты по поданным числам"""
+    if start is None:
+        raise ValueError("Вместо start передано None. Должно быть целое число")
+
     results: list = []
 
     for number in range(start, stop + 1):
