@@ -40,6 +40,8 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
     """Функция, возвращающая описание каждой операции из списка транзакций"""
     if transactions is None:
         raise ValueError("Вместо списка словарей с транзакциями передано None. Должен быть список словарей")
+    elif len(transactions) == 0:
+        raise ValueError("Список не содержит ни одной транзакции")
 
     for i in range(len(transactions)):
         yield transactions[i]["description"]
