@@ -3,11 +3,18 @@ import pytest
 from src.generators import filter_by_currency, transaction_descriptions
 
 
-def test_none_list_for_filter_by_currency():
+def test_none_list_for_filter_by_currency_and_transaction_descriptions():
     """Тестирует обработку None в качестве списка словарей."""
+
+    raise_message = "Вместо списка словарей с транзакциями передано None. Должен быть список словарей"
+
     with pytest.raises(ValueError) as exc_info:
         next(filter_by_currency(None, "USD"))
-    assert str(exc_info.value) == "Вместо списка словарей с транзакциями передано None. Должен быть список словарей"
+    assert str(exc_info.value) == raise_message
+
+    with pytest.raises(ValueError) as exc_info2:
+        next(transaction_descriptions(None))
+    assert str(exc_info2.value) == raise_message
 
 
 def test_empty_transactions_list_for_filter_by_currency_and_transaction_descriptions():
