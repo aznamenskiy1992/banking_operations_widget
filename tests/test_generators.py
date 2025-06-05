@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import filter_by_currency
+from src.generators import filter_by_currency, transaction_descriptions
 
 
 def test_none_list_for_filter_by_currency():
@@ -215,3 +215,11 @@ def test_currency_in_different_registers_for_filter_by_currency(example_input_tr
         "from": "Visa Classic 6831982476737658",
         "to": "Visa Platinum 8990922113665229"
     }
+
+
+def test_get_transaction_info_for_transaction_descriptions(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
+    """Тестирует выдачу информации по транзакциям"""
+    generator = transaction_descriptions(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions)
+    assert next(generator) == "Перевод организации"
+    assert next(generator) == "Перевод со счета на счет"
+    assert next(generator) == "Перевод со счета на счет"
