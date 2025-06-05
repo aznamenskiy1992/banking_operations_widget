@@ -262,9 +262,9 @@ def test_generate_card_number_for_card_number_generator():
         next(generator)
 
     generator2 = card_number_generator(150, 152)
-    assert next(generator) == "0000 0000 0000 0150"
-    assert next(generator) == "0000 0000 0000 0151"
-    assert next(generator) == "0000 0000 0000 0152"
+    assert next(generator2) == "0000 0000 0000 0150"
+    assert next(generator2) == "0000 0000 0000 0151"
+    assert next(generator2) == "0000 0000 0000 0152"
 
     with pytest.raises(StopIteration):
         next(generator2)
