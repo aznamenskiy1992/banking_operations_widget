@@ -60,4 +60,19 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
 
 
 def card_number_generator(start: int, stop: int) -> str:
-    pass
+    """Функция, генерирует номера карты по поданным числам"""
+    results: list = []
+
+    for number in range(start, stop + 1):
+        number_str = str(number)
+        number_temp: str = "0" * (16 - len(number_str)) + number_str
+        formatted_number = " ".join([
+            number_temp[:4],
+            number_temp[4:8],
+            number_temp[8:12],
+            number_temp[12:]
+        ])
+        results.append(formatted_number)
+
+    for result in results:
+        yield result
