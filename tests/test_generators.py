@@ -32,7 +32,7 @@ def test_empty_transactions_list_for_filter_by_currency_and_transaction_descript
 
 
 @pytest.mark.parametrize(
-    "transactions, currency, error_message",
+    "transactions, currency, raise_message",
     [
         (
             [{(939719570, 9824.07), (142264268, "EXECUTED")}],
@@ -46,11 +46,15 @@ def test_empty_transactions_list_for_filter_by_currency_and_transaction_descript
         )
     ]
 )
-def test_in_transactions_list_not_dict_for_filter_by_currency_and_transaction_descriptions(transactions, currency, error_message):
+def test_in_transactions_list_not_dict_for_filter_by_currency_and_transaction_descriptions(transactions, currency, raise_message):
     """Тестирует обработку кейса, когда на вход подаётся список с транзакциями не в словарях"""
     with pytest.raises(TypeError) as exc_info:
         next(filter_by_currency(transactions, currency))
-    assert str(exc_info.value) == error_message
+    assert str(exc_info.value) == raise_message
+
+    with pytest.raises(TypeError) as exc_info2:
+        next(transaction_descriptions(transactions))
+    assert str(exc_info2) == raise_message
 
 
 def test_filter_by_currency(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
