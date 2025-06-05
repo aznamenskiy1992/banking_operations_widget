@@ -275,4 +275,4 @@ def test_start_is_none_for_card_number_generator():
     """Тестирует кейс, где start = None"""
     with pytest.raises(ValueError) as exc_info:
         next(card_number_generator(None, 5))
-    assert str(exc_info) == "Вместо start передано None. Должно быть целое число"
+    assert str(exc_info.value) == "Вместо start передано None. Должно быть целое число"
