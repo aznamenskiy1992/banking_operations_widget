@@ -253,6 +253,7 @@ def test_not_need_key_in_dict_for_transaction_descriptions(example_input_transac
 
 
 def test_generate_card_number_for_card_number_generator():
+    """Тестирует генерацию номера карты"""
     generator = card_number_generator(1, 3)
     assert next(generator) == "0000 0000 0000 0001"
     assert next(generator) == "0000 0000 0000 0002"
