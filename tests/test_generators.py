@@ -309,3 +309,10 @@ def test_stop_not_int_for_card_number_generator(start, stop, raise_message):
     with pytest.raises(TypeError) as exc_info:
         next(card_number_generator(start, stop))
     assert str(exc_info.value) == raise_message
+
+
+def test_stop_less_start_for_card_number_generator():
+    """Тестирует кейс, где stop меньше start"""
+    with pytest.raises(ValueError) as exc_info:
+        next(card_number_generator(5, 1))
+    assert str(exc_info.value) == "stop должен быть >= start"
