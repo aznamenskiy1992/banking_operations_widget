@@ -106,28 +106,56 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> Iterator[str
 
 
 def card_number_generator(start: int, stop: int) -> Iterator[str]:
-    """Функция, генерирует номера карты по поданным числам"""
+    """
+    Генерирует номера банковских карт в заданном диапазоне в формате XXXX XXXX XXXX XXXX.
+
+    Параметры:
+        start: int - начальный номер карты (должен быть положительным целым числом)
+        stop: int - конечный номер карты (не может превышать 9999 9999 9999 9999)
+
+    Возвращает:
+        Iterator[str]: итератор по строкам, где каждая строка представляет номер карты
+        в формате "XXXX XXXX XXXX XXXX" (16 цифр, разделенных пробелами по 4).
+        Номера дополняются ведущими нулями, если число цифр меньше 16.
+
+    Исключения:
+        ValueError: Возникает в следующих случаях:
+            - start или stop равно None
+            - start не положительное число
+            - stop превышает 9999999999999999
+            - stop меньше start
+        TypeError: Возникает, если start или stop не являются целыми числами.
+    """
+    # Проверка корректности параметра start
     if start is None:
         raise ValueError("Вместо start передано None. Должно быть целое число")
     elif not isinstance(start, int):
         print(f"start передан в типе {type(start)}")
-        raise TypeError("start должен быть целым число")
+        raise TypeError("start должен быть целым числом")
     elif start <= 0:
         raise ValueError("start должен быть > 0")
 
+    # Проверка корректности параметра stop
     if stop is None:
         raise ValueError("Вместо stop передано None. Должно быть целое число")
     elif not isinstance(stop, int):
         print(f"stop передан в типе {type(stop)}")
-        raise TypeError("stop должен быть целым число")
+        raise TypeError("stop должен быть целым числом")
     elif stop > 9999999999999999:
         raise ValueError("stop не может быть больше 9999 9999 9999 9999")
 
+    # Проверка, что stop не меньше start
     if stop < start:
         raise ValueError("stop должен быть >= start")
 
+    # Генерация номеров карт
     for number in range(start, stop + 1):
+        # Преобразуем число в строку и дополняем ведущими нулями до 16 цифр
         number_str = str(number)
         number_temp: str = "0" * (16 - len(number_str)) + number_str
+
+        # Форматируем номер карты: разбиваем на группы по 4 цифры
         formatted_number = " ".join([number_temp[:4], number_temp[4:8], number_temp[8:12], number_temp[12:]])
+
+        # Возвращаем отформатированный номер через итератор
         yield formatted_number
