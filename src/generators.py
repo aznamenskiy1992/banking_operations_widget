@@ -69,6 +69,9 @@ def card_number_generator(start: int, stop: int) -> str:
 
     if stop is None:
         raise ValueError("Вместо stop передано None. Должно быть целое число")
+    elif not isinstance(stop, int):
+        print(f"stop передан в типе {type(stop)}")
+        raise TypeError("stop должен быть целым число")
 
     results: list = []
 
