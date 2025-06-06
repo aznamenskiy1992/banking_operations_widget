@@ -316,3 +316,10 @@ def test_stop_less_start_for_card_number_generator():
     with pytest.raises(ValueError) as exc_info:
         next(card_number_generator(5, 1))
     assert str(exc_info.value) == "stop должен быть >= start"
+
+
+def test_start_is_negative_for_card_number_generator():
+    """Тестирует кейс, где start отрицательное число"""
+    with pytest.raises(ValueError) as exc_info:
+        next(card_number_generator(-2, 5))
+    assert str(exc_info.value) == "start должен быть > 0"
