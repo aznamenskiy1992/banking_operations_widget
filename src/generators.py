@@ -73,6 +73,9 @@ def card_number_generator(start: int, stop: int) -> str:
         print(f"stop передан в типе {type(stop)}")
         raise TypeError("stop должен быть целым число")
 
+    if stop < start:
+        raise ValueError("stop должен быть >= start")
+
     results: list = []
 
     for number in range(start, stop + 1):
