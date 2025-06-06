@@ -78,8 +78,21 @@ def card_number_generator(start: int, stop: int) -> str:
     if stop < start:
         raise ValueError("stop должен быть >= start")
 
-    results: list = []
-
+    #results: list = []
+#
+    #for number in range(start, stop + 1):
+    #    number_str = str(number)
+    #    number_temp: str = "0" * (16 - len(number_str)) + number_str
+    #    formatted_number = " ".join([
+    #        number_temp[:4],
+    #        number_temp[4:8],
+    #        number_temp[8:12],
+    #        number_temp[12:]
+    #    ])
+    #    results.append(formatted_number)
+#
+    #for result in results:
+    #    yield result
     for number in range(start, stop + 1):
         number_str = str(number)
         number_temp: str = "0" * (16 - len(number_str)) + number_str
@@ -89,7 +102,4 @@ def card_number_generator(start: int, stop: int) -> str:
             number_temp[8:12],
             number_temp[12:]
         ])
-        results.append(formatted_number)
-
-    for result in results:
-        yield result
+        yield formatted_number
