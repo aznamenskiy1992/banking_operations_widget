@@ -2,12 +2,35 @@ from typing import Any, Dict, Iterator
 
 
 def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Iterator[Dict[str, Any]]:
-    """Функция, фильтрующая список словарей с транзакциями по указанной валюте"""
+    """
+    Фильтрует список транзакций по указанной валюте и возвращает итератор по подходящим транзакциям.
+
+    Параметры:
+        transactions: list[Dict[str, Any]] - список словарей, где каждый словарь содержит информацию о транзакции.
+            Каждая транзакция должна содержать информацию о валюте в поле 'operationAmount.currency.name'.
+        currency: str - код валюты (например, "USD", "EUR"), по которой нужно отфильтровать транзакции.
+            Сравнение происходит без учета регистра.
+
+    Возвращает:
+        Iterator[Dict[str, Any]]: итератор по словарям с транзакциями, где валюта соответствует заданной.
+
+    Исключения:
+        ValueError: Возникает в следующих случаях:
+            - передан None вместо списка транзакций
+            - передан пустой список транзакций
+            - передан None вместо валюты
+            - передан пустая строка в качестве валюты
+        TypeError: Возникает в следующих случаях:
+            - валюта передана не в виде строки
+            - хотя бы одна транзакция передана не в виде словаря
+    """
+    # Проверка корректности входных данных: список транзакций
     if transactions is None:
         raise ValueError("Вместо списка словарей с транзакциями передано None. Должен быть список словарей")
     elif len(transactions) == 0:
         raise ValueError("Список не содержит ни одной транзакции")
 
+    # Проверка корректности входных данных: валюта
     if currency is None:
         raise ValueError("Вместо валюты транзакций передано None. должно быть str")
     elif len(currency) == 0:
@@ -15,6 +38,7 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
     elif not isinstance(currency, str):
         raise TypeError("Валюта транзакций передана не в str")
 
+    # Проверка, что все транзакции переданы в виде словарей
     for i, e in enumerate(transactions):
         if not isinstance(transactions[i], dict):
             print(
@@ -24,6 +48,7 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
             )
             raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
 
+    # Фильтрация транзакций по валюте (без учета регистра)
     filtered_transactions: list[dict[str, int]] = list(
         filter(
             lambda item: item.get("operationAmount", {}).get("currency", {}).get("name", "").lower()
@@ -32,6 +57,7 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
         )
     )
 
+    # Возврат результата через итератор
     for transaction in filtered_transactions:
         yield transaction
 
