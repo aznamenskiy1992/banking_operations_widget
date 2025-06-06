@@ -63,6 +63,9 @@ def card_number_generator(start: int, stop: int) -> str:
     """Функция, генерирует номера карты по поданным числам"""
     if start is None:
         raise ValueError("Вместо start передано None. Должно быть целое число")
+    elif not isinstance(start, int):
+        print(f"start передан в типе {type(start)}")
+        raise TypeError("start должен быть целым число")
 
     results: list = []
 
