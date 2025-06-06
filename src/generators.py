@@ -63,12 +63,31 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
 
 
 def transaction_descriptions(transactions: list[Dict[str, Any]]) -> Iterator[str]:
-    """Функция, возвращающая описание каждой операции из списка транзакций"""
+    """
+    Возвращает итератор по описаниям операций из списка транзакций.
+
+    Параметры:
+        transactions: list[Dict[str, Any]] - список словарей, где каждый словарь содержит информацию о транзакции.
+            Каждая транзакция может содержать поле "description" с текстовым описанием операции.
+            Если поле отсутствует, транзакция пропускается.
+
+    Возвращает:
+        Iterator[str]: итератор по строкам с описаниями транзакций. Если у транзакции нет поля "description",
+            она не включается в результат.
+
+    Исключения:
+        ValueError: Возникает в следующих случаях:
+            - передан None вместо списка транзакций
+            - передан пустой список транзакций
+        TypeError: Возникает, если хотя бы одна транзакция передана не в виде словаря.
+    """
+    # Проверка корректности входных данных: список транзакций
     if transactions is None:
         raise ValueError("Вместо списка словарей с транзакциями передано None. Должен быть список словарей")
     elif len(transactions) == 0:
         raise ValueError("Список не содержит ни одной транзакции")
 
+    # Проверка, что все транзакции переданы в виде словарей
     for i, e in enumerate(transactions):
         if not isinstance(transactions[i], dict):
             print(
@@ -78,11 +97,12 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> Iterator[str
             )
             raise TypeError("Детали транзакций должны находиться в словарях. 1 словарь = 1 транзакция")
 
+    # Извлечение описаний транзакций (если они есть)
     for i in range(len(transactions)):
         if not transactions[i].get("description"):
-            continue
+            continue  # Пропускаем транзакции без описания
         else:
-            yield transactions[i]["description"]
+            yield transactions[i]["description"]  # Возвращаем описание через итератор
 
 
 def card_number_generator(start: int, stop: int) -> Iterator[str]:
