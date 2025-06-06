@@ -285,6 +285,7 @@ def test_start_is_none_for_card_number_generator():
     ]
 )
 def test_start_not_int_for_card_number_generator(start, stop, raise_message):
+    """Тестирует кейс, где start не int"""
     with pytest.raises(TypeError) as exc_info:
         next(card_number_generator(start, stop))
     assert str(exc_info.value) == raise_message
