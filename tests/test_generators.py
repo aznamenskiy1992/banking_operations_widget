@@ -276,3 +276,15 @@ def test_start_is_none_for_card_number_generator():
     with pytest.raises(ValueError) as exc_info:
         next(card_number_generator(None, 5))
     assert str(exc_info.value) == "Вместо start передано None. Должно быть целое число"
+
+
+@pytest.mark.parametrize(
+    "start, stop, raise_message", [
+        ([1], 5, "start должен быть целым число"),
+        (2.25, 4,  "start должен быть целым число"),
+    ]
+)
+def test_start_not_int_for_card_number_generator(start, stop, raise_message):
+    with pytest.raises(TypeError) as exc_info:
+        next(card_number_generator(start, stop))
+    assert str(exc_info.value) == raise_message
