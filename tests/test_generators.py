@@ -280,8 +280,8 @@ def test_start_is_none_for_card_number_generator():
 
 @pytest.mark.parametrize(
     "start, stop, raise_message", [
-        ([1], 5, "start должен быть целым число"),
-        (2.25, 4,  "start должен быть целым число"),
+        ([1], 5, "start должен быть целым числом"),
+        (2.25, 4,  "start должен быть целым числом"),
     ]
 )
 def test_start_not_int_for_card_number_generator(start, stop, raise_message):
@@ -300,8 +300,8 @@ def test_stop_is_none_for_card_number_generator():
 
 @pytest.mark.parametrize(
     "start, stop, raise_message", [
-        (1, [5], "stop должен быть целым число"),
-        (2, 4.45,  "stop должен быть целым число"),
+        (1, [5], "stop должен быть целым числом"),
+        (2, 4.45,  "stop должен быть целым числом"),
     ]
 )
 def test_stop_not_int_for_card_number_generator(start, stop, raise_message):
