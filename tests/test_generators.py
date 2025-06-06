@@ -323,3 +323,10 @@ def test_start_is_negative_for_card_number_generator():
     with pytest.raises(ValueError) as exc_info:
         next(card_number_generator(-2, 5))
     assert str(exc_info.value) == "start должен быть > 0"
+
+
+def test_stop_upper_limit_for_card_number_generator():
+    """Тестирует кейс, где stop превышает верхнюю границу"""
+    with pytest.raises(ValueError) as exc_info:
+        next(card_number_generator(1, 10000000000000000))
+    assert str(exc_info.value) == "stop не может быть больше 9999 9999 9999 9999"
