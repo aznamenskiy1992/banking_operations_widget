@@ -1,4 +1,4 @@
-from typing import Any, Dict, Iterator, Union
+from typing import Any, Dict, Iterator
 
 
 def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Iterator[Dict[str, Any]]:
@@ -36,7 +36,7 @@ def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Ite
         yield transaction
 
 
-def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
+def transaction_descriptions(transactions: list[Dict[str, Any]]) -> Iterator[str]:
     """Функция, возвращающая описание каждой операции из списка транзакций"""
     if transactions is None:
         raise ValueError("Вместо списка словарей с транзакциями передано None. Должен быть список словарей")
@@ -59,7 +59,7 @@ def transaction_descriptions(transactions: list[Dict[str, Any]]) -> str:
             yield transactions[i]["description"]
 
 
-def card_number_generator(start: int, stop: int) -> str:
+def card_number_generator(start: int, stop: int) -> Iterator[str]:
     """Функция, генерирует номера карты по поданным числам"""
     if start is None:
         raise ValueError("Вместо start передано None. Должно быть целое число")
@@ -83,10 +83,5 @@ def card_number_generator(start: int, stop: int) -> str:
     for number in range(start, stop + 1):
         number_str = str(number)
         number_temp: str = "0" * (16 - len(number_str)) + number_str
-        formatted_number = " ".join([
-            number_temp[:4],
-            number_temp[4:8],
-            number_temp[8:12],
-            number_temp[12:]
-        ])
+        formatted_number = " ".join([number_temp[:4], number_temp[4:8], number_temp[8:12], number_temp[12:]])
         yield formatted_number
