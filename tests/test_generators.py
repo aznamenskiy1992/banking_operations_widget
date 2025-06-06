@@ -289,3 +289,10 @@ def test_start_not_int_for_card_number_generator(start, stop, raise_message):
     with pytest.raises(TypeError) as exc_info:
         next(card_number_generator(start, stop))
     assert str(exc_info.value) == raise_message
+
+
+def test_stop_is_none_for_card_number_generator():
+    """Тестирует кейс, где stop = None"""
+    with pytest.raises(ValueError) as exc_info:
+        next(card_number_generator(5, None))
+    assert str(exc_info.value) == "Вместо stop передано None. Должно быть целое число"
