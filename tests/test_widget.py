@@ -115,9 +115,11 @@ def test_not_have_date():
     assert str(exc_info.value) == "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
 
 
-def test_none_date(none_date):
+def test_none_date():
     """Тестирует обработку случая, когда на вход подается None вместо даты."""
-    assert get_date(None) == none_date
+    with pytest.raises(ValueError) as exc_info:
+        get_date(None)
+    assert str(exc_info.value) == "Дата не указана"
 
 
 @pytest.mark.parametrize(
