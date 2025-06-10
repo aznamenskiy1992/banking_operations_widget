@@ -81,7 +81,7 @@ def get_date(date_: str) -> str:
         formatted_date_by_y_m_d: str = str(datetime.strptime(date_split[0], "%Y-%m-%d").date())
     except ValueError:
         # Обработка ошибки парсинга (неверный формат даты)
-        return "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
+        raise ValueError("Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD")
     else:
         # Разделение даты на компоненты (год, месяц, день)
         formatted_date_by_y_m_d_split: list[str] = formatted_date_by_y_m_d.split("-")
