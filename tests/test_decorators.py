@@ -20,7 +20,7 @@ def test_log_success_operation_in_file_for_get_mask_card_number_with_log_decorat
         assert content[-1].strip() == "get_mask_card_number ok"
 
 
-def test_log_success_operation_in_file_for_filter_by_state_with_log_decorator():
+def test_log_success_operation_in_file_for_filter_by_state_with_log_decorator(example_input_list_dicts_for_filter_by_state):
     """Тестирует выполнение успешной операции. Логи в файл"""
     @log("mylog.txt")
     def filter_by_state(source_data, state = "EXECUTED"):
