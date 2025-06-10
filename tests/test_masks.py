@@ -95,9 +95,11 @@ def test_input_account_number(account_number, mask_number):
     assert get_mask_account(account_number) == mask_number
 
 
-def test_none_account_number(none_card_and_account_number):
+def test_none_account_number():
     """Тестирует обработку None в качестве номера счета."""
-    assert get_mask_account(None) == none_card_and_account_number
+    with pytest.raises(ValueError) as exc_info:
+        get_mask_account(None)
+    assert str(exc_info.value) == "Не указан номер карты или счёта"
 
 
 def test_none_standard_account_number(none_standard_card_and_account_number):
