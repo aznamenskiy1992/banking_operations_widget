@@ -14,8 +14,10 @@ def log(filename = None):
             if filename is not None:
                 try:
                     result = func(*args, **kwargs)
-                except:
-                    pass
+                except Exception as exc_info:
+                    inputs = args[0] if len(args) == 1 and not kwargs else (args if args else kwargs)
+                    with open(file_address, "a", encoding="utf-8") as file:
+                        file.write(f"{func.__name__} error: {str(exc_info)}. Inputs: {inputs}\n")
                 else:
                     with open(file_address, "a", encoding="utf-8") as file:
                         file.write(f"{func.__name__} ok\n")
