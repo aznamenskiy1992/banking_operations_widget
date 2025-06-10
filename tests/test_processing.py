@@ -154,4 +154,6 @@ def test_sort_dict_by_date_key(src_dicts, reverse_, sort_dicts):
 )
 def test_not_have_date_key_in_dict(src_dicts, notice):
     """Тестирует обработку случая отсутствия ключа 'date' в словарях."""
-    assert sort_by_date(src_dicts) == notice
+    with pytest.raises(KeyError) as exc_info:
+        sort_by_date(src_dicts)
+    assert str(exc_info.value) == f'"{notice}"'
