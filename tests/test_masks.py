@@ -24,10 +24,20 @@ def test_none_card_number():
     assert str(exc_info.value) == "Не указан номер карты или счёта"
 
 
-def test_none_standard_card_number(none_standard_card_and_account_number):
+@pytest.mark.parametrize(
+    "card_number, error_message",
+    [
+        (123, "Указан некорректный номер карты или счёта. Проверьте количество цифр"),
+        (15234820356820125369, "Указан некорректный номер карты или счёта. Проверьте количество цифр")
+    ]
+)
+def test_none_standard_card_number(card_number, error_message):
     """Тестирует обработку номеров карт некорректной длины (слишком коротких/длинных)."""
-    assert get_mask_card_number(123) == none_standard_card_and_account_number
-    assert get_mask_card_number(15234820356820125369) == none_standard_card_and_account_number
+    with pytest.raises(ValueError) as exc_info:
+        get_mask_card_number(card_number)
+    assert str(exc_info.value) == error_message
+    #assert get_mask_card_number(123) == none_standard_card_and_account_number
+    #assert get_mask_card_number(15234820356820125369) == none_standard_card_and_account_number
 
 
 @pytest.mark.parametrize(
