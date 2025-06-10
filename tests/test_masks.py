@@ -36,8 +36,6 @@ def test_none_standard_card_number(card_number, error_message):
     with pytest.raises(ValueError) as exc_info:
         get_mask_card_number(card_number)
     assert str(exc_info.value) == error_message
-    #assert get_mask_card_number(123) == none_standard_card_and_account_number
-    #assert get_mask_card_number(15234820356820125369) == none_standard_card_and_account_number
 
 
 @pytest.mark.parametrize(
