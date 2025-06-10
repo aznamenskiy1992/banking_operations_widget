@@ -92,7 +92,7 @@ def test_card_and_account_number_incorrect_types(card_or_account_number, error_m
     """
     with pytest.raises(TypeError) as exc_info:
         mask_account_card(card_or_account_number)
-    assert str(exc_info.value) == f'"{error_message}"'
+    assert str(exc_info.value) == error_message
 
 
 @pytest.mark.parametrize(
