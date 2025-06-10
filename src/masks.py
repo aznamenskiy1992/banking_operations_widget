@@ -112,7 +112,7 @@ def get_mask_account(account_number: int) -> str:
     """
     # Проверка на None
     if account_number is None:
-        return "Не указан номер карты или счёта"
+        raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера счёта в строку с проверкой типа
     if isinstance(account_number, int):
