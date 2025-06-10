@@ -89,15 +89,11 @@ def test_state_key_not_in_dicts(src_dicts, state, notice):
     assert filter_by_state(src_dicts, state) == notice
 
 
-@pytest.mark.parametrize(
-    "src_dicts, notice",
-    [
-        (None, "Не указан список словарей"),
-    ],
-)
-def test_none_list_dicts(src_dicts, notice):
+def test_none_list_dicts():
     """Тестирует обработку случая, когда вместо списка словарей передано None."""
-    assert filter_by_state(src_dicts) == notice
+    with pytest.raises(ValueError) as exc_info:
+        filter_by_state(None)
+    assert str(exc_info.value) == "Не указан список словарей"
 
 
 @pytest.mark.parametrize(
