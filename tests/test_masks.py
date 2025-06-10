@@ -17,9 +17,11 @@ def test_input_standard_card_number(card_number, mask_number):
     assert get_mask_card_number(card_number) == mask_number
 
 
-def test_none_card_number(none_card_and_account_number):
+def test_none_card_number():
     """Тестирует обработку None в качестве номера карты."""
-    assert get_mask_card_number(None) == none_card_and_account_number
+    with pytest.raises(ValueError) as exc_info:
+        get_mask_card_number(None)
+    assert str(exc_info.value) == "Не указан номер карты или счёта"
 
 
 def test_none_standard_card_number(none_standard_card_and_account_number):
