@@ -21,7 +21,7 @@ def mask_account_card(card_or_account_number: str) -> str:
 
     # Проверка на None (отсутствие номера)
     if card_or_account_number is None:
-        return "Не указан номер карты или счёта"
+        raise ValueError("Не указан номер карты или счёта")
 
     # Проверка типа входных данных (должна быть строка)
     if not isinstance(card_or_account_number, str):
