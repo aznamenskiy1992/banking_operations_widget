@@ -2,53 +2,6 @@ import pytest
 
 
 @pytest.fixture
-def none_card_and_account_number():
-    """Фикстура возвращает стандартное сообщение об ошибке, когда номер карты/счёта не указан (None)."""
-    return "Не указан номер карты или счёта"
-
-
-@pytest.fixture
-def none_standard_card_and_account_number():
-    """Фикстура возвращает сообщение об ошибке для некорректной длины номера карты/счёта."""
-    return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
-
-
-@pytest.fixture
-def card_and_account_number_str_symbols_not_int():
-    """Фикстура возвращает сообщение об ошибке, когда номер содержит нецифровые символы."""
-    return "Номер карты или счёта должен состоять только из цифр"
-
-
-@pytest.fixture
-def card_and_account_number_other_incorrect_types():
-    """Фикстура возвращает сообщение об ошибке для нецелочисленных типов данных номера."""
-    return "Номер карты или счёта должен быть целым числом"
-
-
-@pytest.fixture
-def card_and_account_number_incorrect_types():
-    """Фикстура возвращает форматированное сообщение об ошибке для некорректного строкового ввода.
-    Содержит примеры правильного формата для карты и счёта."""
-    return """Номер карты или счёта должен быть строкой.
-    Маска ввода:
-    Для счёта - 'Счёт 79053641285349013572'
-    Для Карты - 'Visa Classic 5543812355785'"""
-
-
-@pytest.fixture
-def not_have_date():
-    """Фикстура возвращает сообщение об ошибке для отсутствующей или неверно форматированной даты.
-    Указывает требуемый формат YYYY-MM-DD."""
-    return "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
-
-
-@pytest.fixture
-def none_date():
-    """Фикстура возвращает сообщение об ошибке, когда дата не указана (None)."""
-    return "Дата не указана"
-
-
-@pytest.fixture
 def example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions():
     """Фикстура передаёт список транзакций в функции filter_by_currency и transaction_descriptions"""
     transactions = [
