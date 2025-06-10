@@ -24,7 +24,7 @@ def filter_by_state(
     """
     # Проверка на None входных данных
     if source_data is None:
-        return "Не указан список словарей"
+        raise ValueError("Не указан список словарей")
 
     try:
         # Фильтрация словарей по значению state с обработкой возможного исключения KeyError
