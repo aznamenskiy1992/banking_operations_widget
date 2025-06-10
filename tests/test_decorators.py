@@ -3,11 +3,7 @@ import os
 
 import pytest
 
-from src.decorators import log
-
-
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-file_address = os.path.join(project_root, "data", "logs", "mylog.txt")
+from src.decorators import log, file_address
 
 
 def test_log_success_operation_in_file_for_get_mask_card_number_with_log_decorator(example_input_card_for_get_mask_curd_number):
