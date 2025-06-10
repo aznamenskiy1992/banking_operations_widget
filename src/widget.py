@@ -67,7 +67,7 @@ def get_date(date_: str) -> str:
     """
     # Проверка на None (дата не указана)
     if date_ is None:
-        return "Дата не указана"
+        raise ValueError("Дата не указана")
 
     # Удаление пробелов в строке, если они есть
     if " " in date_:
