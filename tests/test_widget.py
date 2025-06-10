@@ -108,9 +108,11 @@ def test_convert_str_to_date_d_m_y(date, convert_date):
     assert get_date(date) == convert_date
 
 
-def test_not_have_date(not_have_date):
+def test_not_have_date():
     """Тестирует обработку случая, когда дата указана без корректной даты (только время)."""
-    assert get_date("T12:30:45") == not_have_date
+    with pytest.raises(ValueError) as exc_info:
+        get_date("T12:30:45")
+    assert str(exc_info.value) == "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
 
 
 def test_none_date(none_date):
