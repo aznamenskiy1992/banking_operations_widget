@@ -67,7 +67,7 @@ def sort_by_date(
         sorted_data = sorted(source_data, key=lambda data: data["date"], reverse=reverse)
     except KeyError:
         # Если ключ "date" отсутствует в словарях, возвращаем сообщение об ошибке
-        return "В словарях нет ключа 'date'"
+        raise KeyError("В словарях нет ключа 'date'")
     else:
         # Возвращаем отсортированные данные, если ошибок не возникло
         return sorted_data
