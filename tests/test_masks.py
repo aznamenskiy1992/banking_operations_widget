@@ -52,10 +52,18 @@ def test_card_number_str_all_symbols_int(card_number, mask_number):
     assert get_mask_card_number(card_number) == mask_number
 
 
-def test_card_number_str_symbols_not_int(card_and_account_number_str_symbols_not_int):
+@pytest.mark.parametrize(
+    "card_number, error_message",
+    [
+        ("5543-8123-5585-520", "Номер карты или счёта должен состоять только из цифр"),
+        ("5543 812 355 785", "Номер карты или счёта должен состоять только из цифр")
+    ]
+)
+def test_card_number_str_symbols_not_int(card_number, error_message):
     """Тестирует обработку номеров карт с нецифровыми символами (дефисы, пробелы и др.)."""
-    assert get_mask_card_number("5543-8123-5585-520") == card_and_account_number_str_symbols_not_int
-    assert get_mask_card_number("5543 812 355 785") == card_and_account_number_str_symbols_not_int
+    with pytest.raises(ValueError) as exc_info:
+        get_mask_card_number(card_number)
+    assert str(exc_info.value) == error_message
 
 
 def test_card_number_other_incorrect_types(card_and_account_number_other_incorrect_types):
