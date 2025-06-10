@@ -41,9 +41,11 @@ def test_definition_other_account_number(account_number, mask_number):
     assert mask_account_card(account_number) == mask_number
 
 
-def test_none_card_and_account_number(none_card_and_account_number):
+def test_none_card_and_account_number():
     """Тестирует обработку случая, когда на вход подается None вместо номера карты/счета."""
-    assert mask_account_card(None) == none_card_and_account_number
+    with pytest.raises(ValueError) as exc_info:
+        mask_account_card(None)
+    assert str(exc_info.value) == "Не указан номер карты или счёта"
 
 
 def test_card_and_account_number_incorrect_types(card_and_account_number_incorrect_types):

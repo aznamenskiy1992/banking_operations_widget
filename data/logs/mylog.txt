@@ -70,3 +70,5 @@ get_mask_card_number ok
 filter_by_state ok
 get_mask_card_number ok
 filter_by_state ok
+get_mask_card_number ok
+filter_by_state ok
