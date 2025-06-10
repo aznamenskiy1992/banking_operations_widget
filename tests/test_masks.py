@@ -66,13 +66,21 @@ def test_card_number_str_symbols_not_int(card_number, error_message):
     assert str(exc_info.value) == error_message
 
 
-def test_card_number_other_incorrect_types(card_and_account_number_other_incorrect_types):
+@pytest.mark.parametrize(
+    "card_number, error_message",
+    [
+        ([5543812355785520, 5543812355785], "Номер карты или счёта должен быть целым числом"),
+        ({"Visa": 5543812355785520}, "Номер карты или счёта должен быть целым числом"),
+        ((5543812355785520, 5543812355785), "Номер карты или счёта должен быть целым числом"),
+        ({5543812355785520}, "Номер карты или счёта должен быть целым числом"),
+        (5543812355785520.25, "Номер карты или счёта должен быть целым числом"),
+    ]
+)
+def test_card_number_other_incorrect_types(card_number, error_message):
     """Тестирует обработку некорректных типов данных для номера карты (списки, словари, кортежи, множества, float)."""
-    assert get_mask_card_number([5543812355785520, 5543812355785]) == card_and_account_number_other_incorrect_types
-    assert get_mask_card_number({"Visa": 5543812355785520}) == card_and_account_number_other_incorrect_types
-    assert get_mask_card_number((5543812355785520, 5543812355785)) == card_and_account_number_other_incorrect_types
-    assert get_mask_card_number({5543812355785520}) == card_and_account_number_other_incorrect_types
-    assert get_mask_card_number(5543812355785520.25) == card_and_account_number_other_incorrect_types
+    with pytest.raises(TypeError) as exc_info:
+        get_mask_card_number(card_number)
+    assert str(exc_info.value) == error_message
 
 
 @pytest.mark.parametrize(
