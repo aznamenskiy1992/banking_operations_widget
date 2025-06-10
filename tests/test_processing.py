@@ -88,7 +88,7 @@ def test_state_key_not_in_dicts(src_dicts, state, notice):
     """Тестирует обработку случая отсутствия ключа 'state' в словарях."""
     with pytest.raises(KeyError) as exc_info:
         filter_by_state(src_dicts, state)
-    assert str(exc_info.value) == notice
+    assert str(exc_info.value) == f'"{notice}"'
 
 
 def test_none_list_dicts():
