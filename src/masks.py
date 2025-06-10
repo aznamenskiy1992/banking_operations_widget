@@ -119,11 +119,11 @@ def get_mask_account(account_number: int) -> str:
         account_number_str = str(account_number)
     elif isinstance(account_number, str):
         if not account_number.isdigit():
-            return "Номер карты или счёта должен состоять только из цифр"
+            raise ValueError("Номер карты или счёта должен состоять только из цифр")
         else:
             account_number_str = account_number
     else:
-        return "Номер карты или счёта должен быть целым числом"
+        raise TypeError("Номер карты или счёта должен быть целым числом")
 
     # Проверка длины номера счёта
     len_account_number = len(account_number_str)
