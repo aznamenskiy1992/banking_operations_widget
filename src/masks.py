@@ -132,6 +132,6 @@ def get_mask_account(account_number: int) -> str:
     if len_account_number == 20:
         mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
-        return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
+        raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     return mask_account_number
