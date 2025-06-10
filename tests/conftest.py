@@ -172,3 +172,10 @@ def example_input_transactions_without_need_key_for_for_filter_by_currency_and_t
         }
     ]
     return transactions
+
+
+@pytest.fixture
+def example_input_card_for_get_mask_curd_number():
+    """Фикстура, передаёт номер карты"""
+    card_number: int = 5543812355785520
+    return card_number
