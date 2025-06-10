@@ -144,3 +144,9 @@ def example_input_list_dicts_for_filter_by_state():
         {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
     ]
     return source_data
+
+
+@pytest.fixture
+def example_input_none_for_get_mask_card_number():
+    """Фикстура, передаёт None вместо номера карты"""
+    return None
