@@ -48,7 +48,40 @@ def test_none_card_and_account_number():
     assert str(exc_info.value) == "Не указан номер карты или счёта"
 
 
-def test_card_and_account_number_incorrect_types(card_and_account_number_incorrect_types):
+@pytest.mark.parametrize(
+    "card_or_account_number, error_message",
+    [
+        ([5543812355785, 79053641285349013572], """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""),
+        ({"Visa": 5543812355785520, "Расчётный счет": 79053641285349013572}, """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""),
+        ((5543812355785, 79053641285349013572), """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""),
+        ({5543812355785, 79053641285349013572}, """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""),
+        (5543812355785.25, """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""),
+        (5543812355785, """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'"""),
+        (79053641285349013572, """Номер карты или счёта должен быть строкой.
+    Маска ввода:
+    Для счёта - 'Счёт 79053641285349013572'
+    Для Карты - 'Visa Classic 5543812355785'""")
+    ]
+)
+def test_card_and_account_number_incorrect_types(card_or_account_number, error_message):
     """Тестирует обработку некорректных типов данных вместо номера карты/счета:
     - Списки
     - Словари
@@ -57,16 +90,9 @@ def test_card_and_account_number_incorrect_types(card_and_account_number_incorre
     - Числа с плавающей точкой
     - Целые числа без указания типа карты/счета
     """
-    assert mask_account_card([5543812355785, 79053641285349013572]) == card_and_account_number_incorrect_types
-    assert (
-        mask_account_card({"Visa": 5543812355785520, "Расчётный счет": 79053641285349013572})
-        == card_and_account_number_incorrect_types
-    )
-    assert mask_account_card((5543812355785, 79053641285349013572)) == card_and_account_number_incorrect_types
-    assert mask_account_card({5543812355785, 79053641285349013572}) == card_and_account_number_incorrect_types
-    assert mask_account_card(5543812355785.25) == card_and_account_number_incorrect_types
-    assert mask_account_card(5543812355785) == card_and_account_number_incorrect_types
-    assert mask_account_card(79053641285349013572) == card_and_account_number_incorrect_types
+    with pytest.raises(TypeError) as exc_info:
+        mask_account_card(card_or_account_number)
+    assert str(exc_info.value) == f'"{error_message}"'
 
 
 @pytest.mark.parametrize(
