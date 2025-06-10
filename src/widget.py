@@ -25,10 +25,10 @@ def mask_account_card(card_or_account_number: str) -> str:
 
     # Проверка типа входных данных (должна быть строка)
     if not isinstance(card_or_account_number, str):
-        return """Номер карты или счёта должен быть строкой.
+        raise TypeError("""Номер карты или счёта должен быть строкой.
     Маска ввода:
     Для счёта - 'Счёт 79053641285349013572'
-    Для Карты - 'Visa Classic 5543812355785'"""
+    Для Карты - 'Visa Classic 5543812355785'""")
 
     # Разделение входной строки на части по пробелам
     card_or_account_number_split: list[str] = card_or_account_number.split()
