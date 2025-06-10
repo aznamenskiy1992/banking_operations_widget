@@ -24,7 +24,7 @@ def get_mask_card_number(card_number: int) -> str:
         else:
             card_number_str = card_number
     else:
-        return "Номер карты или счёта должен быть целым числом"  # Недопустимый тип данных (не int и не str)
+        raise TypeError("Номер карты или счёта должен быть целым числом")  # Недопустимый тип данных (не int и не str)
 
     len_card_number = len(card_number_str)
 
