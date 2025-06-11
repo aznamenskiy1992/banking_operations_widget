@@ -8,6 +8,9 @@ def log(filename = None):
     def log_inner(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            if filename is not None and filename != "mylog.txt":
+                raise ValueError("Неверное название файла логов. Должно быть 'mylog.txt'")
+
             try:
                 result = func(*args, **kwargs)
             except Exception as exc_info:
