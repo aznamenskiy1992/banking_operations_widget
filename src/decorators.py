@@ -11,16 +11,18 @@ def log(filename = None):
     def log_inner(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            if filename is not None:
-                try:
-                    result = func(*args, **kwargs)
-                except Exception as exc_info:
-                    inputs = args[0] if len(args) == 1 and not kwargs else (args if args else kwargs)
-                    with open(file_address, "a", encoding="utf-8") as file:
-                        file.write(f"{func.__name__} error: {str(exc_info)}. Inputs: {inputs}\n")
-                else:
+            try:
+                result = func(*args, **kwargs)
+            except Exception as exc_info:
+                inputs = args[0] if len(args) == 1 and not kwargs else (args if args else kwargs)
+                with open(file_address, "a", encoding="utf-8") as file:
+                    file.write(f"{func.__name__} error: {str(exc_info)}. Inputs: {inputs}\n")
+            else:
+                if filename is not None:
                     with open(file_address, "a", encoding="utf-8") as file:
                         file.write(f"{func.__name__} ok\n")
+                else:
+                    print(f"{func.__name__} ok")
             return None
         return wrapper
     return log_inner
