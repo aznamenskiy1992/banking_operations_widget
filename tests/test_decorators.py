@@ -1,6 +1,3 @@
-from fileinput import filename
-import os
-
 import pytest
 
 from src.decorators import log
