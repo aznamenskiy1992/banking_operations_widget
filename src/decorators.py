@@ -1,6 +1,5 @@
 import os
 from functools import wraps
-from typing import Union
 
 
 def log(filename=None):
