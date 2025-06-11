@@ -1,4 +1,5 @@
 import pytest
+import os
 
 
 @pytest.fixture
@@ -162,3 +163,9 @@ def example_input_none_for_filter_by_state():
         {"id": 615064591, "date": "2018-10-14T08:21:33.419441"},
     ]
     return source_data
+
+
+@pytest.fixture
+def example_path_to_log_file():
+    """Фикстура передаёт путь до mylog.txt"""
+    return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "logs", "mylog.txt")
