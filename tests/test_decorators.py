@@ -78,20 +78,22 @@ def test_log_error_operation_in_file_for_get_mask_card_number_with_log_decorator
                 assert content[-1].strip() == f"get_mask_card_number error: Не указан номер карты или счёта. Inputs: {example_input_none_for_get_mask_card_number}"
 
 
-#def test_log_error_operation_in_console_for_get_mask_card_number_with_log_decorator(capsys):
-#    """Тестирует логирование ошибок при выполнении операции. Логи в консоль"""
-#    @log()
-#    def get_mask_card_number(card_number):
-#        if card_number is None:
-#            raise ValueError("Не указан номер карты или счёта")
-#        card_number_str = str(card_number)
-#        return card_number_str[:4] + " " + card_number_str[4:6] + "*" * 2 + " " + "*" * 4 + " " + card_number_str[12:]
-#
-#    get_mask_card_number(None)
-#    captured = capsys.readouterr()
-#    assert captured.out == f"get_mask_card_number error: Не указан номер карты или счёта. Inputs: None\n"
-#
-#
+def test_log_error_operation_in_console_for_get_mask_card_number_with_log_decorator(capsys):
+    """Тестирует логирование ошибок при выполнении операции. Логи в консоль"""
+    @log()
+    def get_mask_card_number(card_number):
+        if card_number is None:
+            raise ValueError("Не указан номер карты или счёта")
+        card_number_str = str(card_number)
+        return card_number_str[:4] + " " + card_number_str[4:6] + "*" * 2 + " " + "*" * 4 + " " + card_number_str[12:]
+
+    try:
+        get_mask_card_number(None)
+    except ValueError:
+        captured = capsys.readouterr()
+        assert captured.out == f"get_mask_card_number error: Не указан номер карты или счёта. Inputs: None\n"
+
+
 #def test_log_error_operation_in_file_for_filter_by_state_with_log_decorator(example_input_none_for_filter_by_state, example_path_to_log_file):
 #    """Тестирует логирование ошибок при выполнении операции. Логи в файл"""
 #    @log("mylog.txt")

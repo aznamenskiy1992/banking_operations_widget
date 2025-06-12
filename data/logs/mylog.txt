@@ -304,3 +304,9 @@ get_mask_card_number error: Не указан номер карты или сч�
 get_mask_card_number ok
 filter_by_state ok
 get_mask_card_number error: Не указан номер карты или счёта. Inputs: None
+get_mask_card_number ok
+filter_by_state ok
+get_mask_card_number error: Не указан номер карты или счёта. Inputs: None
+get_mask_card_number ok
+filter_by_state ok
+get_mask_card_number error: Не указан номер карты или счёта. Inputs: None
