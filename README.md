@@ -84,6 +84,16 @@ pytest tests/ -v
    - Проверка типов (int)
    - Проверка диапазона (0 < start ≤ stop ≤ 9999999999999999)
 
+#### Тестирование декоратора логирования:
+1. `test_log_success_operation_in_file_for_get_mask_card_number_with_log_decorator` - проверяет логирование успешной операции в файл
+2. `test_log_success_operation_in_console_for_get_mask_card_number_with_log_decorator` - проверяет логирование успешной операции в консоль
+3. `test_log_success_operation_in_file_for_filter_by_state_with_log_decorator` - проверяет логирование успешной фильтрации в файл
+4. `test_log_success_operation_in_console_for_filter_by_state_with_log_decorator` - проверяет логирование успешной фильтрации в консоль
+5. `test_log_error_operation_in_file_for_get_mask_card_number_with_log_decorator` - проверяет логирование ошибок в файл
+6. `test_log_error_operation_in_console_for_get_mask_card_number_with_log_decorator` - проверяет логирование ошибок в консоль
+7. `test_log_error_operation_in_file_for_filter_by_state_with_log_decorator` - проверяет логирование ошибок фильтрации в файл
+8. `test_log_error_operation_in_console_for_filter_by_state_with_log_decorator` - проверяет логирование ошибок фильтрации в консоль
+
 ### Покрытие тестами
 Для проверки покрытия кода тестами используйте:
 ```
@@ -249,3 +259,25 @@ card_number_generator(1, 3)
 "0000 0000 0000 0002"
 "0000 0000 0000 0003"
 ```
+### log (decorators.py)
+- Декоратор для логирования результатов выполнения функций
+```
+Пример использования:
+@log("mylog.txt") # Логи в файл
+def some_function():
+pass
+
+@log() # Логи в консоль
+def another_function():
+pass
+```
+- Параметры:
+  - `filename`: str | None - имя файла для записи логов (должно быть 'файл.txt' или None)
+- Возможности:
+  - Логирует успешное выполнение функций
+  - Логирует ошибки с информацией об исключении и входных данных
+  - Поддерживает запись как в файл, так и вывод в консоль
+  - Сохраняет оригинальное имя и docstring обернутой функции
+- Особенности:
+  - Файлы логов создаются в директории `data/logs` относительно расположения скрипта
+  - Для ошибок дополнительно записывает информацию об исключении и входных данных

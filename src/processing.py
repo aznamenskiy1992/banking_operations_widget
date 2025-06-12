@@ -24,14 +24,14 @@ def filter_by_state(
     """
     # Проверка на None входных данных
     if source_data is None:
-        return "Не указан список словарей"
+        raise ValueError("Не указан список словарей")
 
     try:
         # Фильтрация словарей по значению state с обработкой возможного исключения KeyError
         filtered_data = list(filter(lambda data: data["state"] == state, source_data))
     except KeyError:
         # Обработка случая, когда в словарях отсутствует ключ 'state'
-        return "В словарях нет ключа 'state'"
+        raise KeyError("В словарях нет ключа 'state'")
     else:
         # Проверка на пустой результат фильтрации
         if len(filtered_data) == 0:
@@ -67,7 +67,7 @@ def sort_by_date(
         sorted_data = sorted(source_data, key=lambda data: data["date"], reverse=reverse)
     except KeyError:
         # Если ключ "date" отсутствует в словарях, возвращаем сообщение об ошибке
-        return "В словарях нет ключа 'date'"
+        raise KeyError("В словарях нет ключа 'date'")
     else:
         # Возвращаем отсортированные данные, если ошибок не возникло
         return sorted_data

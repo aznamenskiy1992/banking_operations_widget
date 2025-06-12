@@ -86,18 +86,16 @@ def test_note_have_value_state_in_dicts(src_dicts, state, notice):
 )
 def test_state_key_not_in_dicts(src_dicts, state, notice):
     """Тестирует обработку случая отсутствия ключа 'state' в словарях."""
-    assert filter_by_state(src_dicts, state) == notice
+    with pytest.raises(KeyError) as exc_info:
+        filter_by_state(src_dicts, state)
+    assert str(exc_info.value) == f'"{notice}"'
 
 
-@pytest.mark.parametrize(
-    "src_dicts, notice",
-    [
-        (None, "Не указан список словарей"),
-    ],
-)
-def test_none_list_dicts(src_dicts, notice):
+def test_none_list_dicts():
     """Тестирует обработку случая, когда вместо списка словарей передано None."""
-    assert filter_by_state(src_dicts) == notice
+    with pytest.raises(ValueError) as exc_info:
+        filter_by_state(None)
+    assert str(exc_info.value) == "Не указан список словарей"
 
 
 @pytest.mark.parametrize(
@@ -156,4 +154,6 @@ def test_sort_dict_by_date_key(src_dicts, reverse_, sort_dicts):
 )
 def test_not_have_date_key_in_dict(src_dicts, notice):
     """Тестирует обработку случая отсутствия ключа 'date' в словарях."""
-    assert sort_by_date(src_dicts) == notice
+    with pytest.raises(KeyError) as exc_info:
+        sort_by_date(src_dicts)
+    assert str(exc_info.value) == f'"{notice}"'
