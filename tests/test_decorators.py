@@ -112,24 +112,25 @@ def test_log_error_operation_in_file_for_filter_by_state_with_log_decorator(exam
             assert content[-1].strip() == f"filter_by_state error: \"В словарях нет ключа 'state'\". Inputs: {example_input_none_for_filter_by_state}"
 
 
-#def test_log_error_operation_in_console_for_filter_by_state_with_log_decorator(capsys):
-#    """Тестирует логирование ошибок при выполнении операции. Логи в консоль"""
-#    @log()
-#    def filter_by_state(source_data, state = "EXECUTED"):
-#        try:
-#            filtered_data = list(filter(lambda data: data["state"] == state, source_data))
-#        except KeyError:
-#            raise KeyError("В словарях нет ключа 'state'")
-#        return filtered_data
-#
-#    filter_by_state(
-#        [
-#            {"id": 41428829, "date": "2019-07-03T18:35:29.512364"},
-#            {"id": 939719570, "date": "2018-06-30T02:08:58.425572"},
-#            {"id": 594226727, "date": "2018-09-12T21:27:25.241689"},
-#            {"id": 615064591, "date": "2018-10-14T08:21:33.419441"},
-#        ]
-#    )
-#    captured = capsys.readouterr()
-#    assert captured.out == "filter_by_state error: \"В словарях нет ключа 'state'\". Inputs: [{'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'date': '2018-10-14T08:21:33.419441'}]\n"
-#
+def test_log_error_operation_in_console_for_filter_by_state_with_log_decorator(capsys):
+    """Тестирует логирование ошибок при выполнении операции. Логи в консоль"""
+    @log()
+    def filter_by_state(source_data, state = "EXECUTED"):
+        try:
+            filtered_data = list(filter(lambda data: data["state"] == state, source_data))
+        except KeyError:
+            raise KeyError("В словарях нет ключа 'state'")
+        return filtered_data
+
+    try:
+        filter_by_state(
+            [
+                {"id": 41428829, "date": "2019-07-03T18:35:29.512364"},
+                {"id": 939719570, "date": "2018-06-30T02:08:58.425572"},
+                {"id": 594226727, "date": "2018-09-12T21:27:25.241689"},
+                {"id": 615064591, "date": "2018-10-14T08:21:33.419441"},
+            ]
+        )
+    except KeyError:
+        captured = capsys.readouterr()
+        assert captured.out == "filter_by_state error: \"В словарях нет ключа 'state'\". Inputs: [{'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'date': '2018-10-14T08:21:33.419441'}]\n"
