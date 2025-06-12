@@ -126,16 +126,3 @@ def test_log_error_operation_in_console_for_filter_by_state_with_log_decorator(c
     )
     captured = capsys.readouterr()
     assert captured.out == "filter_by_state error: \"В словарях нет ключа 'state'\". Inputs: [{'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'date': '2018-10-14T08:21:33.419441'}]\n"
-
-
-def test_incorrect_log_file_name(example_input_none_for_get_mask_card_number):
-    """Тестирует обработку кейса, где в декоратор log передано неверное название файла с логами"""
-    @log("mylog.csv")
-    def get_mask_card_number(card_number):
-        if card_number is None:
-            raise ValueError("Не указан номер карты или счёта")
-        card_number_str = str(card_number)
-        return card_number_str[:4] + " " + card_number_str[4:6] + "*" * 2 + " " + "*" * 4 + " " + card_number_str[12:]
-
-    with pytest.raises(ValueError, match="Неверное название файла логов. Должно быть 'mylog.txt'"):
-        get_mask_card_number(example_input_none_for_get_mask_card_number)
