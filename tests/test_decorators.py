@@ -72,8 +72,8 @@ def test_log_error_operation_in_file_for_get_mask_card_number_with_log_decorator
 
     result = get_mask_card_number(example_input_none_for_get_mask_card_number)
     with open(example_path_to_log_file, "r", encoding="utf-8") as file:
-        content = file.readlines()
-        assert content[-1].strip() == f"get_mask_card_number error: Не указан номер карты или счёта. Inputs: {example_input_none_for_get_mask_card_number}"
+            content = file.readlines()
+            assert content[-1].strip() == f"get_mask_card_number error: Не указан номер карты или счёта. Inputs: {example_input_none_for_get_mask_card_number}"
 
 
 def test_log_error_operation_in_console_for_get_mask_card_number_with_log_decorator(capsys):
