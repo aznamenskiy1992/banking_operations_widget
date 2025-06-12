@@ -93,7 +93,6 @@ pytest tests/ -v
 6. `test_log_error_operation_in_console_for_get_mask_card_number_with_log_decorator` - проверяет логирование ошибок в консоль
 7. `test_log_error_operation_in_file_for_filter_by_state_with_log_decorator` - проверяет логирование ошибок фильтрации в файл
 8. `test_log_error_operation_in_console_for_filter_by_state_with_log_decorator` - проверяет логирование ошибок фильтрации в консоль
-9. `test_incorrect_log_file_name` - проверяет обработку неверного имени файла логов
 
 ### Покрытие тестами
 Для проверки покрытия кода тестами используйте:
@@ -273,7 +272,7 @@ def another_function():
 pass
 ```
 - Параметры:
-  - `filename`: str | None - имя файла для записи логов (должно быть 'mylog.txt' или None)
+  - `filename`: str | None - имя файла для записи логов (должно быть 'файл.txt' или None)
 - Возможности:
   - Логирует успешное выполнение функций
   - Логирует ошибки с информацией об исключении и входных данных
