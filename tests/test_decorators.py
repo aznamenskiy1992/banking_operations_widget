@@ -94,22 +94,24 @@ def test_log_error_operation_in_console_for_get_mask_card_number_with_log_decora
         assert captured.out == f"get_mask_card_number error: Не указан номер карты или счёта. Inputs: None\n"
 
 
-#def test_log_error_operation_in_file_for_filter_by_state_with_log_decorator(example_input_none_for_filter_by_state, example_path_to_log_file):
-#    """Тестирует логирование ошибок при выполнении операции. Логи в файл"""
-#    @log("mylog.txt")
-#    def filter_by_state(source_data, state = "EXECUTED"):
-#        try:
-#            filtered_data = list(filter(lambda data: data["state"] == state, source_data))
-#        except KeyError:
-#            raise KeyError("В словарях нет ключа 'state'")
-#        return filtered_data
-#
-#    result = filter_by_state(example_input_none_for_filter_by_state)
-#    with open(example_path_to_log_file, "r", encoding="utf-8") as file:
-#        content = file.readlines()
-#        assert content[-1].strip() == f"filter_by_state error: \"В словарях нет ключа 'state'\". Inputs: {example_input_none_for_filter_by_state}"
-#
-#
+def test_log_error_operation_in_file_for_filter_by_state_with_log_decorator(example_input_none_for_filter_by_state, example_path_to_log_file):
+    """Тестирует логирование ошибок при выполнении операции. Логи в файл"""
+    @log("mylog.txt")
+    def filter_by_state(source_data, state = "EXECUTED"):
+        try:
+            filtered_data = list(filter(lambda data: data["state"] == state, source_data))
+        except KeyError:
+            raise KeyError("В словарях нет ключа 'state'")
+        return filtered_data
+
+    try:
+        filter_by_state(example_input_none_for_filter_by_state)
+    except KeyError:
+        with open(example_path_to_log_file, "r", encoding="utf-8") as file:
+            content = file.readlines()
+            assert content[-1].strip() == f"filter_by_state error: \"В словарях нет ключа 'state'\". Inputs: {example_input_none_for_filter_by_state}"
+
+
 #def test_log_error_operation_in_console_for_filter_by_state_with_log_decorator(capsys):
 #    """Тестирует логирование ошибок при выполнении операции. Логи в консоль"""
 #    @log()

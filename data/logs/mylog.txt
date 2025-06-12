@@ -310,3 +310,11 @@ get_mask_card_number error: Не указан номер карты или сч�
 get_mask_card_number ok
 filter_by_state ok
 get_mask_card_number error: Не указан номер карты или счёта. Inputs: None
+get_mask_card_number ok
+filter_by_state ok
+get_mask_card_number error: Не указан номер карты или счёта. Inputs: None
+filter_by_state error: "В словарях нет ключа 'state'". Inputs: [{'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'date': '2018-10-14T08:21:33.419441'}]
+get_mask_card_number ok
+filter_by_state ok
+get_mask_card_number error: Не указан номер карты или счёта. Inputs: None
+filter_by_state error: "В словарях нет ключа 'state'". Inputs: [{'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'date': '2018-10-14T08:21:33.419441'}]
