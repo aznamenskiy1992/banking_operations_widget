@@ -27,10 +27,11 @@ def log(filename=None):
         @wraps(func)
         def wrapper(*args, **kwargs):
             # Формируем путь к файлу логов (если filename указан)
-            log_path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                "data", "logs", filename
-            ) if filename else None
+            log_path = (
+                os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "logs", filename)
+                if filename
+                else None
+            )
 
             try:
                 # Пытаемся выполнить декорируемую функцию
