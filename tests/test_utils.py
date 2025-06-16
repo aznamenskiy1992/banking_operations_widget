@@ -1,5 +1,6 @@
 import json
 import os
+from json import JSONDecodeError
 
 import pytest
 from unittest.mock import patch
@@ -112,4 +113,27 @@ def test_empty_operations_json():
         result = get_transactions("operations.json")
 
     assert result == fake_json_data
+    mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+
+def test_decode_error_to_json_data():
+    """Тестирует обработку кейса, когда в файле содержатся данные, которые невозможно декодировать"""
+    invalid_json_str = """[
+        {
+            "id": 667307132,
+            "state": "EXECUTED"
+            "date": "2019-07-13T18:51:29.313309",
+            "operationAmount": {
+                "amount": "97853.86",
+                "currency": {
+                    "name": "руб.",
+                    "code": "RUB"
+                }
+            }
+        }"""
+    with patch("builtins.open", mock_open(read_data=invalid_json_str)) as mocked_open:
+        with pytest.raises(JSONDecodeError) as exc_info:
+            get_transactions("operations.json")
+
+    assert str(exc_info.value) == "Невозможно декодировать данные в JSON"
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
