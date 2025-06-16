@@ -12,6 +12,8 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
             if not isinstance(operations, list):
                 print("Данные в файле находятся не в списке")
                 return empty_list_to_return
+            elif len(operations) == 0:
+                print("Нет данных в файле")
     except FileNotFoundError:
         print("Не найден файл по указанному пути")
         return empty_list_to_return
