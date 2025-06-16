@@ -1,51 +1,5 @@
 import pytest
-
-
-@pytest.fixture
-def none_card_and_account_number():
-    """Фикстура возвращает стандартное сообщение об ошибке, когда номер карты/счёта не указан (None)."""
-    return "Не указан номер карты или счёта"
-
-
-@pytest.fixture
-def none_standard_card_and_account_number():
-    """Фикстура возвращает сообщение об ошибке для некорректной длины номера карты/счёта."""
-    return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
-
-
-@pytest.fixture
-def card_and_account_number_str_symbols_not_int():
-    """Фикстура возвращает сообщение об ошибке, когда номер содержит нецифровые символы."""
-    return "Номер карты или счёта должен состоять только из цифр"
-
-
-@pytest.fixture
-def card_and_account_number_other_incorrect_types():
-    """Фикстура возвращает сообщение об ошибке для нецелочисленных типов данных номера."""
-    return "Номер карты или счёта должен быть целым числом"
-
-
-@pytest.fixture
-def card_and_account_number_incorrect_types():
-    """Фикстура возвращает форматированное сообщение об ошибке для некорректного строкового ввода.
-    Содержит примеры правильного формата для карты и счёта."""
-    return """Номер карты или счёта должен быть строкой.
-    Маска ввода:
-    Для счёта - 'Счёт 79053641285349013572'
-    Для Карты - 'Visa Classic 5543812355785'"""
-
-
-@pytest.fixture
-def not_have_date():
-    """Фикстура возвращает сообщение об ошибке для отсутствующей или неверно форматированной даты.
-    Указывает требуемый формат YYYY-MM-DD."""
-    return "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
-
-
-@pytest.fixture
-def none_date():
-    """Фикстура возвращает сообщение об ошибке, когда дата не указана (None)."""
-    return "Дата не указана"
+import os
 
 
 @pytest.fixture
@@ -172,3 +126,46 @@ def example_input_transactions_without_need_key_for_for_filter_by_currency_and_t
         }
     ]
     return transactions
+
+
+@pytest.fixture
+def example_input_card_for_get_mask_card_number():
+    """Фикстура, передаёт номер карты"""
+    card_number: int = 5543812355785520
+    return card_number
+
+
+@pytest.fixture
+def example_input_list_dicts_for_filter_by_state():
+    """Фикстура передаёт список словарей"""
+    source_data = [
+        {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+        {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+        {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+        {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+    ]
+    return source_data
+
+
+@pytest.fixture
+def example_input_none_for_get_mask_card_number():
+    """Фикстура, передаёт None вместо номера карты"""
+    return None
+
+
+@pytest.fixture
+def example_input_none_for_filter_by_state():
+    """Фикстура, передаёт список словарей без ключа 'state'"""
+    source_data = [
+        {"id": 41428829, "date": "2019-07-03T18:35:29.512364"},
+        {"id": 939719570, "date": "2018-06-30T02:08:58.425572"},
+        {"id": 594226727, "date": "2018-09-12T21:27:25.241689"},
+        {"id": 615064591, "date": "2018-10-14T08:21:33.419441"},
+    ]
+    return source_data
+
+
+@pytest.fixture
+def example_path_to_log_file():
+    """Фикстура передаёт путь до mylog.txt"""
+    return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "logs", "mylog.txt")
