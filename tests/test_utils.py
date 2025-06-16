@@ -1,13 +1,17 @@
+import json
+
 import pytest
 from unittest.mock import patch
+from unittest.mock import mock_open
 
 from src.utils import get_transactions
 
 
-@patch("json.loads")
-def test_get_transactions(mock_json, path_to_operations_json):
+def test_get_transactions():
     """Тестирует выдачу банковских операций из JSON файла"""
-    return_transactions = [
+
+    # Создаём фейковые данные
+    fake_json_data = [
         {
             "id": 441945886,
             "state": "EXECUTED",
@@ -37,9 +41,27 @@ def test_get_transactions(mock_json, path_to_operations_json):
             "description": "Перевод организации",
             "from": "MasterCard 7158300734726758",
             "to": "Счет 35383033474447895560"
+        },
+        {
+            "id": 667307132,
+            "state": "EXECUTED",
+            "date": "2019-07-13T18:51:29.313309",
+            "operationAmount": {
+                "amount": "97853.86",
+                "currency": {
+                    "name": "руб.",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод с карты на счет",
+            "from": "Maestro 1308795367077170",
+            "to": "Счет 96527012349577388612"
         }
     ]
+    fake_json_str = json.dumps(fake_json_data)
 
-    mock_json.return_value = return_transactions
-    assert get_transactions(path_to_operations_json) == return_transactions
-    mock_json.assert_called_with(path_to_operations_json)
+    with patch("builtins.open", mock_open(read_data=fake_json_str)) as mocked_open:
+        result = get_transactions("operations.json")
+
+    assert result == fake_json_data
+    mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
