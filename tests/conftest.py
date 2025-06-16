@@ -169,3 +169,9 @@ def example_input_none_for_filter_by_state():
 def example_path_to_log_file():
     """Фикстура передаёт путь до mylog.txt"""
     return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "logs", "mylog.txt")
+
+
+@pytest.fixture
+def path_to_operations_json():
+    """Фикстура передаёт путь до файла operations.json"""
+    return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "operations.json")
