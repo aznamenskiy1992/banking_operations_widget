@@ -21,14 +21,14 @@ def mask_account_card(card_or_account_number: str) -> str:
 
     # Проверка на None (отсутствие номера)
     if card_or_account_number is None:
-        return "Не указан номер карты или счёта"
+        raise ValueError("Не указан номер карты или счёта")
 
     # Проверка типа входных данных (должна быть строка)
     if not isinstance(card_or_account_number, str):
-        return """Номер карты или счёта должен быть строкой.
+        raise TypeError("""Номер карты или счёта должен быть строкой.
     Маска ввода:
     Для счёта - 'Счёт 79053641285349013572'
-    Для Карты - 'Visa Classic 5543812355785'"""
+    Для Карты - 'Visa Classic 5543812355785'""")
 
     # Разделение входной строки на части по пробелам
     card_or_account_number_split: list[str] = card_or_account_number.split()
@@ -67,7 +67,7 @@ def get_date(date_: str) -> str:
     """
     # Проверка на None (дата не указана)
     if date_ is None:
-        return "Дата не указана"
+        raise ValueError("Дата не указана")
 
     # Удаление пробелов в строке, если они есть
     if " " in date_:
@@ -81,7 +81,7 @@ def get_date(date_: str) -> str:
         formatted_date_by_y_m_d: str = str(datetime.strptime(date_split[0], "%Y-%m-%d").date())
     except ValueError:
         # Обработка ошибки парсинга (неверный формат даты)
-        return "Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD"
+        raise ValueError("Дата не указана или указана неверно. Формат ввода даты YYYY-MM-DD")
     else:
         # Разделение даты на компоненты (год, месяц, день)
         formatted_date_by_y_m_d_split: list[str] = formatted_date_by_y_m_d.split("-")

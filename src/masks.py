@@ -13,18 +13,18 @@ def get_mask_card_number(card_number: int) -> str:
 
     # Обработка случая, когда входные данные не переданы (None)
     if card_number is None:
-        return "Не указан номер карты или счёта"
+        raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера карты в строку и проверка типа входных данных
     if isinstance(card_number, int):  # Если номер карты передан как целое число
         card_number_str = str(card_number)
     elif isinstance(card_number, str):  # Если номер карты передан как строка
         if not card_number.isdigit():
-            return "Номер карты или счёта должен состоять только из цифр"  # Строка содержит нецифровые символы
+            raise ValueError("Номер карты или счёта должен состоять только из цифр")  # Строка содержит нецифровые символы
         else:
             card_number_str = card_number
     else:
-        return "Номер карты или счёта должен быть целым числом"  # Недопустимый тип данных (не int и не str)
+        raise TypeError("Номер карты или счёта должен быть целым числом")  # Недопустимый тип данных (не int и не str)
 
     len_card_number = len(card_number_str)
 
@@ -91,7 +91,7 @@ def get_mask_card_number(card_number: int) -> str:
                     )
     else:
         # Длина номера карты не поддерживается
-        return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
+        raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     # Собираем блоки в одну строку с разделением пробелами
     return " ".join(dividing_card_number_by_blocks)
@@ -112,18 +112,18 @@ def get_mask_account(account_number: int) -> str:
     """
     # Проверка на None
     if account_number is None:
-        return "Не указан номер карты или счёта"
+        raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера счёта в строку с проверкой типа
     if isinstance(account_number, int):
         account_number_str = str(account_number)
     elif isinstance(account_number, str):
         if not account_number.isdigit():
-            return "Номер карты или счёта должен состоять только из цифр"
+            raise ValueError("Номер карты или счёта должен состоять только из цифр")
         else:
             account_number_str = account_number
     else:
-        return "Номер карты или счёта должен быть целым числом"
+        raise TypeError("Номер карты или счёта должен быть целым числом")
 
     # Проверка длины номера счёта
     len_account_number = len(account_number_str)
@@ -132,6 +132,6 @@ def get_mask_account(account_number: int) -> str:
     if len_account_number == 20:
         mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
-        return "Указан некорректный номер карты или счёта. Проверьте количество цифр"
+        raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     return mask_account_number
