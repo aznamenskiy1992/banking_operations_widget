@@ -1,4 +1,5 @@
 import json
+import os
 
 import pytest
 from unittest.mock import patch
@@ -65,3 +66,8 @@ def test_get_transactions():
 
     assert result == fake_json_data
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+
+def test_incorrect_path_to_operations_json():
+    """Тестирует обработку кейса, когда указан некорректный путь до файла с банковскими операциями"""
+    assert get_transactions(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "operations.json")) == []
