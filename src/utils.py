@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 
 
 def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
@@ -17,5 +18,11 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
     except FileNotFoundError:
         print("Не найден файл по указанному пути")
         return empty_list_to_return
+    except json.JSONDecodeError as exc_info:
+        raise json.JSONDecodeError(
+            msg="Невозможно декодировать данные в JSON",
+            doc=exc_info.doc,
+            pos=exc_info.pos
+        )
 
     return operations

@@ -135,5 +135,5 @@ def test_decode_error_to_json_data():
         with pytest.raises(JSONDecodeError) as exc_info:
             get_transactions("operations.json")
 
-    assert str(exc_info.value) == "Невозможно декодировать данные в JSON"
+    assert str(exc_info.value) == "Невозможно декодировать данные в JSON: line 5 column 13 (char 85)"
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
