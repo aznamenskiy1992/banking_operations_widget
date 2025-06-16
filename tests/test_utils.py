@@ -101,3 +101,15 @@ def test_not_list_in_operations_json():
 
     assert result == fake_json_data
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+
+def test_empty_operations_json():
+    """Тестирует обработку кейса, когда файл с банковскими операциями пустой"""
+    fake_json_data = []
+    fake_json_str = json.dumps(fake_json_data)
+
+    with patch("builtins.open", mock_open(read_data=fake_json_str)) as mocked_open:
+        result = get_transactions("operations.json")
+
+    assert result == fake_json_data
+    mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
