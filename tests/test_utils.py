@@ -182,3 +182,48 @@ def test_decode_error_to_json_data():
 def test_get_amount_for_get_amount(operations, result):
     """Функция возвращает сумму транзакции из операции"""
     assert get_amount(operations) == result
+
+
+@pytest.mark.parametrize(
+    "operations, error_message",
+    [
+        (
+                {
+                    "id": 41428829,
+                    "state": "EXECUTED",
+                    "date": "2019-07-03T18:35:29.512364",
+                    "amount": "8221.37",
+                    "currency": {
+                      "name": "USD",
+                      "code": "USD"
+                    },
+                    "description": "Перевод организации",
+                    "from": "MasterCard 7158300734726758",
+                    "to": "Счет 35383033474447895560"
+                },
+                "Нет ключа \"operationAmount\""
+        ),
+        (
+                {
+                    "id": 41428829,
+                    "state": "EXECUTED",
+                    "date": "2019-07-03T18:35:29.512364",
+                    "operationAmount": {
+                      "currency": {
+                        "name": "USD",
+                        "code": "USD"
+                      }
+                    },
+                    "description": "Перевод организации",
+                    "from": "MasterCard 7158300734726758",
+                    "to": "Счет 35383033474447895560"
+                },
+                "Нет ключа \"amount\""
+        )
+    ]
+)
+def test_not_need_key_in_dict_for_get_amount(operations, error_message):
+    """Тестирует обраотку кейса, когда в словаре с операцией нет нужных ключей"""
+    with pytest.raises(KeyError) as exc_info:
+        get_amount(operations)
+    assert str(exc_info) == error_message
