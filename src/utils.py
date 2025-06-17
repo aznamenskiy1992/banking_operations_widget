@@ -33,4 +33,9 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
 
 def get_amount(transaction: dict[str, int]) -> float:
     """Функция возвращает сумму транзакции из операции"""
-    return float(transaction["operationAmount"]["amount"])
+    if "operationAmount" not in transaction:
+        raise KeyError("Нет ключа operationAmount")
+    elif "amount" not in transaction["operationAmount"]:
+        raise KeyError("Нет ключа amount")
+    else:
+        return float(transaction["operationAmount"]["amount"])
