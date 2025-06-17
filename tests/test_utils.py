@@ -227,3 +227,25 @@ def test_not_need_key_in_dict_for_get_amount(operations, error_message):
     with pytest.raises(KeyError) as exc_info:
         get_amount(operations)
     assert str(exc_info.value) == f"'{error_message}'"
+
+
+def test_cant_convert_to_float_for_get_amount():
+    """Тестирует обработку кейса, когда значение в ключе amount не конвертируется во float"""
+    incorrect_operations = {
+        "id": 41428829,
+        "state": "EXECUTED",
+        "date": "2019-07-03T18:35:29.512364",
+        "operationAmount": {
+            "amount": "31957 58",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод организации",
+        "from": "MasterCard 7158300734726758",
+        "to": "Счет 35383033474447895560"
+    }
+    with pytest.raises(ValueError) as exc_info:
+        get_amount(incorrect_operations)
+    assert str(exc_info.value) == "Сумма транзакции указана в нечисловом формате"
