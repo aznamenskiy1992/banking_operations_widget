@@ -6,7 +6,7 @@ import pytest
 from unittest.mock import patch
 from unittest.mock import mock_open
 
-from src.utils import get_transactions
+from src.utils import get_transactions, get_amount
 
 
 def test_get_transactions():
@@ -137,3 +137,48 @@ def test_decode_error_to_json_data():
 
     assert str(exc_info.value) == "Невозможно декодировать данные в JSON: line 5 column 13 (char 85)"
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+
+@pytest.mark.parametrize(
+    "operations, result", [
+        (
+                {
+                    "id": 41428829,
+                    "state": "EXECUTED",
+                    "date": "2019-07-03T18:35:29.512364",
+                    "operationAmount": {
+                      "amount": "8221.37",
+                      "currency": {
+                        "name": "USD",
+                        "code": "USD"
+                      }
+                    },
+                    "description": "Перевод организации",
+                    "from": "MasterCard 7158300734726758",
+                    "to": "Счет 35383033474447895560"
+                },
+                8221.37
+        ),
+        (
+                {
+                    "id": 41428829,
+                    "state": "EXECUTED",
+                    "date": "2019-07-03T18:35:29.512364",
+                    "operationAmount": {
+                      "amount": "31957.58",
+                      "currency": {
+                        "name": "USD",
+                        "code": "USD"
+                      }
+                    },
+                    "description": "Перевод организации",
+                    "from": "MasterCard 7158300734726758",
+                    "to": "Счет 35383033474447895560"
+                },
+                31957.58
+        )
+    ]
+)
+def test_get_amount_for_get_amount(operations, result):
+    """Функция возвращает сумму транзакции из операции"""
+    assert get_amount(operations) == result

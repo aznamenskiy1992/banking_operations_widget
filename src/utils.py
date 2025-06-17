@@ -29,3 +29,7 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
             doc=exc_info.doc,
             pos=exc_info.pos
         )
+
+
+def get_amount(transaction: dict[str, int]) -> float:
+    pass
