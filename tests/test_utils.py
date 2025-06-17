@@ -272,4 +272,4 @@ def test_not_dict_for_get_amount():
     ]
     with pytest.raises(TypeError) as exc_info:
         get_amount(incorrect_operations)
-    assert str(exc_info) == "Транзакция должна быть передана в словаре"
+    assert str(exc_info.value) == "Транзакция должна быть передана в словаре"
