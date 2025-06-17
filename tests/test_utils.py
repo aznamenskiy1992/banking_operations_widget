@@ -36,8 +36,8 @@ def test_get_transactions():
             "operationAmount": {
                 "amount": "8221.37",
                 "currency": {
-                    "name": "USD",
-                    "code": "USD"
+                    "name": "руб.",
+                    "code": "RUB"
                 }
             },
             "description": "Перевод организации",
@@ -149,8 +149,8 @@ def test_decode_error_to_json_data():
                     "operationAmount": {
                       "amount": "8221.37",
                       "currency": {
-                        "name": "USD",
-                        "code": "USD"
+                        "name": "руб.",
+                        "code": "RUB"
                       }
                     },
                     "description": "Перевод организации",
@@ -167,8 +167,8 @@ def test_decode_error_to_json_data():
                     "operationAmount": {
                       "amount": "31957.58",
                       "currency": {
-                        "name": "USD",
-                        "code": "USD"
+                        "name": "руб.",
+                        "code": "RUB"
                       }
                     },
                     "description": "Перевод организации",
@@ -194,8 +194,8 @@ def test_get_amount_for_get_amount(operations, result):
                     "date": "2019-07-03T18:35:29.512364",
                     "amount": "8221.37",
                     "currency": {
-                      "name": "USD",
-                      "code": "USD"
+                      "name": "руб.",
+                      "code": "RUB"
                     },
                     "description": "Перевод организации",
                     "from": "MasterCard 7158300734726758",
@@ -210,8 +210,8 @@ def test_get_amount_for_get_amount(operations, result):
                     "date": "2019-07-03T18:35:29.512364",
                     "operationAmount": {
                       "currency": {
-                        "name": "USD",
-                        "code": "USD"
+                        "name": "руб.",
+                        "code": "RUB"
                       }
                     },
                     "description": "Перевод организации",
@@ -238,8 +238,8 @@ def test_cant_convert_to_float_for_get_amount():
         "operationAmount": {
             "amount": "31957 58",
             "currency": {
-                "name": "USD",
-                "code": "USD"
+                "name": "руб.",
+                "code": "RUB"
             }
         },
         "description": "Перевод организации",
@@ -261,8 +261,8 @@ def test_not_dict_for_get_amount():
             "operationAmount": {
                 "amount": "31957 58",
                 "currency": {
-                    "name": "USD",
-                    "code": "USD"
+                    "name": "руб.",
+                    "code": "RUB"
                 }
             },
             "description": "Перевод организации",
