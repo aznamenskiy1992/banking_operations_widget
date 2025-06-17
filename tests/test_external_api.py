@@ -23,4 +23,8 @@ def test_get_success_response_for_convert_currency(mock_get):
 
     mock_get.return_value.json.return_value = response_data
     assert convert_currency("USD", 10.2) == response_data
-    mock_get.assert_called_once_with("https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=10.2")
+    mock_get.assert_called_once_with(
+        "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=10.2",
+        headers={"apikey": "my_API_key"},
+        data={}
+    )
