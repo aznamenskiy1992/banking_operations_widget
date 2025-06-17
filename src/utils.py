@@ -32,4 +32,5 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
 
 
 def get_amount(transaction: dict[str, int]) -> float:
-    pass
+    """Функция возвращает сумму транзакции из операции"""
+    return float(transaction["operationAmount"]["amount"])
