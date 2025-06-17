@@ -37,5 +37,10 @@ def get_amount(transaction: dict[str, int]) -> float:
         raise KeyError("Нет ключа operationAmount")
     elif "amount" not in transaction["operationAmount"]:
         raise KeyError("Нет ключа amount")
+
     else:
-        return float(transaction["operationAmount"]["amount"])
+        try:
+            return float(transaction["operationAmount"]["amount"])
+        except ValueError:
+            raise ValueError("Сумма транзакции указана в нечисловом формате")
+
