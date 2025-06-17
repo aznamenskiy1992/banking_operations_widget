@@ -201,7 +201,7 @@ def test_get_amount_for_get_amount(operations, result):
                     "from": "MasterCard 7158300734726758",
                     "to": "Счет 35383033474447895560"
                 },
-                "Нет ключа \"operationAmount\""
+                "Нет ключа operationAmount"
         ),
         (
                 {
@@ -218,12 +218,12 @@ def test_get_amount_for_get_amount(operations, result):
                     "from": "MasterCard 7158300734726758",
                     "to": "Счет 35383033474447895560"
                 },
-                "Нет ключа \"amount\""
+                "Нет ключа amount"
         )
     ]
 )
 def test_not_need_key_in_dict_for_get_amount(operations, error_message):
-    """Тестирует обраотку кейса, когда в словаре с операцией нет нужных ключей"""
+    """Тестирует обработку кейса, когда в словаре с операцией нет нужных ключей"""
     with pytest.raises(KeyError) as exc_info:
         get_amount(operations)
-    assert str(exc_info) == error_message
+    assert str(exc_info.value) == f"'{error_message}'"
