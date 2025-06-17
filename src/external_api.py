@@ -12,6 +12,9 @@ def convert_currency(from_: str, amount: float) -> float:
     "apikey": "my_API_key"
   }
 
-  response = requests.get(url, headers=headers, data=payload)
-
-  return response.json()["result"]
+  try:
+      response = requests.get(url, headers=headers, data=payload)
+      response.raise_for_status()
+      return response.json()["result"]
+  except requests.HTTPError as exc_info:
+    raise requests.HTTPError(exc_info.response.json()["error"]["message"])
