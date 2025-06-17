@@ -14,4 +14,4 @@ def convert_currency(from_: str, amount: float) -> tuple[int, dict[str, Union[st
 
   response = requests.get(url, headers=headers, data=payload)
 
-  return response.json()
+  return response.json()["result"]
