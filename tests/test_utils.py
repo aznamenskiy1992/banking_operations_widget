@@ -3,7 +3,7 @@ import os
 from json import JSONDecodeError
 
 import pytest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from unittest.mock import mock_open
 
 from src.utils import get_transactions, get_amount
@@ -273,3 +273,34 @@ def test_not_dict_for_get_amount():
     with pytest.raises(TypeError) as exc_info:
         get_amount(incorrect_operations)
     assert str(exc_info.value) == "Транзакция должна быть передана в словаре"
+
+
+def test_get_amount_with_convert_to_rub_for_get_amount():
+    """Тестирует возврат суммы транзакции из операции с конвертацией в рубли из иностранной валюты"""
+    mock_convert_currency = Mock(return_value=799.603939)
+    convert_currency = mock_convert_currency
+
+    result = get_amount(
+        {
+            "id": 41428829,
+            "state": "EXECUTED",
+            "date": "2019-07-03T18:35:29.512364",
+            "operationAmount": {
+                "amount": "10.2",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "MasterCard 7158300734726758",
+            "to": "Счет 35383033474447895560"
+        }
+    )
+    assert result == 799.603939
+
+    mock_convert_currency.assert_called_once_with(
+        "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=10.2",
+        headers={"apikey": "my_API_key"},
+        data={}
+    )
