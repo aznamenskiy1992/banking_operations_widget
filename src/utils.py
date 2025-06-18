@@ -42,6 +42,11 @@ def get_amount(transaction: dict[str, int]) -> float:
         raise KeyError("Нет ключа operationAmount")
     elif "amount" not in transaction["operationAmount"]:
         raise KeyError("Нет ключа amount")
+    elif "currency" not in transaction["operationAmount"]:
+        raise KeyError("Нет ключа currency")
+    elif "code" not in transaction["operationAmount"]["currency"]:
+        raise KeyError("Нет ключа code")
+
 
     else:
         try:
