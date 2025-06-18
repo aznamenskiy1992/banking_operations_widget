@@ -1,10 +1,12 @@
 from json import JSONDecodeError
 from unittest.mock import patch, Mock
+import os
 
 import pytest
 import requests
+from dotenv import load_dotenv
 
-from src.external_api import convert_currency
+from src.external_api import convert_currency, token_for_exchange_rates_data_api
 
 
 @patch("requests.get")
@@ -29,7 +31,7 @@ def test_get_success_response_for_convert_currency(mock_get):
 
     mock_get.assert_called_once_with(
         "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=10.2",
-        headers={"apikey": "my_API_key"},
+        headers={"apikey": token_for_exchange_rates_data_api},
         data={}
     )
 
@@ -57,6 +59,6 @@ def test_http_error_for_convert_currency(mock_get):
 
     mock_get.assert_called_once_with(
         "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=10.2",
-        headers={"apikey": "my_API_key"},
+        headers={"apikey": token_for_exchange_rates_data_api},
         data={}
     )
