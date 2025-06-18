@@ -1,6 +1,8 @@
 import json
 from json import JSONDecodeError
 
+from src.external_api import convert_currency
+
 
 def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
     """Функция возвращает список банковских операций из operations.json"""
