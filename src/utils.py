@@ -45,7 +45,13 @@ def get_amount(transaction: dict[str, int]) -> float:
 
     else:
         try:
-            return float(transaction["operationAmount"]["amount"])
+            currency: str = transaction["operationAmount"]["currency"]["code"]
+            amount = float(transaction["operationAmount"]["amount"])
         except ValueError:
             raise ValueError("Сумма транзакции указана в нечисловом формате")
+        else:
+            if currency != "RUB":
+                return convert_currency(currency, amount)
+            else:
+                return amount
 
