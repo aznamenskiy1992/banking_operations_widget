@@ -60,27 +60,3 @@ def test_http_error_for_convert_currency(mock_get):
         headers={"apikey": "my_API_key"},
         data={}
     )
-
-
-
-
-
-
-
-
-#    mock_get.return_value.raise_for_status.return_value.json.return_value = {
-#        "error": {
-#            "code": "invalid_conversion_amount",
-#            "message": "You have not specified an amount to be converted. [Example: amount=5]"
-#        }
-#    }
-#
-#    with pytest.raises(requests.HTTPError) as exc_info:
-#        convert_currency("USD", 10.2)
-#    assert str(exc_info.value) == "You have not specified an amount to be converted. [Example: amount=5]"
-#
-#    mock_get.assert_called_once_with(
-#        "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=10.2",
-#        headers={"apikey": "my_API_key"},
-#        data={}
-#    )
