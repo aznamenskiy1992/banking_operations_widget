@@ -219,6 +219,39 @@ def test_get_amount_for_get_amount(operations, result):
                     "to": "Счет 35383033474447895560"
                 },
                 "Нет ключа amount"
+        ),
+        (
+                {
+                    "id": 41428829,
+                    "state": "EXECUTED",
+                    "date": "2019-07-03T18:35:29.512364",
+                    "operationAmount": {
+                      "amount": "31957.58",
+                      "name": "руб.",
+                      "code": "RUB"
+                    },
+                    "description": "Перевод организации",
+                    "from": "MasterCard 7158300734726758",
+                    "to": "Счет 35383033474447895560"
+                },
+                "Нет ключа currency"
+        ),
+        (
+                {
+                    "id": 41428829,
+                    "state": "EXECUTED",
+                    "date": "2019-07-03T18:35:29.512364",
+                    "operationAmount": {
+                      "amount": "31957.58",
+                      "currency": {
+                        "name": "руб.",
+                      }
+                    },
+                    "description": "Перевод организации",
+                    "from": "MasterCard 7158300734726758",
+                    "to": "Счет 35383033474447895560"
+                },
+                "Нет ключа code"
         )
     ]
 )
