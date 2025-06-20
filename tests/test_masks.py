@@ -173,8 +173,16 @@ def test_none_account_number(caplog):
         (745205381921035742369, "Указан некорректный номер карты или счёта. Проверьте количество цифр"),
     ]
 )
-def test_none_standard_account_number(account_number, error_message):
+def test_none_standard_account_number(account_number, error_message, caplog):
     """Тестирует обработку номеров счетов некорректной длины (слишком коротких/длинных)."""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(ValueError) as exc_info:
         get_mask_account(account_number)
     assert str(exc_info.value) == error_message
+
+    assert f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}" in caplog.text
+
+    assert len(caplog.records) == 2
+    assert caplog.records[0].levelname == "INFO"
+    assert caplog.records[1].levelname == "CRITICAL"
