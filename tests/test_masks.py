@@ -28,11 +28,18 @@ def test_input_standard_card_number(card_number, mask_number, caplog):
     assert caplog.records[1].levelname == "INFO"
 
 
-def test_none_card_number():
+def test_none_card_number(caplog):
     """Тестирует обработку None в качестве номера карты."""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(ValueError) as exc_info:
         get_mask_card_number(None)
     assert str(exc_info.value) == "Не указан номер карты или счёта"
+
+    assert "Номер карты получен, как None" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 @pytest.mark.parametrize(
