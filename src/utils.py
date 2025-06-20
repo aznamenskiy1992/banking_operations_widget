@@ -124,7 +124,7 @@ def get_amount(transaction: dict[str, int]) -> float:
 
     # Проверка типа входных данных
     if not isinstance(transaction, dict):
-        logging.critical(none_key_logging_message)
+        logging.critical("Транзакция получена не в словаре")
         raise TypeError("Транзакция должна быть передана в словаре")
 
     # Проверка наличия основного ключа с суммой и валютой
