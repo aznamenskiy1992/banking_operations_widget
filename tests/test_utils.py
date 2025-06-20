@@ -385,8 +385,10 @@ def test_not_dict_for_get_amount(caplog):
     assert caplog.records[0].levelname == "CRITICAL"
 
 
-def test_get_amount_with_convert_to_rub_for_get_amount():
+def test_get_amount_with_convert_to_rub_for_get_amount(caplog):
     """Тестирует возврат суммы транзакции из операции с конвертацией в рубли из иностранной валюты"""
+    caplog.set_level(logging.DEBUG)
+
     with patch("src.utils.convert_currency") as mock_convert_currency:
         mock_convert_currency.return_value = 799.603939
 
@@ -411,3 +413,8 @@ def test_get_amount_with_convert_to_rub_for_get_amount():
         assert result == 799.603939
 
         mock_convert_currency.assert_called_once_with("USD", 10.2)
+
+        assert "Возврат суммы транзакции с конвертацией в рубли" in caplog.text
+
+        assert len(caplog.records) == 1
+        assert caplog.records[0].levelname == "INFO"
