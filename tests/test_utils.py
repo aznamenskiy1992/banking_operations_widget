@@ -354,8 +354,10 @@ def test_cant_convert_to_float_for_get_amount(caplog):
     assert caplog.records[0].levelname == "CRITICAL"
 
 
-def test_not_dict_for_get_amount():
+def test_not_dict_for_get_amount(caplog):
     """Тестирует обработку кейса, когда операция передаётся не в словаре"""
+    caplog.set_level(logging.DEBUG)
+
     incorrect_operations = [
         {
             "id": 41428829,
@@ -376,6 +378,11 @@ def test_not_dict_for_get_amount():
     with pytest.raises(TypeError) as exc_info:
         get_amount(incorrect_operations)
     assert str(exc_info.value) == "Транзакция должна быть передана в словаре"
+
+    assert "Транзакция получена не в словаре" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 def test_get_amount_with_convert_to_rub_for_get_amount():
