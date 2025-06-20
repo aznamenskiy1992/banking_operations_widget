@@ -3,7 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler('logs/logs.log')
+file_handler = logging.FileHandler('logs/logs.log', mode='w', encoding='utf-8')
 file_formatter = logging.Formatter('%(asctime)s %(filename)s %(levelname)s: %(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -67,6 +67,7 @@ def get_mask_card_number(card_number: int) -> str:
     # Проверяем, поддерживается ли длина номера карты
     if len_card_number in list(mask_patterns.keys()):
         # Получаем позиции для маскирования из шаблона
+        logger.info(f"Маскируется номер карты: {card_number}")
         masking_position_start: int = mask_patterns[len_card_number]["masking"][0]
         masking_position_end: int = mask_patterns[len_card_number]["masking"][1]
 
@@ -107,6 +108,7 @@ def get_mask_card_number(card_number: int) -> str:
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     # Собираем блоки в одну строку с разделением пробелами
+    logger.info(f"Возвращается замаскированный номер карты: {card_number}")
     return " ".join(dividing_card_number_by_blocks)
 
 
