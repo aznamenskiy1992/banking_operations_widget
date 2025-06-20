@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 
 from src.masks import get_mask_account, get_mask_card_number
@@ -12,9 +14,18 @@ from src.masks import get_mask_account, get_mask_card_number
         (5543812355785520439, "5543 81** **** **** 439"),  # 19 цифр
     ],
 )
-def test_input_standard_card_number(card_number, mask_number):
+def test_input_standard_card_number(card_number, mask_number, caplog):
     """Тестирует корректность маскировки стандартных номеров карт (целые числа разной длины)."""
     assert get_mask_card_number(card_number) == mask_number
+
+    caplog.set_level(logging.DEBUG)
+
+    assert f"Маскируется номер карты: {card_number}" in caplog.text
+    assert f"Возвращается замаскированный номер карты: {card_number}" in caplog.text
+
+    assert len(caplog.records) == 2
+    assert caplog.records[0].levelname == "INFO"
+    assert caplog.records[1].levelname == "INFO"
 
 
 def test_none_card_number():
