@@ -91,11 +91,18 @@ def test_card_number_str_all_symbols_int(card_number, mask_number, caplog):
         ("5543 812 355 785", "Номер карты или счёта должен состоять только из цифр")
     ]
 )
-def test_card_number_str_symbols_not_int(card_number, error_message):
+def test_card_number_str_symbols_not_int(card_number, error_message, caplog):
     """Тестирует обработку номеров карт с нецифровыми символами (дефисы, пробелы и др.)."""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(ValueError) as exc_info:
         get_mask_card_number(card_number)
     assert str(exc_info.value) == error_message
+
+    assert f"Номер карты получен, как строка и содержит нечисловые символы: {card_number}" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 @pytest.mark.parametrize(
