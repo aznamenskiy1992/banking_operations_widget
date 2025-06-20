@@ -228,9 +228,16 @@ def test_decode_error_to_json_data(caplog):
         )
     ]
 )
-def test_get_amount_for_get_amount(operations, result):
+def test_get_amount_for_get_amount(operations, result, caplog):
     """Функция возвращает сумму транзакции из операции"""
+    caplog.set_level(logging.DEBUG)
+
     assert get_amount(operations) == result
+
+    assert "Возврат суммы транзакции" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "INFO"
 
 
 @pytest.mark.parametrize(
