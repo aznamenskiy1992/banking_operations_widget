@@ -325,8 +325,10 @@ def test_not_need_key_in_dict_for_get_amount(operations, error_message, caplog):
     assert caplog.records[0].levelname == "CRITICAL"
 
 
-def test_cant_convert_to_float_for_get_amount():
+def test_cant_convert_to_float_for_get_amount(caplog):
     """Тестирует обработку кейса, когда значение в ключе amount не конвертируется во float"""
+    caplog.set_level(logging.DEBUG)
+
     incorrect_operations = {
         "id": 41428829,
         "state": "EXECUTED",
@@ -345,6 +347,11 @@ def test_cant_convert_to_float_for_get_amount():
     with pytest.raises(ValueError) as exc_info:
         get_amount(incorrect_operations)
     assert str(exc_info.value) == "Сумма транзакции указана в нечисловом формате"
+
+    assert "Сумма транзакции не преобразуется в float" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 def test_not_dict_for_get_amount():
