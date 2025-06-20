@@ -1,10 +1,9 @@
 import logging
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler('logs/logs.log', mode='w', encoding='utf-8')
-file_formatter = logging.Formatter('%(asctime)s %(filename)s %(levelname)s: %(message)s')
+file_handler = logging.FileHandler("logs/logs.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s %(filename)s %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
@@ -109,7 +108,9 @@ def get_mask_card_number(card_number: int) -> str:
                     )
     else:
         # Длина номера карты не поддерживается
-        logger.critical(f"Получен номер карты некорректной длины. Номер: {card_number}, длина: {len(str(card_number))}")
+        logger.critical(
+            f"Получен номер карты некорректной длины. Номер: {card_number}, длина: {len(str(card_number))}"
+        )
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     # Собираем блоки в одну строку с разделением пробелами
@@ -156,7 +157,9 @@ def get_mask_account(account_number: int) -> str:
         logger.info(f"Маскирует номер счёта {account_number}")
         mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
-        logger.critical(f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}")
+        logger.critical(
+            f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}"
+        )
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     logger.info(f"Возвращает замаскированный номер счёта {account_number}")

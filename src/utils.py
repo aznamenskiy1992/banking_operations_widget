@@ -3,11 +3,10 @@ import logging
 
 from src.external_api import convert_currency
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler('logs/logs.log', mode="w", encoding="utf-8")
-file_formatter = logging.Formatter('%(asctime)s %(filename)s %(levelname)s: %(message)s')
+file_handler = logging.FileHandler("logs/logs.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s %(filename)s %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 

@@ -1,19 +1,17 @@
 import json
+import logging
 import os
 from json import JSONDecodeError
-import logging
+from unittest.mock import mock_open, patch
 
 import pytest
-from unittest.mock import patch
-from unittest.mock import mock_open
 
-from src.utils import get_transactions, get_amount
+from src.utils import get_amount, get_transactions
 
 
 def test_get_transactions(caplog):
     """Тестирует выдачу банковских операций из JSON файла"""
     caplog.set_level(logging.DEBUG)
-
 
     # Создаём фейковые данные
     fake_json_data = [
@@ -21,47 +19,29 @@ def test_get_transactions(caplog):
             "id": 441945886,
             "state": "EXECUTED",
             "date": "2019-08-26T10:50:58.294041",
-            "operationAmount": {
-                "amount": "31957.58",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод организации",
             "from": "Maestro 1596837868705199",
-            "to": "Счет 64686473678894779589"
+            "to": "Счет 64686473678894779589",
         },
         {
             "id": 41428829,
             "state": "EXECUTED",
             "date": "2019-07-03T18:35:29.512364",
-            "operationAmount": {
-                "amount": "8221.37",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "8221.37", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод организации",
             "from": "MasterCard 7158300734726758",
-            "to": "Счет 35383033474447895560"
+            "to": "Счет 35383033474447895560",
         },
         {
             "id": 667307132,
             "state": "EXECUTED",
             "date": "2019-07-13T18:51:29.313309",
-            "operationAmount": {
-                "amount": "97853.86",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "97853.86", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод с карты на счет",
             "from": "Maestro 1308795367077170",
-            "to": "Счет 96527012349577388612"
-        }
+            "to": "Счет 96527012349577388612",
+        },
     ]
     fake_json_str = json.dumps(fake_json_data)
 
@@ -85,7 +65,10 @@ def test_incorrect_path_to_operations_json(caplog):
     """Тестирует обработку кейса, когда указан некорректный путь до файла с банковскими операциями"""
     caplog.set_level(logging.DEBUG)
 
-    assert get_transactions(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "operations.json")) == []
+    assert (
+        get_transactions(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "operations.json"))
+        == []
+    )
 
     assert "JSON файл с банковскими операциями не найден" in caplog.text
     assert "Возврат пустого списка" in caplog.text
@@ -107,16 +90,10 @@ def test_not_list_in_operations_json(caplog):
                 "id": 667307132,
                 "state": "EXECUTED",
                 "date": "2019-07-13T18:51:29.313309",
-                "operationAmount": {
-                    "amount": "97853.86",
-                    "currency": {
-                        "name": "руб.",
-                        "code": "RUB"
-                    }
-                },
+                "operationAmount": {"amount": "97853.86", "currency": {"name": "руб.", "code": "RUB"}},
                 "description": "Перевод с карты на счет",
                 "from": "Maestro 1308795367077170",
-                "to": "Счет 96527012349577388612"
+                "to": "Счет 96527012349577388612",
             }
         )
     )
@@ -189,44 +166,33 @@ def test_decode_error_to_json_data(caplog):
 
 
 @pytest.mark.parametrize(
-    "operations, result", [
+    "operations, result",
+    [
         (
-                {
-                    "id": 41428829,
-                    "state": "EXECUTED",
-                    "date": "2019-07-03T18:35:29.512364",
-                    "operationAmount": {
-                      "amount": "8221.37",
-                      "currency": {
-                        "name": "руб.",
-                        "code": "RUB"
-                      }
-                    },
-                    "description": "Перевод организации",
-                    "from": "MasterCard 7158300734726758",
-                    "to": "Счет 35383033474447895560"
-                },
-                8221.37
+            {
+                "id": 41428829,
+                "state": "EXECUTED",
+                "date": "2019-07-03T18:35:29.512364",
+                "operationAmount": {"amount": "8221.37", "currency": {"name": "руб.", "code": "RUB"}},
+                "description": "Перевод организации",
+                "from": "MasterCard 7158300734726758",
+                "to": "Счет 35383033474447895560",
+            },
+            8221.37,
         ),
         (
-                {
-                    "id": 41428829,
-                    "state": "EXECUTED",
-                    "date": "2019-07-03T18:35:29.512364",
-                    "operationAmount": {
-                      "amount": "31957.58",
-                      "currency": {
-                        "name": "руб.",
-                        "code": "RUB"
-                      }
-                    },
-                    "description": "Перевод организации",
-                    "from": "MasterCard 7158300734726758",
-                    "to": "Счет 35383033474447895560"
-                },
-                31957.58
-        )
-    ]
+            {
+                "id": 41428829,
+                "state": "EXECUTED",
+                "date": "2019-07-03T18:35:29.512364",
+                "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+                "description": "Перевод организации",
+                "from": "MasterCard 7158300734726758",
+                "to": "Счет 35383033474447895560",
+            },
+            31957.58,
+        ),
+    ],
 )
 def test_get_amount_for_get_amount(operations, result, caplog):
     """Функция возвращает сумму транзакции из операции"""
@@ -244,72 +210,60 @@ def test_get_amount_for_get_amount(operations, result, caplog):
     "operations, error_message",
     [
         (
-                {
-                    "id": 41428829,
-                    "state": "EXECUTED",
-                    "date": "2019-07-03T18:35:29.512364",
-                    "amount": "8221.37",
+            {
+                "id": 41428829,
+                "state": "EXECUTED",
+                "date": "2019-07-03T18:35:29.512364",
+                "amount": "8221.37",
+                "currency": {"name": "руб.", "code": "RUB"},
+                "description": "Перевод организации",
+                "from": "MasterCard 7158300734726758",
+                "to": "Счет 35383033474447895560",
+            },
+            "Нет ключа operationAmount",
+        ),
+        (
+            {
+                "id": 41428829,
+                "state": "EXECUTED",
+                "date": "2019-07-03T18:35:29.512364",
+                "operationAmount": {"currency": {"name": "руб.", "code": "RUB"}},
+                "description": "Перевод организации",
+                "from": "MasterCard 7158300734726758",
+                "to": "Счет 35383033474447895560",
+            },
+            "Нет ключа amount",
+        ),
+        (
+            {
+                "id": 41428829,
+                "state": "EXECUTED",
+                "date": "2019-07-03T18:35:29.512364",
+                "operationAmount": {"amount": "31957.58", "name": "руб.", "code": "RUB"},
+                "description": "Перевод организации",
+                "from": "MasterCard 7158300734726758",
+                "to": "Счет 35383033474447895560",
+            },
+            "Нет ключа currency",
+        ),
+        (
+            {
+                "id": 41428829,
+                "state": "EXECUTED",
+                "date": "2019-07-03T18:35:29.512364",
+                "operationAmount": {
+                    "amount": "31957.58",
                     "currency": {
-                      "name": "руб.",
-                      "code": "RUB"
-                    },
-                    "description": "Перевод организации",
-                    "from": "MasterCard 7158300734726758",
-                    "to": "Счет 35383033474447895560"
-                },
-                "Нет ключа operationAmount"
-        ),
-        (
-                {
-                    "id": 41428829,
-                    "state": "EXECUTED",
-                    "date": "2019-07-03T18:35:29.512364",
-                    "operationAmount": {
-                      "currency": {
                         "name": "руб.",
-                        "code": "RUB"
-                      }
                     },
-                    "description": "Перевод организации",
-                    "from": "MasterCard 7158300734726758",
-                    "to": "Счет 35383033474447895560"
                 },
-                "Нет ключа amount"
+                "description": "Перевод организации",
+                "from": "MasterCard 7158300734726758",
+                "to": "Счет 35383033474447895560",
+            },
+            "Нет ключа code",
         ),
-        (
-                {
-                    "id": 41428829,
-                    "state": "EXECUTED",
-                    "date": "2019-07-03T18:35:29.512364",
-                    "operationAmount": {
-                      "amount": "31957.58",
-                      "name": "руб.",
-                      "code": "RUB"
-                    },
-                    "description": "Перевод организации",
-                    "from": "MasterCard 7158300734726758",
-                    "to": "Счет 35383033474447895560"
-                },
-                "Нет ключа currency"
-        ),
-        (
-                {
-                    "id": 41428829,
-                    "state": "EXECUTED",
-                    "date": "2019-07-03T18:35:29.512364",
-                    "operationAmount": {
-                      "amount": "31957.58",
-                      "currency": {
-                        "name": "руб.",
-                      }
-                    },
-                    "description": "Перевод организации",
-                    "from": "MasterCard 7158300734726758",
-                    "to": "Счет 35383033474447895560"
-                },
-                "Нет ключа code"
-        )
-    ]
+    ],
 )
 def test_not_need_key_in_dict_for_get_amount(operations, error_message, caplog):
     """Тестирует обработку кейса, когда в словаре с операцией нет нужных ключей"""
@@ -333,16 +287,10 @@ def test_cant_convert_to_float_for_get_amount(caplog):
         "id": 41428829,
         "state": "EXECUTED",
         "date": "2019-07-03T18:35:29.512364",
-        "operationAmount": {
-            "amount": "31957 58",
-            "currency": {
-                "name": "руб.",
-                "code": "RUB"
-            }
-        },
+        "operationAmount": {"amount": "31957 58", "currency": {"name": "руб.", "code": "RUB"}},
         "description": "Перевод организации",
         "from": "MasterCard 7158300734726758",
-        "to": "Счет 35383033474447895560"
+        "to": "Счет 35383033474447895560",
     }
     with pytest.raises(ValueError) as exc_info:
         get_amount(incorrect_operations)
@@ -363,16 +311,10 @@ def test_not_dict_for_get_amount(caplog):
             "id": 41428829,
             "state": "EXECUTED",
             "date": "2019-07-03T18:35:29.512364",
-            "operationAmount": {
-                "amount": "31957 58",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "31957 58", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод организации",
             "from": "MasterCard 7158300734726758",
-            "to": "Счет 35383033474447895560"
+            "to": "Счет 35383033474447895560",
         }
     ]
     with pytest.raises(TypeError) as exc_info:
@@ -397,16 +339,10 @@ def test_get_amount_with_convert_to_rub_for_get_amount(caplog):
                 "id": 41428829,
                 "state": "EXECUTED",
                 "date": "2019-07-03T18:35:29.512364",
-                "operationAmount": {
-                    "amount": "10.2",
-                    "currency": {
-                        "name": "USD",
-                        "code": "USD"
-                    }
-                },
+                "operationAmount": {"amount": "10.2", "currency": {"name": "USD", "code": "USD"}},
                 "description": "Перевод организации",
                 "from": "MasterCard 7158300734726758",
-                "to": "Счет 35383033474447895560"
+                "to": "Счет 35383033474447895560",
             }
         )
 

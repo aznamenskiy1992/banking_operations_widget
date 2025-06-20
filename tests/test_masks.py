@@ -46,8 +46,8 @@ def test_none_card_number(caplog):
     "card_number, error_message",
     [
         (123, "Указан некорректный номер карты или счёта. Проверьте количество цифр"),
-        (15234820356820125369, "Указан некорректный номер карты или счёта. Проверьте количество цифр")
-    ]
+        (15234820356820125369, "Указан некорректный номер карты или счёта. Проверьте количество цифр"),
+    ],
 )
 def test_none_standard_card_number(card_number, error_message, caplog):
     """Тестирует обработку номеров карт некорректной длины (слишком коротких/длинных)."""
@@ -57,7 +57,9 @@ def test_none_standard_card_number(card_number, error_message, caplog):
         get_mask_card_number(card_number)
     assert str(exc_info.value) == error_message
 
-    assert f"Получен номер карты некорректной длины. Номер: {card_number}, длина: {len(str(card_number))}" in caplog.text
+    assert (
+        f"Получен номер карты некорректной длины. Номер: {card_number}, длина: {len(str(card_number))}" in caplog.text
+    )
 
     assert len(caplog.records) == 1
     assert caplog.records[0].levelname == "CRITICAL"
@@ -88,8 +90,8 @@ def test_card_number_str_all_symbols_int(card_number, mask_number, caplog):
     "card_number, error_message",
     [
         ("5543-8123-5585-520", "Номер карты или счёта должен состоять только из цифр"),
-        ("5543 812 355 785", "Номер карты или счёта должен состоять только из цифр")
-    ]
+        ("5543 812 355 785", "Номер карты или счёта должен состоять только из цифр"),
+    ],
 )
 def test_card_number_str_symbols_not_int(card_number, error_message, caplog):
     """Тестирует обработку номеров карт с нецифровыми символами (дефисы, пробелы и др.)."""
@@ -113,7 +115,7 @@ def test_card_number_str_symbols_not_int(card_number, error_message, caplog):
         ((5543812355785520, 5543812355785), "Номер карты или счёта должен быть целым числом"),
         ({5543812355785520}, "Номер карты или счёта должен быть целым числом"),
         (5543812355785520.25, "Номер карты или счёта должен быть целым числом"),
-    ]
+    ],
 )
 def test_card_number_other_incorrect_types(card_number, error_message, caplog):
     """Тестирует обработку некорректных типов данных для номера карты (списки, словари, кортежи, множества, float)."""
@@ -171,7 +173,7 @@ def test_none_account_number(caplog):
     [
         (7, "Указан некорректный номер карты или счёта. Проверьте количество цифр"),
         (745205381921035742369, "Указан некорректный номер карты или счёта. Проверьте количество цифр"),
-    ]
+    ],
 )
 def test_none_standard_account_number(account_number, error_message, caplog):
     """Тестирует обработку номеров счетов некорректной длины (слишком коротких/длинных)."""
@@ -181,7 +183,10 @@ def test_none_standard_account_number(account_number, error_message, caplog):
         get_mask_account(account_number)
     assert str(exc_info.value) == error_message
 
-    assert f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}" in caplog.text
+    assert (
+        f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}"
+        in caplog.text
+    )
 
     assert len(caplog.records) == 2
     assert caplog.records[0].levelname == "INFO"
