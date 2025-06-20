@@ -74,6 +74,7 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
 
     except json.JSONDecodeError as exc_info:
         # Пробрасываем JSONDecodeError с более понятным сообщением
+        logger.critical("Ошибка декодирования данных в JSON")
         raise json.JSONDecodeError(msg="Невозможно декодировать данные в JSON", doc=exc_info.doc, pos=exc_info.pos)
 
 
