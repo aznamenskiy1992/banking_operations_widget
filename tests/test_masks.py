@@ -152,11 +152,18 @@ def test_input_account_number(account_number, mask_number, caplog):
     assert caplog.records[2].levelname == "INFO"
 
 
-def test_none_account_number():
+def test_none_account_number(caplog):
     """Тестирует обработку None в качестве номера счета."""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(ValueError) as exc_info:
         get_mask_account(None)
     assert str(exc_info.value) == "Не указан номер карты или счёта"
+
+    assert "Номер счёта получен, как None" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 @pytest.mark.parametrize(
