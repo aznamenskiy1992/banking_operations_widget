@@ -150,4 +150,5 @@ def get_amount(transaction: dict[str, int]) -> float:
             if currency != "RUB":
                 return convert_currency(currency, amount)
             else:
+                logger.info("Возврат суммы транзакции")
                 return amount  # Для рублей возвращаем как есть
