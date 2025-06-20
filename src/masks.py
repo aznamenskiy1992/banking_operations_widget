@@ -143,6 +143,7 @@ def get_mask_account(account_number: int) -> str:
         if not account_number.isdigit():
             raise ValueError("Номер карты или счёта должен состоять только из цифр")
         else:
+            logger.info("Номер счёта получен, как строка с цифрами")
             account_number_str = account_number
     else:
         raise TypeError("Номер карты или счёта должен быть целым числом")
