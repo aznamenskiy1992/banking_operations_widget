@@ -132,6 +132,7 @@ def get_mask_account(account_number: int) -> str:
     """
     # Проверка на None
     if account_number is None:
+        logger.critical("Номер счёта получен, как None")
         raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера счёта в строку с проверкой типа
