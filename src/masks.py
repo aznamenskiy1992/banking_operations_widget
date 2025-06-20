@@ -36,6 +36,7 @@ def get_mask_card_number(card_number: int) -> str:
                 "Номер карты или счёта должен состоять только из цифр"
             )  # Строка содержит нецифровые символы
         else:
+            logger.info("Номер карты получен, как строка с цифрами")
             card_number_str = card_number
     else:
         raise TypeError("Номер карты или счёта должен быть целым числом")  # Недопустимый тип данных (не int и не str)
