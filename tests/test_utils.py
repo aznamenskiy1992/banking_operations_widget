@@ -1,16 +1,19 @@
 import json
 import os
 from json import JSONDecodeError
+import logging
 
 import pytest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 from unittest.mock import mock_open
 
 from src.utils import get_transactions, get_amount
 
 
-def test_get_transactions():
+def test_get_transactions(caplog):
     """Тестирует выдачу банковских операций из JSON файла"""
+    caplog.set_level(logging.DEBUG)
+
 
     # Создаём фейковые данные
     fake_json_data = [
@@ -67,6 +70,15 @@ def test_get_transactions():
 
     assert result == fake_json_data
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+    assert "Попытка открытия JSON файла с банковскими операциями" in caplog.text
+    assert "Попытка получить данные из JSON файла с банковскими операциями" in caplog.text
+    assert "Возврат загруженных банковских операций" in caplog.text
+
+    assert len(caplog.records) == 3
+    assert caplog.records[0].levelname == "INFO"
+    assert caplog.records[1].levelname == "INFO"
+    assert caplog.records[2].levelname == "INFO"
 
 
 def test_incorrect_path_to_operations_json():
