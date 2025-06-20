@@ -72,9 +72,16 @@ def test_none_standard_card_number(card_number, error_message, caplog):
         ("5543812355785520439", "5543 81** **** **** 439"),  # 19 цифр
     ],
 )
-def test_card_number_str_all_symbols_int(card_number, mask_number):
+def test_card_number_str_all_symbols_int(card_number, mask_number, caplog):
     """Тестирует корректность маскировки номеров карт, переданных как строки с цифрами."""
+    caplog.set_level(logging.DEBUG)
+
     assert get_mask_card_number(card_number) == mask_number
+
+    assert "Номер карты получен, как строка с цифрами" in caplog.text
+
+    assert len(caplog.records) == 3
+    assert caplog.records[0].levelname == "INFO"
 
 
 @pytest.mark.parametrize(
