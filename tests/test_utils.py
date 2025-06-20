@@ -157,8 +157,10 @@ def test_empty_operations_json(caplog):
     assert caplog.records[3].levelname == "INFO"
 
 
-def test_decode_error_to_json_data():
+def test_decode_error_to_json_data(caplog):
     """Тестирует обработку кейса, когда в файле содержатся данные, которые невозможно декодировать"""
+    caplog.set_level(logging.DEBUG)
+
     invalid_json_str = """[
         {
             "id": 667307132,
@@ -178,6 +180,12 @@ def test_decode_error_to_json_data():
 
     assert str(exc_info.value) == "Невозможно декодировать данные в JSON: line 5 column 13 (char 85)"
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+    assert "Ошибка декодирования данных в JSON" in caplog.text
+
+    assert len(caplog.records) == 3
+
+    assert caplog.records[2].levelname == "CRITICAL"
 
 
 @pytest.mark.parametrize(
