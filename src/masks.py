@@ -40,6 +40,7 @@ def get_mask_card_number(card_number: int) -> str:
             logger.info("Номер карты получен, как строка с цифрами")
             card_number_str = card_number
     else:
+        logger.critical(f"Номер карты передан не в типе int. Номер карты {card_number}, тип: {type(card_number)}")
         raise TypeError("Номер карты или счёта должен быть целым числом")  # Недопустимый тип данных (не int и не str)
 
     len_card_number = len(card_number_str)
