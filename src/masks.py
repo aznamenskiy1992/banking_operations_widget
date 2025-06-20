@@ -32,6 +32,7 @@ def get_mask_card_number(card_number: int) -> str:
         card_number_str = str(card_number)
     elif isinstance(card_number, str):  # Если номер карты передан как строка
         if not card_number.isdigit():
+            logger.critical(f"Номер карты получен, как строка и содержит нечисловые символы: {card_number}")
             raise ValueError(
                 "Номер карты или счёта должен состоять только из цифр"
             )  # Строка содержит нецифровые символы
