@@ -120,22 +120,28 @@ def get_amount(transaction: dict[str, int]) -> float:
         >>> get_amount(transaction)  # Конвертирует USD в RUB по текущему курсу
         7500.0
     """
+    none_key_logging_message = "Нет нужного ключа в словаре транзакций"
+
     # Проверка типа входных данных
     if not isinstance(transaction, dict):
+        logging.critical(none_key_logging_message)
         raise TypeError("Транзакция должна быть передана в словаре")
 
     # Проверка наличия основного ключа с суммой и валютой
     if "operationAmount" not in transaction:
+        logging.critical(none_key_logging_message)
         raise KeyError("Нет ключа operationAmount")
 
     # Проверка наличия обязательных ключей в operationAmount
     amount_currency_key = ["amount", "currency"]
     for key_ in amount_currency_key:
         if key_ not in transaction["operationAmount"]:
+            logging.critical(none_key_logging_message)
             raise KeyError(f"Нет ключа {key_}")
 
     # Проверка наличия кода валюты
     if "code" not in transaction["operationAmount"]["currency"]:
+        logging.critical(none_key_logging_message)
         raise KeyError("Нет ключа code")
 
     else:
