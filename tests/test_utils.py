@@ -90,9 +90,10 @@ def test_incorrect_path_to_operations_json(caplog):
     assert "JSON файл с банковскими операциями не найден" in caplog.text
     assert "Возврат пустого списка" in caplog.text
 
-    assert len(caplog.records) == 2
-    assert caplog.records[0].levelname == "ERROR"
+    assert len(caplog.records) == 3
     assert caplog.records[0].levelname == "INFO"
+    assert caplog.records[1].levelname == "ERROR"
+    assert caplog.records[2].levelname == "INFO"
 
 
 def test_not_list_in_operations_json():

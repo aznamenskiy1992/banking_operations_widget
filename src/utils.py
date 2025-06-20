@@ -63,7 +63,9 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
 
     except FileNotFoundError:
         # Обработка случая, когда файл не найден
+        logger.error("JSON файл с банковскими операциями не найден")
         print("Не найден файл по указанному пути")
+        logger.info("Возврат пустого списка")
         return empty_list_to_return
 
     except json.JSONDecodeError as exc_info:
