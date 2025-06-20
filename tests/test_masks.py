@@ -136,9 +136,20 @@ def test_card_number_other_incorrect_types(card_number, error_message, caplog):
         (77762358105236921456, "**1456"),
     ],
 )
-def test_input_account_number(account_number, mask_number):
+def test_input_account_number(account_number, mask_number, caplog):
     """Тестирует корректность маскировки стандартных номеров счетов (целые числа)."""
+    caplog.set_level(logging.DEBUG)
+
     assert get_mask_account(account_number) == mask_number
+
+    assert f"Преобразовывает номер счёта в строку {account_number}" in caplog.text
+    assert f"Маскирует номер счёта {account_number}" in caplog.text
+    assert f"Возвращает замаскированный номер счёта {account_number}" in caplog.text
+
+    assert len(caplog.records) == 3
+    assert caplog.records[0].levelname == "INFO"
+    assert caplog.records[1].levelname == "INFO"
+    assert caplog.records[2].levelname == "INFO"
 
 
 def test_none_account_number():
