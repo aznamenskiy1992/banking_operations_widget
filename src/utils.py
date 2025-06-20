@@ -42,8 +42,10 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
 
     try:
         # Открываем файл для чтения с кодировкой UTF-8
+        logger.info("Попытка открытия JSON файла с банковскими операциями")
         with open(path_to_operations_file, "r", encoding="utf-8") as f:
             # Пытаемся загрузить данные из JSON
+            logger.info("Попытка получить данные из JSON файла с банковскими операциями")
             operations: list[dict[str, int]] = json.load(f)
 
             # Проверяем, что данные являются списком
@@ -56,6 +58,7 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
                 return empty_list_to_return
 
             # Возвращаем успешно загруженные операции
+            logger.info("Возврат загруженных банковских операций")
             return operations
 
     except FileNotFoundError:
