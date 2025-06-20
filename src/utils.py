@@ -56,7 +56,9 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
                 return empty_list_to_return
             # Проверяем, что список не пустой
             elif len(operations) == 0:
+                logger.error("JSON файл с банковскими операциями пустой")
                 print("Нет данных в файле")
+                logger.info("Возврат пустого списка")
                 return empty_list_to_return
 
             # Возвращаем успешно загруженные операции
