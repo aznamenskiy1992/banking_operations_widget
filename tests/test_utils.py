@@ -135,8 +135,10 @@ def test_not_list_in_operations_json(caplog):
     assert caplog.records[3].levelname == "INFO"
 
 
-def test_empty_operations_json():
+def test_empty_operations_json(caplog):
     """Тестирует обработку кейса, когда файл с банковскими операциями пустой"""
+    caplog.set_level(logging.DEBUG)
+
     fake_json_data = []
     fake_json_str = json.dumps(fake_json_data)
 
@@ -145,6 +147,14 @@ def test_empty_operations_json():
 
     assert result == fake_json_data
     mocked_open.assert_called_once_with("operations.json", "r", encoding="utf-8")
+
+    assert "JSON файл с банковскими операциями пустой" in caplog.text
+    assert "Возврат пустого списка" in caplog.text
+
+    assert len(caplog.records) == 4
+
+    assert caplog.records[2].levelname == "ERROR"
+    assert caplog.records[3].levelname == "INFO"
 
 
 def test_decode_error_to_json_data():
