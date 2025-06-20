@@ -50,7 +50,9 @@ def get_transactions(path_to_operations_file: str) -> list[dict[str, int]]:
 
             # Проверяем, что данные являются списком
             if not isinstance(operations, list):
+                logger.error("Банковские операции в JSON файле находятся не в списке")
                 print("Данные в файле находятся не в списке")
+                logger.info("Возврат пустого списка")
                 return empty_list_to_return
             # Проверяем, что список не пустой
             elif len(operations) == 0:
