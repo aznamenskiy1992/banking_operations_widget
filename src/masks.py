@@ -136,6 +136,7 @@ def get_mask_account(account_number: int) -> str:
 
     # Преобразование номера счёта в строку с проверкой типа
     if isinstance(account_number, int):
+        logger.info(f"Преобразовывает номер счёта в строку {account_number}")
         account_number_str = str(account_number)
     elif isinstance(account_number, str):
         if not account_number.isdigit():
@@ -150,8 +151,10 @@ def get_mask_account(account_number: int) -> str:
 
     # Маскировка номера счёта (оставляем только последние 4 цифры)
     if len_account_number == 20:
+        logger.info(f"Маскирует номер счёта {account_number}")
         mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
+    logger.info(f"Возвращает замаскированный номер счёта {account_number}")
     return mask_account_number
