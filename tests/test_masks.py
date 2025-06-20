@@ -115,11 +115,18 @@ def test_card_number_str_symbols_not_int(card_number, error_message, caplog):
         (5543812355785520.25, "Номер карты или счёта должен быть целым числом"),
     ]
 )
-def test_card_number_other_incorrect_types(card_number, error_message):
+def test_card_number_other_incorrect_types(card_number, error_message, caplog):
     """Тестирует обработку некорректных типов данных для номера карты (списки, словари, кортежи, множества, float)."""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(TypeError) as exc_info:
         get_mask_card_number(card_number)
     assert str(exc_info.value) == error_message
+
+    assert f"Номер карты передан не в типе int. Номер карты {card_number}, тип: {type(card_number)}" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 @pytest.mark.parametrize(
