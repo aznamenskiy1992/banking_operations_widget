@@ -311,11 +311,18 @@ def test_get_amount_for_get_amount(operations, result, caplog):
         )
     ]
 )
-def test_not_need_key_in_dict_for_get_amount(operations, error_message):
+def test_not_need_key_in_dict_for_get_amount(operations, error_message, caplog):
     """Тестирует обработку кейса, когда в словаре с операцией нет нужных ключей"""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(KeyError) as exc_info:
         get_amount(operations)
     assert str(exc_info.value) == f"'{error_message}'"
+
+    assert "Нет нужного ключа в словаре транзакций"
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 def test_cant_convert_to_float_for_get_amount():
