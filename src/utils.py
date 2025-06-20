@@ -155,6 +155,7 @@ def get_amount(transaction: dict[str, int]) -> float:
         else:
             # Если валюта не рубли - конвертируем
             if currency != "RUB":
+                logger.info("Возврат суммы транзакции с конвертацией в рубли")
                 return convert_currency(currency, amount)
             else:
                 logger.info("Возврат суммы транзакции")
