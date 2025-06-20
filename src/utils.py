@@ -150,6 +150,7 @@ def get_amount(transaction: dict[str, int]) -> float:
             currency: str = transaction["operationAmount"]["currency"]["code"]
             amount = float(transaction["operationAmount"]["amount"])  # Преобразуем в float
         except ValueError:
+            logger.critical("Сумма транзакции не преобразуется в float")
             raise ValueError("Сумма транзакции указана в нечисловом формате")
         else:
             # Если валюта не рубли - конвертируем
