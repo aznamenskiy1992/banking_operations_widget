@@ -81,9 +81,18 @@ def test_get_transactions(caplog):
     assert caplog.records[2].levelname == "INFO"
 
 
-def test_incorrect_path_to_operations_json():
+def test_incorrect_path_to_operations_json(caplog):
     """Тестирует обработку кейса, когда указан некорректный путь до файла с банковскими операциями"""
+    caplog.set_level(logging.DEBUG)
+
     assert get_transactions(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "operations.json")) == []
+
+    assert "JSON файл с банковскими операциями не найден" in caplog.text
+    assert "Возврат пустого списка" in caplog.text
+
+    assert len(caplog.records) == 2
+    assert caplog.records[0].levelname == "ERROR"
+    assert caplog.records[0].levelname == "INFO"
 
 
 def test_not_list_in_operations_json():
