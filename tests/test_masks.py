@@ -49,11 +49,18 @@ def test_none_card_number(caplog):
         (15234820356820125369, "Указан некорректный номер карты или счёта. Проверьте количество цифр")
     ]
 )
-def test_none_standard_card_number(card_number, error_message):
+def test_none_standard_card_number(card_number, error_message, caplog):
     """Тестирует обработку номеров карт некорректной длины (слишком коротких/длинных)."""
+    caplog.set_level(logging.DEBUG)
+
     with pytest.raises(ValueError) as exc_info:
         get_mask_card_number(card_number)
     assert str(exc_info.value) == error_message
+
+    assert f"Получен номер карты некорректной длины. Номер: {card_number}, длина: {len(str(card_number))}" in caplog.text
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].levelname == "CRITICAL"
 
 
 @pytest.mark.parametrize(
