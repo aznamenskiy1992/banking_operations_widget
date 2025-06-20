@@ -24,6 +24,7 @@ def get_mask_card_number(card_number: int) -> str:
 
     # Обработка случая, когда входные данные не переданы (None)
     if card_number is None:
+        logger.critical("Номер карты получен, как None")
         raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера карты в строку и проверка типа входных данных
