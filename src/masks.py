@@ -155,6 +155,7 @@ def get_mask_account(account_number: int) -> str:
         logger.info(f"Маскирует номер счёта {account_number}")
         mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
+        logger.critical(f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}")
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     logger.info(f"Возвращает замаскированный номер счёта {account_number}")
