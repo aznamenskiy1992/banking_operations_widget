@@ -1,3 +1,13 @@
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("logs/logs.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s %(filename)s %(levelname)s: %(message)s")
+file_handler.setFormatter(file_formatter)
+logger.addHandler(file_handler)
+
+
 def get_mask_card_number(card_number: int) -> str:
     """Функция для маскирования номера карты или счёта.
 
@@ -13,6 +23,7 @@ def get_mask_card_number(card_number: int) -> str:
 
     # Обработка случая, когда входные данные не переданы (None)
     if card_number is None:
+        logger.critical("Номер карты получен, как None")
         raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера карты в строку и проверка типа входных данных
@@ -20,12 +31,15 @@ def get_mask_card_number(card_number: int) -> str:
         card_number_str = str(card_number)
     elif isinstance(card_number, str):  # Если номер карты передан как строка
         if not card_number.isdigit():
+            logger.critical(f"Номер карты получен, как строка и содержит нечисловые символы: {card_number}")
             raise ValueError(
                 "Номер карты или счёта должен состоять только из цифр"
             )  # Строка содержит нецифровые символы
         else:
+            logger.info("Номер карты получен, как строка с цифрами")
             card_number_str = card_number
     else:
+        logger.critical(f"Номер карты передан не в типе int. Номер карты {card_number}, тип: {type(card_number)}")
         raise TypeError("Номер карты или счёта должен быть целым числом")  # Недопустимый тип данных (не int и не str)
 
     len_card_number = len(card_number_str)
@@ -56,6 +70,7 @@ def get_mask_card_number(card_number: int) -> str:
     # Проверяем, поддерживается ли длина номера карты
     if len_card_number in list(mask_patterns.keys()):
         # Получаем позиции для маскирования из шаблона
+        logger.info(f"Маскируется номер карты: {card_number}")
         masking_position_start: int = mask_patterns[len_card_number]["masking"][0]
         masking_position_end: int = mask_patterns[len_card_number]["masking"][1]
 
@@ -93,9 +108,13 @@ def get_mask_card_number(card_number: int) -> str:
                     )
     else:
         # Длина номера карты не поддерживается
+        logger.critical(
+            f"Получен номер карты некорректной длины. Номер: {card_number}, длина: {len(str(card_number))}"
+        )
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
     # Собираем блоки в одну строку с разделением пробелами
+    logger.info(f"Возвращается замаскированный номер карты: {card_number}")
     return " ".join(dividing_card_number_by_blocks)
 
 
@@ -114,15 +133,18 @@ def get_mask_account(account_number: int) -> str:
     """
     # Проверка на None
     if account_number is None:
+        logger.critical("Номер счёта получен, как None")
         raise ValueError("Не указан номер карты или счёта")
 
     # Преобразование номера счёта в строку с проверкой типа
     if isinstance(account_number, int):
+        logger.info(f"Преобразовывает номер счёта в строку {account_number}")
         account_number_str = str(account_number)
     elif isinstance(account_number, str):
         if not account_number.isdigit():
             raise ValueError("Номер карты или счёта должен состоять только из цифр")
         else:
+            logger.info("Номер счёта получен, как строка с цифрами")
             account_number_str = account_number
     else:
         raise TypeError("Номер карты или счёта должен быть целым числом")
@@ -132,8 +154,13 @@ def get_mask_account(account_number: int) -> str:
 
     # Маскировка номера счёта (оставляем только последние 4 цифры)
     if len_account_number == 20:
+        logger.info(f"Маскирует номер счёта {account_number}")
         mask_account_number: str = "*" * 2 + str(account_number)[-4:]
     else:
+        logger.critical(
+            f"Получен номер карты некорректной длины. Номер: {account_number}, длина: {len(str(account_number))}"
+        )
         raise ValueError("Указан некорректный номер карты или счёта. Проверьте количество цифр")
 
+    logger.info(f"Возвращает замаскированный номер счёта {account_number}")
     return mask_account_number
