@@ -94,6 +94,24 @@ pytest tests/ -v
 7. `test_log_error_operation_in_file_for_filter_by_state_with_log_decorator` - проверяет логирование ошибок фильтрации в файл
 8. `test_log_error_operation_in_console_for_filter_by_state_with_log_decorator` - проверяет логирование ошибок фильтрации в консоль
 
+#### Тестирование работы с файлами транзакций:
+1. `test_get_transactions_from_csv_for_get_transactions_from_csv` - проверяет чтение транзакций из CSV-файла:
+   - Корректное чтение и преобразование данных
+   - Проверка параметров чтения (разделитель ";", кодировка UTF-8)
+2. `test_file_not_found_for_get_transactions_from_csv` - проверяет обработку отсутствия CSV-файла:
+   - Корректное возбуждение FileNotFoundError
+   - Проверка текста сообщения об ошибке
+3. `test_empty_csv_file_for_get_transactions_from_csv` - проверяет обработку пустого CSV-файла:
+   - Возврат пустого списка для пустого файла
+4. `test_get_transactions_from_xlsx_for_get_transactions_from_xlsx` - проверяет чтение транзакций из XLSX-файла:
+   - Корректное чтение и преобразование данных
+   - Проверка чтения первого листа файла
+5. `test_file_not_found_for_get_transactions_from_xlsx` - проверяет обработку отсутствия XLSX-файла:
+   - Корректное возбуждение FileNotFoundError
+   - Проверка текста сообщения об ошибке
+6. `test_empty_xlsx_file_for_get_transactions_from_xlsx` - проверяет обработку пустого XLSX-файла:
+   - Возврат пустого списка для пустого файла
+
 ### Покрытие тестами
 Для проверки покрытия кода тестами используйте:
 ```
@@ -281,3 +299,46 @@ pass
 - Особенности:
   - Файлы логов создаются в директории `data/logs` относительно расположения скрипта
   - Для ошибок дополнительно записывает информацию об исключении и входных данных
+### get_transactions_from_csv (transactions_from_files.py)
+- Читает транзакции из CSV-файла
+- Принимает путь к CSV-файлу (разделитель - точка с запятой, кодировка UTF-8)
+```
+Пример вызова:
+get_transactions_from_csv("data/transactions.csv")
+```
+- Возвращает список словарей с транзакциями
+```
+Пример возвращаемых данных (list[dict]):
+[
+{"id": 1, "amount": 100, "currency": "USD"},
+{"id": 2, "amount": 200, "currency": "EUR"}
+]
+```
+- Исключения:
+  - FileNotFoundError: если файл не найден
+- Особенности:
+  - Возвращает пустой список для пустого файла
+  - Автоматически преобразует DataFrame в список словарей
+
+### get_transactions_from_xlsx (transactions_from_files.py)
+- Читает транзакции из Excel-файла (XLSX)
+- Принимает путь к XLSX-файлу
+```
+Пример вызова:
+get_transactions_from_xlsx("data/transactions.xlsx")
+```
+- Возвращает список словарей с транзакциями
+```
+Пример возвращаемых данных (list[dict]):
+[
+{"id": 1, "amount": 100, "currency": "USD"},
+{"id": 2, "amount": 200, "currency": "EUR"}
+]
+```
+- Исключения:
+  - FileNotFoundError: если файл не найден
+  - ValueError: при ошибках чтения Excel-файла
+- Особенности:
+  - Читает первый лист файла
+  - Возвращает пустой список для пустого файла
+  - Поддерживает только формат XLSX
