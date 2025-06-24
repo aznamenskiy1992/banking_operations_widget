@@ -24,3 +24,15 @@ def test_file_not_found_for_get_transactions_from_csv():
     with pytest.raises(FileNotFoundError) as exc_info:
         get_transactions_from_csv("test.csv")
     assert str(exc_info.value) == "Файл не найден. Проверьте путь до файла"
+
+
+@patch("src.transactions_from_files.pd.read_csv")
+def test_empty_csv_file_for_get_transactions_from_csv(mock_read_csv):
+    """Обрабатывает кейс, когда csv файл пустой"""
+    mock_read_csv.return_value = []
+
+    result = get_transactions_from_csv("transactions.csv")
+
+    assert result == []
+
+    assert mock_read_csv.assert_called_once_with("transactions.csv", sep=";", encoding="utf-8")
