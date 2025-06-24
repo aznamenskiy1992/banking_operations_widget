@@ -47,4 +47,4 @@ def test_get_transactions_from_xlsx_for_get_transactions_from_xlsx(transactions_
 
         assert result == transactions_from_files
 
-        mock_read_xlsx.assert_called_once_with("transactions_excel.xlsx", sep=";", encoding="utf-8")
+        mock_read_xlsx.assert_called_once_with("transactions_excel.xlsx")
