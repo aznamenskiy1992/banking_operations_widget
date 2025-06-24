@@ -16,4 +16,4 @@ def test_get_transactions_from_csv_for_get_transactions_from_csv(transactions_fr
 
         assert result == transactions_from_files
 
-        mock_read_csv.assert_called_once_with("transactions.csv")
+        mock_read_csv.assert_called_once_with("transactions.csv", sep=";", encoding="utf-8")
