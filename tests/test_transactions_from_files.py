@@ -48,3 +48,10 @@ def test_get_transactions_from_xlsx_for_get_transactions_from_xlsx(transactions_
         assert result == transactions_from_files
 
         mock_read_xlsx.assert_called_once_with("transactions_excel.xlsx")
+
+
+def test_file_not_found_for_get_transactions_from_xlsx():
+    """Обрабатывает кейс, когда excel файл не найден"""
+    with pytest.raises(FileNotFoundError) as exc_info:
+        get_transactions_from_xlsx("test.xlsx")
+    assert str(exc_info.value) == "Файл не найден. Проверьте путь до файла"
