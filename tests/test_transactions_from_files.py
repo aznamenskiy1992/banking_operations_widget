@@ -1,8 +1,7 @@
-import pytest
 from unittest.mock import patch
-import logging
 
 import pandas as pd
+import pytest
 
 from src.transactions_from_files import get_transactions_from_csv, get_transactions_from_xlsx
 
