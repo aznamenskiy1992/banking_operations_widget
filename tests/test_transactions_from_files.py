@@ -55,3 +55,15 @@ def test_file_not_found_for_get_transactions_from_xlsx():
     with pytest.raises(FileNotFoundError) as exc_info:
         get_transactions_from_xlsx("test.xlsx")
     assert str(exc_info.value) == "Файл не найден. Проверьте путь до файла"
+
+
+@patch("src.transactions_from_files.pd.read_excel")
+def test_empty_xlsx_file_for_get_transactions_from_xlsx(mock_read_xlsx):
+    """Обрабатывает кейс, когда xlsx файл пустой"""
+    mock_read_xlsx.return_value = []
+
+    result = get_transactions_from_xlsx("transactions_excel.xlsx")
+
+    assert result == []
+
+    mock_read_xlsx.assert_called_once_with("transactions_excel.xlsx")
