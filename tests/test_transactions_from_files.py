@@ -17,3 +17,10 @@ def test_get_transactions_from_csv_for_get_transactions_from_csv(transactions_fr
         assert result == transactions_from_files
 
         mock_read_csv.assert_called_once_with("transactions.csv", sep=";", encoding="utf-8")
+
+
+def test_file_not_found_for_get_transactions_from_csv():
+    """Обрабатывает кейс, когда csv файл не найден"""
+    with pytest.raises(FileNotFoundError) as exc_info:
+        get_transactions_from_csv("test.csv")
+    assert str(exc_info.value) == "Файл не найден. Проверьте путь до файла"
