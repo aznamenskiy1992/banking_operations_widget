@@ -17,3 +17,8 @@ def get_transactions_from_csv(path_to_csv: str) -> list:
 
         transactions_list: list = transactions_from_file.to_dict("records")
         return transactions_list
+
+
+def get_transactions_from_xlsx(path_to_xlsx: str) -> list:
+    """Функция возвращает список транзакций из xlsx файла"""
+    pass
