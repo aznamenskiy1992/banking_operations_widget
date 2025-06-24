@@ -35,4 +35,4 @@ def test_empty_csv_file_for_get_transactions_from_csv(mock_read_csv):
 
     assert result == []
 
-    assert mock_read_csv.assert_called_once_with("transactions.csv", sep=";", encoding="utf-8")
+    mock_read_csv.assert_called_once_with("transactions.csv", sep=";", encoding="utf-8")

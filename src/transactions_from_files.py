@@ -12,5 +12,8 @@ def get_transactions_from_csv(path_to_csv: str) -> list:
         raise FileNotFoundError("Файл не найден. Проверьте путь до файла")
 
     else:
+        if len(transactions_from_file) == 0:
+            return []
+
         transactions_list: list = transactions_from_file.to_dict("records")
         return transactions_list
