@@ -3,6 +3,16 @@ import re
 
 def process_bank_search(data:list[dict], search:str) -> list[dict]:
     """Функция возвращает отфильтрованный список словарей с операциями по ключу description"""
+    if data is None:
+        raise TypeError("Список операций не передан")
+    elif not isinstance(data, list):
+        raise TypeError("Операции должны быть переданы, как список словарей")
+
+    if search is None:
+        raise TypeError("Строка для поиска описания операций не передана")
+    elif not isinstance(search, str):
+        raise TypeError("Строка для поиска описания операция должна быть передана в формате str")
+
     filtered_operations: list[dict] = []
     not_have_description_in_dic: list = []
 
