@@ -30,3 +30,7 @@ def process_bank_search(data:list[dict], search:str) -> list[dict]:
         print(f"ID операций без ключа description: {', '.join(not_have_description_in_dic)}", end="")
 
     return filtered_operations
+
+
+def process_bank_operations(data:list[dict], categories:list)-> dict:
+    pass

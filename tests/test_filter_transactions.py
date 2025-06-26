@@ -1,7 +1,7 @@
 import pytest
 
 
-from src.filter_transactions import process_bank_search
+from src.filter_transactions import process_bank_search, process_bank_operations
 
 
 @pytest.mark.parametrize(
@@ -153,3 +153,13 @@ def test_input_empty_list_for_process_bank_search():
     """Тестирует кейс, когда передан пустой список транзакций"""
     result = process_bank_search([], "перевод с")
     assert result == []
+
+
+def test_group_operations_by_category_for_process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
+    """Тестирует возврат сгруппированных транзакций по категориям"""
+    result = process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, ["Перевод организации", "Перевод со счета на счет", "Перевод с карты на карту"])
+    assert result == {
+        "Перевод организации": 2,
+        "Перевод со счета на счет": 2,
+        "Перевод с карты на карту": 1
+    }
