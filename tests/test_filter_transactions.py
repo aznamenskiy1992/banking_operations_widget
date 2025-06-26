@@ -131,3 +131,19 @@ def test_not_description_in_dict_process_bank_search(example_input_transactions_
             "to": "Счет 75651667383060284188",
         }
     ]
+
+
+@pytest.mark.parametrize(
+    "input_data, search_str, raise_message",
+    [
+        ({"test",}, "перевод с", "Операции должны быть переданы, как список словарей"),
+        (None, "перевод с", "Список операций не передан"),
+        ([], ["перевод с"], "Строка для поиска описания операция должна быть передана в формате str"),
+        ([], None, "Строка для поиска описания операций не передана")
+    ]
+)
+def test_args_in_incorrect_type(input_data, search_str, raise_message):
+    """Тестирует кейс, когда аргументы переданые в неправильных типах"""
+    with pytest.raises(TypeError) as exc_info:
+        process_bank_search(input_data, search_str)
+    assert str(exc_info.value) == raise_message
