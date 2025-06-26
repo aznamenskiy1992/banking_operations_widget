@@ -169,3 +169,19 @@ def test_input_empty_operations_list_for_process_bank_operations(operation_categ
     """Тестирует кейс, когда на вход подаётся пустой словарь с операциями"""
     result = process_bank_operations([], operation_categories)
     assert result == {}
+
+
+@pytest.mark.parametrize(
+    "input_data, categories, raise_message",
+    [
+        ({"test",}, ["Перевод организации"], "Операции должны быть переданы, как список словарей"),
+        (None, ["Перевод организации"], "Список операций не передан"),
+        ([], {"Перевод организации",}, "Категории должны быть переданы в списке"),
+        ([], None, "Категории не переданы"),
+    ]
+)
+def test_args_in_incorrect_type_for_process_bank_operations(input_data, categories, raise_message):
+    """Тестирует кейс, когда аргументы переданые в неправильных типах"""
+    with pytest.raises(TypeError) as exc_info:
+        process_bank_operations(input_data, categories)
+    assert str(exc_info.value) == raise_message
