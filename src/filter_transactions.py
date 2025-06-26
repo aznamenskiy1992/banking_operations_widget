@@ -35,6 +35,16 @@ def process_bank_search(data:list[dict], search:str) -> list[dict]:
 
 def process_bank_operations(data:list[dict], categories:list)-> dict:
     """Функция возвращает словарь со списком категорий и количеством таких операций"""
+    if data is None:
+        raise TypeError("Список операций не передан")
+    elif not isinstance(data, list):
+        raise TypeError("Операции должны быть переданы, как список словарей")
+
+    if categories is None:
+        raise TypeError("Категории не переданы")
+    elif not isinstance(categories, list):
+        raise TypeError("Категории должны быть переданы в списке")
+
     if len(data) == 0:
         return {}
 
