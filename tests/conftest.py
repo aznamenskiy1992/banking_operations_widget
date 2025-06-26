@@ -177,3 +177,9 @@ def transactions_from_files():
         },
     ]
     return transaction
+
+
+@pytest.fixture
+def operation_categories():
+    """Фикстура возвращает список категорий операций"""
+    return ["Перевод организации", "Перевод со счета на счет", "Перевод с карты на карту"]

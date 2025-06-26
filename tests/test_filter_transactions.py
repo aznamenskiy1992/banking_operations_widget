@@ -155,11 +155,17 @@ def test_input_empty_list_for_process_bank_search():
     assert result == []
 
 
-def test_group_operations_by_category_for_process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
+def test_group_operations_by_category_for_process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, operation_categories):
     """Тестирует возврат сгруппированных транзакций по категориям"""
-    result = process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, ["Перевод организации", "Перевод со счета на счет", "Перевод с карты на карту"])
+    result = process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, operation_categories)
     assert result == {
         "Перевод организации": 2,
         "Перевод со счета на счет": 2,
         "Перевод с карты на карту": 1
     }
+
+
+def test_input_empty_operations_list_for_process_bank_operations(operation_categories):
+    """Тестирует кейс, когда на вход подаётся пустой словарь с операциями"""
+    result = process_bank_operations([], operation_categories)
+    assert result == {}
