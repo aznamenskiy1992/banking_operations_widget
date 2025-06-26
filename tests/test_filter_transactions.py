@@ -147,3 +147,9 @@ def test_args_in_incorrect_type(input_data, search_str, raise_message):
     with pytest.raises(TypeError) as exc_info:
         process_bank_search(input_data, search_str)
     assert str(exc_info.value) == raise_message
+
+
+def test_input_empty_list_for_process_bank_search():
+    """Тестирует кейс, когда передан пустой список транзакций"""
+    result = process_bank_search([], "перевод с")
+    assert result == []
