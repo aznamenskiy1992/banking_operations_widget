@@ -101,7 +101,7 @@ from src.filter_transactions import process_bank_search
         )
     ]
 )
-def test_process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str, out_data):
+def test_return_filtered_operation_for_process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str, out_data):
     """Тестирует возврат отфильтрованного списка словарей с операциями"""
     result = process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str)
     assert result == out_data
