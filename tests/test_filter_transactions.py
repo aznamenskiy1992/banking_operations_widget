@@ -185,3 +185,13 @@ def test_args_in_incorrect_type_for_process_bank_operations(input_data, categori
     with pytest.raises(TypeError) as exc_info:
         process_bank_operations(input_data, categories)
     assert str(exc_info.value) == raise_message
+
+
+def test_test_not_description_in_dict_for_process_bank_operations(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, operation_categories, capsys):
+    """Тестирует кейс, когда в словарях нет ключа description"""
+    result = process_bank_operations(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, operation_categories)
+
+    captured = capsys.readouterr()
+    assert captured.out == "ID операций без ключа description: 939719570, 895315941"
+
+    assert result == {"Перевод со счета на счет": 1}
