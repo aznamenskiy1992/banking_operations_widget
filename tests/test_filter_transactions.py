@@ -113,7 +113,7 @@ def test_empty_out_data_for_process_bank_search(example_input_transactions_for_f
     assert result == []
 
 
-def test_not_description_in_dict_process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, capsys):
+def test_not_description_in_dict_for_process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, capsys):
     """Тестирует кейс, когда в словарях нет ключа description"""
     result = process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, "перевод с")
 
@@ -142,7 +142,7 @@ def test_not_description_in_dict_process_bank_search(example_input_transactions_
         ([], None, "Строка для поиска описания операций не передана")
     ]
 )
-def test_args_in_incorrect_type(input_data, search_str, raise_message):
+def test_args_in_incorrect_type_for_process_bank_search(input_data, search_str, raise_message):
     """Тестирует кейс, когда аргументы переданые в неправильных типах"""
     with pytest.raises(TypeError) as exc_info:
         process_bank_search(input_data, search_str)
