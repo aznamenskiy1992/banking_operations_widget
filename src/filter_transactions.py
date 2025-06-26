@@ -13,6 +13,9 @@ def process_bank_search(data:list[dict], search:str) -> list[dict]:
     elif not isinstance(search, str):
         raise TypeError("Строка для поиска описания операция должна быть передана в формате str")
 
+    if len(data) == 0:
+        return []
+
     filtered_operations: list[dict] = []
     not_have_description_in_dic: list = []
 
