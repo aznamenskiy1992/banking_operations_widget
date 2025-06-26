@@ -48,4 +48,17 @@ def process_bank_operations(data:list[dict], categories:list)-> dict:
     if len(data) == 0:
         return {}
 
-    return dict(Counter([data[i]["description"] for i in range(len(data)) if data[i]["description"] in categories]))
+    cnt_operations: list = []
+    not_have_description_in_dic: list = []
+
+    for i in range(len(data)):
+        if "description" not in data[i].keys():
+            not_have_description_in_dic.append(str(data[i].get("id", "неизвестный id")))
+        else:
+            if data[i]["description"] in categories:
+                cnt_operations.append(data[i]["description"])
+
+    if not_have_description_in_dic:
+        print(f"ID операций без ключа description: {', '.join(not_have_description_in_dic)}", end="")
+
+    return dict(Counter(cnt_operations))
