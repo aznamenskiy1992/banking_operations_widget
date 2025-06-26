@@ -111,3 +111,23 @@ def test_empty_out_data_for_process_bank_search(example_input_transactions_for_f
     """Тестирует кейс, когда в ключе description нет вхождения искомой строки"""
     result = process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, "!")
     assert result == []
+
+
+def test_not_description_in_dict_process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, capsys):
+    """Тестирует кейс, когда в словарях нет ключа description"""
+    result = process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, "перевод с")
+
+    captured = capsys.readouterr()
+    assert captured.out == "ID операций без ключа description: 939719570, 895315941"
+
+    assert result == [
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+            "date": "2019-04-04T23:20:05.206878",
+            "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод со счета на счет",
+            "from": "Счет 19708645243227258542",
+            "to": "Счет 75651667383060284188",
+        }
+    ]
