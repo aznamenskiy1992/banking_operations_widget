@@ -30,5 +30,3 @@ def process_bank_search(data:list[dict], search:str) -> list[dict]:
         print(f"ID операций без ключа description: {', '.join(not_have_description_in_dic)}", end="")
 
     return filtered_operations
-
-    #return [e for i, e in enumerate(data) if re.search(rf"^{search}|.{search}.|{search}$", data[i]["description"], flags=re.IGNORECASE)]
