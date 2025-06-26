@@ -105,3 +105,9 @@ def test_process_bank_search(example_input_transactions_for_for_filter_by_curren
     """Тестирует возврат отфильтрованного списка словарей с операциями"""
     result = process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str)
     assert result == out_data
+
+
+def test_empty_out_data_for_process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
+    """Тестирует кейс, когда в ключе description нет вхождения искомой строки"""
+    result = process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, "!")
+    assert result == []
