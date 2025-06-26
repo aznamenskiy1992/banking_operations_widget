@@ -35,4 +35,7 @@ def process_bank_search(data:list[dict], search:str) -> list[dict]:
 
 def process_bank_operations(data:list[dict], categories:list)-> dict:
     """Функция возвращает словарь со списком категорий и количеством таких операций"""
+    if len(data) == 0:
+        return {}
+
     return dict(Counter([data[i]["description"] for i in range(len(data)) if data[i]["description"] in categories]))
