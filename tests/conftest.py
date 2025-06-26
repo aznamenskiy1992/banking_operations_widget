@@ -136,3 +136,44 @@ def example_input_none_for_filter_by_state():
 def example_path_to_log_file():
     """Фикстура передаёт путь до mylog.txt"""
     return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "logs", "mylog.txt")
+
+
+@pytest.fixture
+def transactions_from_files():
+    """Фикстура возвращает список транзакций из excel и csv файлов"""
+    transaction = [
+        {
+            "id": 650703,
+            "state": "EXECUTED",
+            "date": "2023-09-05T11:30:32Z",
+            "amount": 16210,
+            "currency_name": "Sol",
+            "currency_code": "PEN",
+            "from": "Счет 58803664561298323391",
+            "to": "Счет 39745660563456619397",
+            "description": "Перевод организации",
+        },
+        {
+            "id": 3598919,
+            "state": "EXECUTED",
+            "date": "2020-12-06T23:00:58Z",
+            "amount": 29740,
+            "currency_name": "Peso",
+            "currency_code": "COP",
+            "from": "Discover 3172601889670065",
+            "to": "Discover 0720428384694643",
+            "description": "Перевод с карты на карту",
+        },
+        {
+            "id": 593027,
+            "state": "CANCELED",
+            "date": "2023-07-22T05:02:01Z",
+            "amount": 30368,
+            "currency_name": "Shilling",
+            "currency_code": "TZS",
+            "from": "Visa 1959232722494097",
+            "to": "Visa 6804119550473710",
+            "description": "Перевод с карты на карту",
+        },
+    ]
+    return transaction
