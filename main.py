@@ -4,98 +4,6 @@ from src.processing import filter_by_state
 from src.widget import get_date, mask_account_card
 
 
-def select_file(question_and_correct_answer: dict) -> list[dict]:
-    """Функция запрашивает у пользователя откуда получать данные и возвращает список операций"""
-    while True:
-        selected_file = input(question_and_correct_answer["question"])
-        if selected_file in question_and_correct_answer["options"]:
-            break
-
-    if selected_file == question_and_correct_answer["options"][0]:
-        src_operations = get_transactions("data/operations.json")
-        print("Для обработки выбран JSON-файл.")
-    elif selected_file == question_and_correct_answer["options"][1]:
-        src_operations = get_transactions_from_csv("data/transactions.csv")
-        print("Для обработки выбран CSV-файл.")
-    elif selected_file == question_and_correct_answer["options"][2]:
-        src_operations = get_transactions_from_xlsx("data/transactions_excel.xlsx")
-        print("Для обработки выбран XLSX-файл.")
-
-    return src_operations
-
-
-def select_status(question_and_correct_answer: dict, operations: list[dict]) -> list[dict]:
-    """Функция запрашивает у пользователя статус для фильтрации и возвращает список операций"""
-    while True:
-        selected_status = input(question_and_correct_answer["question"]).lower()
-
-        if selected_status in question_and_correct_answer["options"]:
-            break
-        else:
-            print(f"Статус операции {selected_status} недоступен.")
-
-    filtered_operations = filter_by_state(operations, selected_status.upper())
-
-    print(f"Операции отфильтрованы по статусу {selected_status}")
-
-    return filtered_operations
-
-
-def select_need_sort_by_date(question_and_correct_answer: list[dict], operations: list[dict]) -> list[dict]:
-    """Функция запрашивает у пользователя необходимость сортировки по дате и направление сортировки и возвращает список операций"""
-    while True:
-        needed_sorted_by_date = input(question_and_correct_answer[0]["question"]).lower()
-
-        if needed_sorted_by_date in question_and_correct_answer[0]["options"]:
-            break
-
-    if needed_sorted_by_date == "нет":
-        return operations
-
-
-def select_need_just_rub_operations(question_and_correct_answer: dict, operations: list[dict]) -> list[dict]:
-    """Функция запрашивает у пользователя необходимость выбора только рублёвых транзакций и возвращает список операций"""
-    while True:
-        needed_print_just_rub = input(question_and_correct_answer["question"]).lower()
-
-        if needed_print_just_rub in question_and_correct_answer["options"]:
-            break
-
-    if needed_print_just_rub == "нет":
-        return operations
-
-
-def select_filter_by_description(question_and_correct_answer: list[dict], operations: list[dict]) -> list[dict]:
-    """Функция запрашивает у пользователя необходимость фильтрации по слову в описании и возвращает список операций"""
-    while True:
-        needed_filter_by_description = input(question_and_correct_answer["question"]).lower()
-
-        if needed_filter_by_description in question_and_correct_answer["options"]:
-            break
-
-    if needed_filter_by_description == "нет":
-        return operations
-
-
-def prepare_result(operations: list[dict]) -> list:
-    """Функция подготавливает отфильтрованные операции к выводу в консоль"""
-    result = []
-
-    for i in range(len(operations)):
-        temp_date_and_type = f"{get_date(operations[i]["date"])} {operations[i]["description"]}\n"
-
-        if "from" not in operations[i].keys():
-            temp_from_to = f"{mask_account_card(operations[i]["to"])}\n"
-        else:
-            temp_from_to = f"{mask_account_card(operations[i]["from"])} -> {mask_account_card(operations[i]["to"])}\n"
-
-        temp_amount = f"Сумма: {operations[i]["operationAmount"]["amount"]} {operations[i]["operationAmount"]["currency"]["name"]}"
-
-        result.append(temp_date_and_type + temp_from_to + temp_amount)
-
-    return result
-
-
 def main() -> None:
     """Функция возвращает отфильтрованные операции"""
     QUESTIONS_AND_CORRECT_ANSWERS = {
@@ -133,26 +41,69 @@ def main() -> None:
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
 
     # Выбор откуда получаем данные (шаг 1)
-    src_operations = select_file(QUESTIONS_AND_CORRECT_ANSWERS[1])
+    while True:
+        selected_file = input(QUESTIONS_AND_CORRECT_ANSWERS[1]["question"])
+        if selected_file in QUESTIONS_AND_CORRECT_ANSWERS[1]["options"]:
+            break
+
+    # Получаем данные из файлов
+    if selected_file == QUESTIONS_AND_CORRECT_ANSWERS[1]["options"][0]:
+        operations = get_transactions("data/operations.json")
+        print("Для обработки выбран JSON-файл.")
+    elif selected_file == QUESTIONS_AND_CORRECT_ANSWERS[1]["options"][1]:
+        operations = get_transactions_from_csv("data/transactions.csv")
+        print("Для обработки выбран CSV-файл.")
+    elif selected_file == QUESTIONS_AND_CORRECT_ANSWERS[1]["options"][2]:
+        operations = get_transactions_from_xlsx("data/transactions_excel.xlsx")
+        print("Для обработки выбран XLSX-файл.")
 
     # Выбор статуса операции (шаг 2)
-    filtered_by_status = select_status(QUESTIONS_AND_CORRECT_ANSWERS[2], src_operations)
+    while True:
+        selected_status = input(QUESTIONS_AND_CORRECT_ANSWERS[2]["question"]).lower()
+        if selected_status in QUESTIONS_AND_CORRECT_ANSWERS[2]["options"]:
+            break
+        else:
+            print(f"Статус операции {selected_status} недоступен.")
 
-    # Сортировка по дате (шаг 3 и 4)
-    sorted_by_date = select_need_sort_by_date([QUESTIONS_AND_CORRECT_ANSWERS[3], QUESTIONS_AND_CORRECT_ANSWERS[4]], filtered_by_status)
+    # Фильтруем операции по статусу
+    filtered_operations = filter_by_state(operations, selected_status.upper())
+    print(f"Операции отфильтрованы по статусу {selected_status}")
 
-    # Выбор только рублёвых операций (шаг 5)
-    selected_just_rub_operations = select_need_just_rub_operations(QUESTIONS_AND_CORRECT_ANSWERS[5], sorted_by_date)
+    # Необходимость сортировки по дате (шаг 3)
+    while True:
+        needed_sorted_by_date = input(QUESTIONS_AND_CORRECT_ANSWERS[3]["question"]).lower()
+        if needed_sorted_by_date in QUESTIONS_AND_CORRECT_ANSWERS[3]["options"]:
+            break
 
-    # Фильтрация по слову в описании (шаг 6)
-    filtered_by_description = select_filter_by_description(QUESTIONS_AND_CORRECT_ANSWERS[6], selected_just_rub_operations)
+    # Необходимость вывода только рублёвых операций (шаг 5)
+    while True:
+        needed_print_just_rub = input(QUESTIONS_AND_CORRECT_ANSWERS[5]["question"]).lower()
+        if needed_print_just_rub in QUESTIONS_AND_CORRECT_ANSWERS[5]["options"]:
+            break
+
+    # Необходимость отфильтровать операции по слову в описании (шаг 6)
+    while True:
+        needed_filter_by_description = input(QUESTIONS_AND_CORRECT_ANSWERS[6]["question"]).lower()
+        if needed_filter_by_description in QUESTIONS_AND_CORRECT_ANSWERS[6]["options"]:
+            break
 
     # Подготавливаем операции к выводу в консоль
-    result = prepare_result(filtered_by_description)
+    result = []
 
+    for i in range(len(filtered_operations)):
+        temp_date_and_type = f"{get_date(filtered_operations[i]["date"])} {filtered_operations[i]["description"]}\n"
+
+        if "from" not in filtered_operations[i].keys():
+            temp_from_to = f"{mask_account_card(filtered_operations[i]["to"])}\n"
+        else:
+            temp_from_to = f"{mask_account_card(filtered_operations[i]["from"])} -> {mask_account_card(filtered_operations[i]["to"])}\n"
+
+        temp_amount = f"Сумма: {filtered_operations[i]["operationAmount"]["amount"]} {filtered_operations[i]["operationAmount"]["currency"]["name"]}"
+
+        result.append(temp_date_and_type + temp_from_to + temp_amount)
+
+    # Выводим результат в консоль
     print("Распечатываю итоговый список транзакций...")
-
     print(f"""Всего банковских операций в выборке: {len(result)}
-    
-    {"\n".join(result)}
-    """)
+
+{"\n\n".join(result)}""", end="")
