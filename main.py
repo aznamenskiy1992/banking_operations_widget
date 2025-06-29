@@ -3,6 +3,7 @@ from src.transactions_from_files import get_transactions_from_csv, get_transacti
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
 from src.generators import filter_by_currency
+from src.filter_transactions import process_bank_search
 
 
 def main() -> None:
@@ -35,6 +36,9 @@ def main() -> None:
         6: {
             "question": "Отфильтровать список транзакций по определенному слову в описании? Да/Нет",
             "options": ["да", "нет"]
+        },
+        7: {
+            "question": "Введите слово по которому нужно отсортировать транзакции",
         },
     }
 
@@ -105,6 +109,12 @@ def main() -> None:
         needed_filter_by_description = input(QUESTIONS_AND_CORRECT_ANSWERS[6]["question"]).lower()
         if needed_filter_by_description in QUESTIONS_AND_CORRECT_ANSWERS[6]["options"]:
             break
+
+    if needed_filter_by_description == "да":
+        search_str = input(QUESTIONS_AND_CORRECT_ANSWERS[7]["question"])
+
+        # Фильтруем операции по слову
+        filtered_operations = process_bank_search(filtered_operations, search_str)
 
     # Подготавливаем операции к выводу в консоль
     result = []
