@@ -37,9 +37,6 @@ def main() -> None:
             "question": "Отфильтровать список транзакций по определенному слову в описании? Да/Нет",
             "options": ["да", "нет"]
         },
-        7: {
-            "question": "Введите слово по которому нужно отсортировать транзакции",
-        },
     }
 
     # Приветствие (начало работы программы)
@@ -111,7 +108,7 @@ def main() -> None:
             break
 
     if needed_filter_by_description == "да":
-        search_str = input(QUESTIONS_AND_CORRECT_ANSWERS[7]["question"])
+        search_str = input("Введите слово по которому нужно отсортировать транзакции")
 
         # Фильтруем операции по слову
         filtered_operations = process_bank_search(filtered_operations, search_str)
