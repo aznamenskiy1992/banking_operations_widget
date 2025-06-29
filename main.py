@@ -1,6 +1,6 @@
 from src.utils import get_transactions
 from src.transactions_from_files import get_transactions_from_csv, get_transactions_from_xlsx
-from src.processing import filter_by_state
+from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
 
 
@@ -74,6 +74,19 @@ def main() -> None:
         needed_sorted_by_date = input(QUESTIONS_AND_CORRECT_ANSWERS[3]["question"]).lower()
         if needed_sorted_by_date in QUESTIONS_AND_CORRECT_ANSWERS[3]["options"]:
             break
+
+    # Выбор направления сортировки (шаг 4)
+    if needed_sorted_by_date == "да":
+        while True:
+            sorting_direction = input(QUESTIONS_AND_CORRECT_ANSWERS[4]["question"]).lower()
+            if sorting_direction in QUESTIONS_AND_CORRECT_ANSWERS[4]["options"]:
+                break
+
+        # Сортируем по дате
+        if sorting_direction == "по возрастанию":
+            filtered_operations = sort_by_date(filtered_operations, "False")
+        else:
+            filtered_operations = sort_by_date(filtered_operations)
 
     # Необходимость вывода только рублёвых операций (шаг 5)
     while True:
