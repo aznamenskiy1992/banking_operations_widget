@@ -126,6 +126,11 @@ def main() -> None:
         # Фильтруем операции по слову
         filtered_operations = process_bank_search(filtered_operations, search_str)
 
+        # Проверяем, что в результате в списке остались операции
+        if not filtered_operations:
+            print(EMPTY_RESULTS_MESSAGE, end="")
+            return
+
     # Подготавливаем операции к выводу в консоль
     result = []
 
