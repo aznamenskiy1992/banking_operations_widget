@@ -39,6 +39,8 @@ def main() -> None:
         },
     }
 
+    EMPTY_RESULTS_MESSAGE = "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
+
     # Приветствие (начало работы программы)
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
 
@@ -69,7 +71,13 @@ def main() -> None:
 
     # Фильтруем операции по статусу
     filtered_operations = filter_by_state(operations, selected_status.upper())
-    print(f"Операции отфильтрованы по статусу {selected_status}")
+
+    # Проверяем, что в результате в списке остались операции
+    if filtered_operations == "Нет словарей со значением state":
+        print(EMPTY_RESULTS_MESSAGE, end="")
+        return
+    else:
+        print(f"Операции отфильтрованы по статусу {selected_status}")
 
     # Необходимость сортировки по дате (шаг 3)
     while True:
