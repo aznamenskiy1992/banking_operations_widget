@@ -1,9 +1,9 @@
-from src.utils import get_transactions
-from src.transactions_from_files import get_transactions_from_csv, get_transactions_from_xlsx
-from src.processing import filter_by_state, sort_by_date
-from src.widget import get_date, mask_account_card
-from src.generators import filter_by_currency
 from src.filter_transactions import process_bank_search
+from src.generators import filter_by_currency
+from src.processing import filter_by_state, sort_by_date
+from src.transactions_from_files import get_transactions_from_csv, get_transactions_from_xlsx
+from src.utils import get_transactions
+from src.widget import get_date, mask_account_card
 
 
 def main() -> None:
@@ -14,28 +14,19 @@ def main() -> None:
             1. Получить информацию о транзакциях из JSON-файла
             2. Получить информацию о транзакциях из CSV-файла
             3. Получить информацию о транзакциях из XLSX-файла""",
-            "options": ["1", "2", "3"]
+            "options": ["1", "2", "3"],
         },
         2: {
             "question": """Введите статус, по которому необходимо выполнить фильтрацию.
             Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING""",
-            "options": ["executed", "canceled", "pending"]
+            "options": ["executed", "canceled", "pending"],
         },
-        3: {
-            "question": "Отсортировать операции по дате? Да/Нет",
-            "options": ["да", "нет"]
-        },
-        4: {
-            "question": "Отсортировать по возрастанию или по убыванию",
-            "options": ["по возрастанию", "по убыванию"]
-        },
-        5: {
-            "question": "Выводить только рублевые транзакции? Да/Нет",
-            "options": ["да", "нет"]
-        },
+        3: {"question": "Отсортировать операции по дате? Да/Нет", "options": ["да", "нет"]},
+        4: {"question": "Отсортировать по возрастанию или по убыванию", "options": ["по возрастанию", "по убыванию"]},
+        5: {"question": "Выводить только рублевые транзакции? Да/Нет", "options": ["да", "нет"]},
         6: {
             "question": "Отфильтровать список транзакций по определенному слову в описании? Да/Нет",
-            "options": ["да", "нет"]
+            "options": ["да", "нет"],
         },
     }
 
@@ -140,14 +131,27 @@ def main() -> None:
         if "from" not in filtered_operations[i].keys():
             temp_from_to = f"{mask_account_card(filtered_operations[i]["to"])}\n"
         else:
-            temp_from_to = f"{mask_account_card(filtered_operations[i]["from"])} -> {mask_account_card(filtered_operations[i]["to"])}\n"
+            temp_from_to = (
+                f"{mask_account_card(filtered_operations[i]["from"])}"
+                + " -> "
+                + f"{mask_account_card(filtered_operations[i]["to"])}\n"
+            )
 
-        temp_amount = f"Сумма: {filtered_operations[i]["operationAmount"]["amount"]} {filtered_operations[i]["operationAmount"]["currency"]["name"]}"
+        temp_amount = (
+            "Сумма: "
+            + f"{filtered_operations[i]["operationAmount"]["amount"]} "
+            + f"{filtered_operations[i]["operationAmount"]["currency"]["name"]}"
+        )
 
         result.append(temp_date_and_type + temp_from_to + temp_amount)
 
     # Выводим результат в консоль
     print("Распечатываю итоговый список транзакций...")
-    print(f"""Всего банковских операций в выборке: {len(result)}
+    print(
+        f"""Всего банковских операций в выборке: {len(result)}
 
-{"\n\n".join(result)}""", end="")
+{"\n\n".join(result)}""",
+        end="",
+    )
+
+    return

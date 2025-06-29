@@ -1,7 +1,6 @@
 import pytest
 
-
-from src.filter_transactions import process_bank_search, process_bank_operations
+from src.filter_transactions import process_bank_operations, process_bank_search
 
 
 @pytest.mark.parametrize(
@@ -28,7 +27,7 @@ from src.filter_transactions import process_bank_search, process_bank_operations
                     "from": "Visa Platinum 1246377376343588",
                     "to": "Счет 14211924144426031657",
                 },
-            ]
+            ],
         ),
         (
             "с карты",
@@ -42,7 +41,7 @@ from src.filter_transactions import process_bank_search, process_bank_operations
                     "from": "Visa Classic 6831982476737658",
                     "to": "Visa Platinum 8990922113665229",
                 },
-            ]
+            ],
         ),
         (
             "счет",
@@ -65,7 +64,7 @@ from src.filter_transactions import process_bank_search, process_bank_operations
                     "from": "Счет 44812258784861134719",
                     "to": "Счет 74489636417521191160",
                 },
-            ]
+            ],
         ),
         (
             "перевод с",
@@ -97,25 +96,38 @@ from src.filter_transactions import process_bank_search, process_bank_operations
                     "from": "Visa Classic 6831982476737658",
                     "to": "Visa Platinum 8990922113665229",
                 },
-            ]
-        )
-    ]
+            ],
+        ),
+    ],
 )
-def test_return_filtered_operation_for_process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str, out_data):
+def test_return_filtered_operation_for_process_bank_search(
+    example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str, out_data
+):
     """Тестирует возврат отфильтрованного списка словарей с операциями"""
-    result = process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str)
+    result = process_bank_search(
+        example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, search_str
+    )
     assert result == out_data
 
 
-def test_empty_out_data_for_process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions):
+def test_empty_out_data_for_process_bank_search(
+    example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions,
+):
     """Тестирует кейс, когда в ключе description нет вхождения искомой строки"""
-    result = process_bank_search(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, "!")
+    result = process_bank_search(
+        example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, "!"
+    )
     assert result == []
 
 
-def test_not_description_in_dict_for_process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, capsys):
+def test_not_description_in_dict_for_process_bank_search(
+    example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, capsys
+):
     """Тестирует кейс, когда в словарях нет ключа description"""
-    result = process_bank_search(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, "перевод с")
+    result = process_bank_search(
+        example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions,
+        "перевод с",
+    )
 
     captured = capsys.readouterr()
     assert captured.out == "ID операций без ключа description: 939719570, 895315941"
@@ -136,11 +148,17 @@ def test_not_description_in_dict_for_process_bank_search(example_input_transacti
 @pytest.mark.parametrize(
     "input_data, search_str, raise_message",
     [
-        ({"test",}, "перевод с", "Операции должны быть переданы, как список словарей"),
+        (
+            {
+                "test",
+            },
+            "перевод с",
+            "Операции должны быть переданы, как список словарей",
+        ),
         (None, "перевод с", "Список операций не передан"),
         ([], ["перевод с"], "Строка для поиска описания операция должна быть передана в формате str"),
-        ([], None, "Строка для поиска описания операций не передана")
-    ]
+        ([], None, "Строка для поиска описания операций не передана"),
+    ],
 )
 def test_args_in_incorrect_type_for_process_bank_search(input_data, search_str, raise_message):
     """Тестирует кейс, когда аргументы переданые в неправильных типах"""
@@ -155,14 +173,14 @@ def test_input_empty_list_for_process_bank_search():
     assert result == []
 
 
-def test_group_operations_by_category_for_process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, operation_categories):
+def test_group_operations_by_category_for_process_bank_operations(
+    example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, operation_categories
+):
     """Тестирует возврат сгруппированных транзакций по категориям"""
-    result = process_bank_operations(example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, operation_categories)
-    assert result == {
-        "Перевод организации": 2,
-        "Перевод со счета на счет": 2,
-        "Перевод с карты на карту": 1
-    }
+    result = process_bank_operations(
+        example_input_transactions_for_for_filter_by_currency_and_transaction_descriptions, operation_categories
+    )
+    assert result == {"Перевод организации": 2, "Перевод со счета на счет": 2, "Перевод с карты на карту": 1}
 
 
 def test_input_empty_operations_list_for_process_bank_operations(operation_categories):
@@ -174,11 +192,23 @@ def test_input_empty_operations_list_for_process_bank_operations(operation_categ
 @pytest.mark.parametrize(
     "input_data, categories, raise_message",
     [
-        ({"test",}, ["Перевод организации"], "Операции должны быть переданы, как список словарей"),
+        (
+            {
+                "test",
+            },
+            ["Перевод организации"],
+            "Операции должны быть переданы, как список словарей",
+        ),
         (None, ["Перевод организации"], "Список операций не передан"),
-        ([], {"Перевод организации",}, "Категории должны быть переданы в списке"),
+        (
+            [],
+            {
+                "Перевод организации",
+            },
+            "Категории должны быть переданы в списке",
+        ),
         ([], None, "Категории не переданы"),
-    ]
+    ],
 )
 def test_args_in_incorrect_type_for_process_bank_operations(input_data, categories, raise_message):
     """Тестирует кейс, когда аргументы переданые в неправильных типах"""
@@ -187,9 +217,16 @@ def test_args_in_incorrect_type_for_process_bank_operations(input_data, categori
     assert str(exc_info.value) == raise_message
 
 
-def test_test_not_description_in_dict_for_process_bank_operations(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, operation_categories, capsys):
+def test_test_not_description_in_dict_for_process_bank_operations(
+    example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions,
+    operation_categories,
+    capsys,
+):
     """Тестирует кейс, когда в словарях нет ключа description"""
-    result = process_bank_operations(example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions, operation_categories)
+    result = process_bank_operations(
+        example_input_transactions_without_need_key_for_for_filter_by_currency_and_transaction_descriptions,
+        operation_categories,
+    )
 
     captured = capsys.readouterr()
     assert captured.out == "ID операций без ключа description: 939719570, 895315941"

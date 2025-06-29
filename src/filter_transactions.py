@@ -2,7 +2,7 @@ import re
 from collections import Counter
 
 
-def process_bank_search(data:list[dict], search:str) -> list[dict]:
+def process_bank_search(data: list[dict], search: str) -> list[dict]:
     """Функция возвращает отфильтрованный список словарей с операциями по ключу description"""
     if data is None:
         raise TypeError("Список операций не передан")
@@ -33,7 +33,7 @@ def process_bank_search(data:list[dict], search:str) -> list[dict]:
     return filtered_operations
 
 
-def process_bank_operations(data:list[dict], categories:list)-> dict:
+def process_bank_operations(data: list[dict], categories: list) -> dict:
     """Функция возвращает словарь со списком категорий и количеством таких операций"""
     if data is None:
         raise TypeError("Список операций не передан")
