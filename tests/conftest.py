@@ -255,8 +255,8 @@ def operations_for_main():
             "operationAmount": {
                 "amount": "67314.70",
                 "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
+                    "name": "USD",
+                    "code": "USD"
                 }
             },
             "description": "Перевод организации",
