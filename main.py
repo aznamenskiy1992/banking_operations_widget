@@ -95,6 +95,11 @@ def main() -> None:
         if needed_print_just_rub in QUESTIONS_AND_CORRECT_ANSWERS[5]["options"]:
             break
 
+    if needed_print_just_rub == "да":
+        # Выводим только рублёвые операции
+        generator = filter_by_currency(filtered_operations, "руб.")
+        filtered_operations = [element for element in generator]
+
     # Необходимость отфильтровать операции по слову в описании (шаг 6)
     while True:
         needed_filter_by_description = input(QUESTIONS_AND_CORRECT_ANSWERS[6]["question"]).lower()
