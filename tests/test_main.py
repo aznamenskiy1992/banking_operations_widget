@@ -5,6 +5,7 @@ from main import main
 
 
 @patch("builtins.input")
+@patch("main.get_transactions_from_xlsx")
 @patch("main.get_transactions_from_csv")
 @patch("main.get_transactions")
 @pytest.mark.parametrize(
@@ -112,12 +113,13 @@ Maestro 1596 83** **** 5199 -> Счет **9589
         )
     ]
 )
-def test_print_filtered_operation(mock_json, mock_csv, mock_input, input_values, filtered_operations, operations_for_main, capsys):
+def test_print_filtered_operation(mock_json, mock_csv, mock_xlsx, mock_input, input_values, filtered_operations, operations_for_main, capsys):
     """Тестирует вывод отфильтрованных операций в консоль"""
 
     # Значения из файлов
     mock_json.return_value = operations_for_main
     mock_csv.return_value = operations_for_main
+    mock_xlsx.return_value = operations_for_main
 
     # Значения для input
     input_values_list = [value for value in input_values.values()]
