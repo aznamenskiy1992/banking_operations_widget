@@ -109,6 +109,11 @@ def main() -> None:
         generator = filter_by_currency(filtered_operations, "руб.")
         filtered_operations = [element for element in generator]
 
+        # Проверяем, что в результате в списке остались операции
+        if not filtered_operations:
+            print(EMPTY_RESULTS_MESSAGE, end="")
+            return
+
     # Необходимость отфильтровать операции по слову в описании (шаг 6)
     while True:
         needed_filter_by_description = input(QUESTIONS_AND_CORRECT_ANSWERS[6]["question"]).lower()
