@@ -2,6 +2,7 @@ from src.utils import get_transactions
 from src.transactions_from_files import get_transactions_from_csv, get_transactions_from_xlsx
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
+from src.generators import filter_by_currency
 
 
 def main() -> None:
